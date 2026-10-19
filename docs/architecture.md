@@ -8,6 +8,10 @@ The core has no runtime dependencies. Angular uses `tslib` and is distributed as
 
 No module reads window, document or navigator at import time. Controller construction records options. Client startup acquires document resources; adapters defer it until after mounting/rendering.
 
+Four entry points select features without a public plugin API: the default includes everything, `/core` contains input and binding management, `/navigation` adds spatial focus, and `/hints` adds prompts. The controller depends only on feature interfaces; navigation geometry and rendering are separate modules. Native focus styling is preserved when no renderer is present.
+
+ESM and CommonJS retain shared module boundaries. Root ownership, class claims and adapter contexts are shared across entry points within each module format. Angular uses APF secondary entry points; the core secondary owns the service and directive classes, while other providers select a controller factory. Browser scripts bundle one complete preset each. See [build choices](bundles.md).
+
 ## Input flow
 
 1. Sample the configured Gamepad source once per animation frame while the document is visible and focused.

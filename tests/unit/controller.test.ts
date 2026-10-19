@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createGamepadify } from '../../packages/core/src/index.js';
 import { createGamepadSimulator } from '../../packages/core/src/testing.js';
-import { nearest } from '../../packages/core/src/dom.js';
+import { nearest } from '../../packages/core/src/geometry.js';
 import type { Button, GamepadifyController, GamepadifyOptions } from '../../packages/core/src/types.js';
 
 let time = 0;

@@ -1,33 +1,25 @@
 import { buttonLabel } from './buttons.js';
-import type { Family, HintOptions, PhysicalButton } from './types.js';
+import { onScreen } from './dom.js';
+import { FocusRenderer } from './focus-renderer.js';
+import type { RenderState } from './features.js';
+import type { HintOptions, PhysicalButton } from './types.js';
 
 export interface HintTarget { element: HTMLElement; buttons: readonly PhysicalButton[]; options?: HintOptions }
 
-export class Renderer {
-  readonly host: HTMLDivElement;
-  private ring: HTMLDivElement;
+export class Renderer extends FocusRenderer {
   private hints = new Map<HTMLElement, { node: HTMLDivElement; key: string }>();
 
-  constructor(private document: Document) {
-    this.host = document.createElement('div');
-    this.host.className = 'gamepadify-layer';
-    this.host.setAttribute('aria-hidden', 'true');
-    this.ring = document.createElement('div');
-    this.ring.className = 'gamepadify-focus';
-    this.host.append(this.ring);
-  }
-
-  render(targets: readonly HintTarget[], focus: HTMLElement | null, scope: Document | HTMLElement, family: Family, defaults: HintOptions, showHints: boolean): void {
-    const dialog = scope.nodeType === 1 ? (scope as HTMLElement).closest('dialog[open]') : null;
-    const parent = dialog ?? this.document.body;
-    if (this.host.parentElement !== parent) parent.append(this.host);
-    this.host.hidden = false;
-    if (focus) {
-      const rect = focus.getBoundingClientRect();
-      this.ring.hidden = false;
-      this.place(this.ring, rect.left - 3, rect.top - 3, rect.width + 6, rect.height + 6);
-    } else this.ring.hidden = true;
-
+  override render(state: RenderState): void {
+    super.render(state);
+    const { visible, focused, confirm, entries, family } = state;
+    const defaults = state.options.hints ?? {};
+    const showHints = state.options.showHints !== false;
+    const targets: HintTarget[] = visible.filter(entry => entry.buttons.length).map(entry => ({ element: entry.element, buttons: entry.buttons, options: entry.binding.hint }));
+    if (focused && confirm && onScreen(focused)) {
+      const index = targets.findIndex(hint => hint.element === focused);
+      const hint = { element: focused, buttons: [confirm], options: entries.find(entry => entry.element === focused)?.binding.hint };
+      if (index < 0) targets.push(hint); else targets[index] = hint;
+    }
     const wanted = new Set<HTMLElement>();
     const cssSize = Number.parseFloat(this.document.defaultView!.getComputedStyle(this.host).getPropertyValue('--gamepadify-size')) || 24;
     if (showHints) for (const target of targets) {
@@ -110,12 +102,5 @@ export class Renderer {
     for (const [element, hint] of this.hints) if (!wanted.has(element)) { hint.node.remove(); this.hints.delete(element); }
   }
 
-  private place(node: HTMLElement, x: number, y: number, width: number, height: number): void {
-    const origin = this.host.getBoundingClientRect();
-    const values = { left: `${x - origin.left}px`, top: `${y - origin.top}px`, width: `${width}px`, height: `${height}px` };
-    for (const [key, value] of Object.entries(values)) if (node.style.getPropertyValue(key) !== value) node.style.setProperty(key, value);
-  }
-
-  hide(): void { this.host.remove(); }
-  destroy(): void { this.host.remove(); this.hints.clear(); }
+  override destroy(): void { super.destroy(); this.hints.clear(); }
 }

@@ -4,7 +4,7 @@ Verified on 2026-10-19 using Node v24.22.0 on Windows. GitHub Actions repeats th
 
 ## Packed consumers
 
-Each consumer installs the actual core and adapter npm archives in a separate directory. The test checks package installation, strict TypeScript, client activation, dynamic registration and teardown. React, Vue and Angular also render on the server and hydrate without replacing the server-rendered button. React runs in Strict Mode; Angular runs zoneless. Vue SFC directive typing is checked with vue-tsc, including rejection of an invalid button. jQuery has no SSR renderer and is tested through its explicit plugin lifecycle.
+Each consumer installs the actual core and adapter npm archives in a separate directory. All ten framework versions are checked with the full, core, navigation and hints presets: 40 combinations. Smaller providers are also paired with hooks/directives imported from the default entry point. The test checks package installation, strict TypeScript, client activation, dynamic registration and teardown. React, Vue and Angular also render on the server and hydrate without replacing the server-rendered button. React runs in Strict Mode; Angular runs zoneless. Vue SFC directive typing is checked with vue-tsc, including rejection of an invalid button. jQuery has no SSR renderer and is tested through its explicit plugin lifecycle.
 
 | Target | Framework version | TypeScript | Result |
 | --- | --- | --- | --- |
@@ -22,9 +22,11 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 ## Core and browser checks
 
 - 37 unit tests: normalization, aliases, profiles, chord timing and overlap, classes, conflicts, scopes, focus, lifecycle and recovery.
-- 39 browser tests: 13 scenarios in each of Chromium 156.0.8078.4, Firefox 157.0 and WebKit 27.2.
+- 75 browser tests: 25 scenarios in each of Chromium 156.0.8078.4, Firefox 157.0 and WebKit 27.2.
 - PNG loading for Xbox/PlayStation/Switch, failed-image fallback, atlas rendering, CSS size, per-element placement, dialogs and nested scrolling.
-- ESM and CommonJS imports without browser globals; independent browser IIFE execution.
+- ESM and CommonJS imports without browser globals; independent browser IIFE execution for all presets.
+- Bundle metadata checks prove excluded features are absent, including when adapters mix smaller providers with default hooks/directives.
+- Native focus preservation in core, missing-feature diagnostics and shared ownership across entry points.
 - Repeated start/stop, keyboard/mouse/touch restoration, first-press consumption and class ownership.
 - Five locally built framework examples exercised in Chromium, including activation, navigation and PNGs.
 - Playground exercised at desktop and mobile widths with the controlled simulator.
@@ -33,15 +35,18 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 
 | Artifact | Bytes |
 | --- | ---: |
-| Core IIFE, minified | 25556 |
-| Core IIFE, gzip | 8992 |
-| gamepadify npm archive | 123100 |
-| gamepadify-react npm archive | 3189 |
-| gamepadify-vue npm archive | 3876 |
-| gamepadify-jquery npm archive | 3263 |
-| gamepadify-angular npm archive | 3911 |
+| Full IIFE, minified | 27018 |
+| Full IIFE, gzip | 9400 |
+| Core-only IIFE, gzip | 6779 |
+| Navigation IIFE, gzip | 8200 |
+| Hints IIFE, gzip | 8322 |
+| gamepadify npm archive | 176612 |
+| gamepadify-react npm archive | 4634 |
+| gamepadify-vue npm archive | 5232 |
+| gamepadify-jquery npm archive | 4488 |
+| gamepadify-angular npm archive | 4767 |
 
-The core archive includes ESM, CommonJS, declarations, source maps, the optional test simulator, CSS and 50 PNGs. Runtime core dependencies: zero. Sizes are uncompressed byte counts except the explicitly gzip row and already-compressed npm archives.
+The core archive includes all four presets, ESM, CommonJS, declarations, source maps, the optional simulator, CSS and 50 PNGs. Its archive size is not the size transferred to a browser. Runtime core dependencies: zero. See [build measurements and tradeoffs](bundles.md) for CSS, Brotli and consumer-bundled sizes.
 
 ## Remaining verification
 

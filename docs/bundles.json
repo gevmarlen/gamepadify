@@ -1,0 +1,70 @@
+{
+  "full": {
+    "consumer": {
+      "bytes": 26393,
+      "gzip": 9113,
+      "brotli": 8193
+    },
+    "script": {
+      "bytes": 27018,
+      "gzip": 9400,
+      "brotli": 8466
+    },
+    "css": {
+      "bytes": 7942,
+      "gzip": 1107,
+      "brotli": 893
+    }
+  },
+  "core": {
+    "consumer": {
+      "bytes": 18909,
+      "gzip": 6490,
+      "brotli": 5816
+    },
+    "script": {
+      "bytes": 19522,
+      "gzip": 6779,
+      "brotli": 6083
+    },
+    "css": {
+      "bytes": 66,
+      "gzip": 73,
+      "brotli": 55
+    }
+  },
+  "navigation": {
+    "consumer": {
+      "bytes": 23068,
+      "gzip": 7912,
+      "brotli": 7071
+    },
+    "script": {
+      "bytes": 23687,
+      "gzip": 8200,
+      "brotli": 7331
+    },
+    "css": {
+      "bytes": 699,
+      "gzip": 322,
+      "brotli": 264
+    }
+  },
+  "hints": {
+    "consumer": {
+      "bytes": 23177,
+      "gzip": 8033,
+      "brotli": 7225
+    },
+    "script": {
+      "bytes": 23809,
+      "gzip": 8322,
+      "brotli": 7492
+    },
+    "css": {
+      "bytes": 7942,
+      "gzip": 1107,
+      "brotli": 893
+    }
+  }
+}

@@ -30,6 +30,8 @@ npm run test:consumer -- jquery4
 
 Fixtures are isolated under `.artifacts/consumers` and install actual archives produced by `npm pack`. The Angular consumers select their own TypeScript versions. Run `npm run build` after changing sources before packaging.
 
+Each consumer command checks the full, core, navigation and hints presets. Add a preset argument, such as `npm run test:consumer -- react19 core`, to isolate a failure. `npm run check` also verifies tree shaking and gzip budgets through `test:bundles`. Keep shared adapter contexts independent of the controller factory.
+
 To inspect the demo, run `npm run dev -- --port 4174`, then `node scripts/check-demo.mjs` in another terminal. The latter exercises the simulator and updates the README screenshot. `DEMO_URL` can point it at a deployed Pages URL.
 
 Hardware reports should include controller model, USB/Bluetooth transport, browser/OS versions, reported Gamepad ID and mapping, and exact reproduction steps. Do not report simulator coverage as physical-device verification. Avoid posting sensitive data in issues.

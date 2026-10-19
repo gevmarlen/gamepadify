@@ -11,8 +11,9 @@
     "test": "vitest run",
     "test:browser": "playwright test",
     "test:packages": "node scripts/check-packages.mjs",
+    "test:bundles": "node scripts/check-bundles.mjs",
     "test:consumer": "node scripts/check-consumer.mjs",
-    "check": "npm run build && npm run typecheck && npm test && npm run test:packages",
+    "check": "npm run build && npm run typecheck && npm test && npm run test:packages && npm run test:bundles",
     "dev": "vite demo --host 127.0.0.1",
     "demo:build": "vite build demo --base=/gamepadify/",
     "pack": "node scripts/pack.mjs"

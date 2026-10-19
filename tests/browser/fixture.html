@@ -15,13 +15,17 @@ dialog { padding: 40px; }
 <script type="module">
 import { createGamepadify } from '../../packages/core/dist/index.js';
 import { createGamepadSimulator } from '../../packages/core/dist/testing.js';
+const factories = { full: createGamepadify };
+for (const name of ['core', 'navigation', 'hints']) factories[name] = (await import(`../../packages/core/dist/${name}.js`)).createGamepadify;
+window.factories = factories;
 window.events = [];
-window.setup = (html, options = {}, family = 'xbox') => {
+window.setup = (html, options = {}, family = 'xbox', preset = 'full') => {
   window.pad?.destroy();
+  document.querySelector('link').href = `../../packages/core/dist/gamepadify${preset === 'core' || preset === 'navigation' ? '-' + preset : ''}.css`;
   document.getElementById('root').innerHTML = html;
   window.events = [];
   window.sim = createGamepadSimulator(family);
-  window.pad = createGamepadify({ source: window.sim, ...options });
+  window.pad = factories[preset]({ source: window.sim, ...options });
   window.pad.on('activate', event => window.events.push(event.element.id));
   window.pad.start();
 };

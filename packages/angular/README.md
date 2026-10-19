@@ -16,3 +16,5 @@ Register `provideGamepadify(options)` in your application providers and import
 
 Include `gamepadify/styles.css` in your application styles. Supports Angular 20–22.
 See the main repository for configuration, typed combinations, scopes and examples.
+
+Optional smaller builds are available at `gamepadify-angular/core`, `/navigation` and `/hints`. The default import retains all features. See [build choices](https://github.com/gevmarlen/gamepadify/blob/main/docs/bundles.md) for matching stylesheets and examples.

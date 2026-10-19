@@ -91,7 +91,7 @@ export interface GamepadifyOptions {
   source?: GamepadSource;
 }
 
-export type DiagnosticCode = 'duplicate-binding' | 'reserved-button' | 'ambiguous-chord' | 'invalid-binding' | 'invalid-selector' | 'unsupported-gamepad' | 'unavailable' | 'overlapping-root';
+export type DiagnosticCode = 'duplicate-binding' | 'reserved-button' | 'ambiguous-chord' | 'invalid-binding' | 'invalid-selector' | 'unsupported-gamepad' | 'unavailable' | 'overlapping-root' | 'missing-feature';
 
 export interface Diagnostic {
   code: DiagnosticCode;
@@ -134,3 +134,5 @@ export interface GamepadifyController {
   on<K extends keyof GamepadifyEvents>(event: K, listener: (value: GamepadifyEvents[K]) => void): () => void;
   getState(): GamepadifyState;
 }
+
+export type GamepadifyFactory = (options?: GamepadifyOptions) => GamepadifyController;

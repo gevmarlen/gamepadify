@@ -24,6 +24,8 @@ npm run demo:build
 
 Archives are created in `.artifacts/packages`. Verify the public README, asset licenses and package sizes before publishing. Angular must be packed from `packages/angular/dist`; the packaging script already does this.
 
+Consumer commands check all four presets. Copy the current `.artifacts/bundles.json` into `docs/bundles.json` and aggregate the `target-preset.json` compatibility reports. The browser archive must include all four scripts, their maps, the three stylesheets, optional simulator, artwork and licenses.
+
 ## First npm release
 
 An npm owner must authenticate locally with `npm login` and complete npm's browser/2FA flow. Do not commit tokens or send them in issues/chat.

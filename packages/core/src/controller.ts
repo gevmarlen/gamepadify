@@ -1,15 +1,12 @@
-import { asBinding, normalizeButton, normalizeTrigger } from './buttons.js';
+import { asBinding, normalizeTrigger } from './buttons.js';
 import { ChordMatcher } from './chords.js';
 import { readButtons, resolveProfile } from './devices.js';
-import { available, ClassClaims, classTokens, elements, inRoot, nearest, onScreen } from './dom.js';
-import { Renderer } from './renderer.js';
-import type { HintTarget } from './renderer.js';
-import type { Activation, Binding, BindingInput, DeviceInfo, DeviceProfile, Diagnostic, Direction, GamepadifyController, GamepadifyEvents, GamepadifyOptions, GamepadifyState, InputMode, PhysicalButton } from './types.js';
+import { available, ClassClaims, classTokens, elements, inRoot, onScreen } from './dom.js';
+import type { Entry, Features, Navigation, Presentation } from './features.js';
+import type { Activation, Binding, BindingInput, DeviceInfo, DeviceProfile, Diagnostic, GamepadifyController, GamepadifyEvents, GamepadifyOptions, GamepadifyState, InputMode, PhysicalButton } from './types.js';
 
-interface Entry { id: string; element: HTMLElement; binding: Binding; buttons: PhysicalButton[] }
 interface Scope { element: HTMLElement; previous: HTMLElement | null }
 const roots = new WeakMap<Document, Set<Document | HTMLElement>>();
-const dpad: readonly PhysicalButton[] = ['dpad-up', 'dpad-down', 'dpad-left', 'dpad-right'];
 
 export class Controller implements GamepadifyController {
   private options: GamepadifyOptions;
@@ -21,7 +18,9 @@ export class Controller implements GamepadifyController {
   private device: DeviceInfo | null = null;
   private gamepad: Gamepad | null = null;
   private profile: DeviceProfile | null = null;
-  private focused: HTMLElement | null = null;
+  private navigation: Navigation | undefined;
+  private get focused(): HTMLElement | null { return this.navigation?.focused ?? null; }
+  private set focused(value: HTMLElement | null) { if (this.navigation) this.navigation.focused = value; }
   private scopes: Scope[] = [];
   private explicit = new Map<HTMLElement, Map<symbol, Binding>>();
   private entries: Entry[] = [];
@@ -31,17 +30,14 @@ export class Controller implements GamepadifyController {
   private observer: MutationObserver | null = null;
   private resizeObserver: ResizeObserver | null = null;
   private observed = new Set<HTMLElement>();
-  private renderer: Renderer | null = null;
+  private renderer: Presentation | null = null;
   private classes = new ClassClaims();
   private focusClasses = new ClassClaims();
-  private tabIndices = new Map<HTMLElement, string | null>();
   private frameId: number | null = null;
   private cleanups: (() => void)[] = [];
   private matcher = new ChordMatcher();
   private previousRaw = new Map<number, boolean[]>();
   private armed = false;
-  private direction: Direction | null = null;
-  private nextMove = 0;
   private pointer: readonly [number, number] | null = null;
   private configIssues: Diagnostic[] = [];
   private deviceIssues: Diagnostic[] = [];
@@ -49,8 +45,16 @@ export class Controller implements GamepadifyController {
   private diagnosticKeys = new Set<string>();
   private listeners = new Map<keyof GamepadifyEvents, Set<(value: never) => void>>();
 
-  constructor(options: GamepadifyOptions = {}) {
-    this.options = { showHints: true, bodyClass: '', elementClass: '', chordWindow: 80, warnings: true, ...options };
+  constructor(options: GamepadifyOptions = {}, private features: Features = {}) {
+    this.options = { showHints: features.hints ?? false, bodyClass: '', elementClass: '', chordWindow: 80, warnings: true, ...options };
+    this.navigation = features.navigation?.({
+      options: () => this.options.navigation,
+      document: () => this.document,
+      active: () => this.mode === 'gamepad',
+      entries: () => this.entries,
+      scope: () => this.scope(),
+      changed: element => { this.emit('focuschange', element); this.emitState(); },
+    });
   }
 
   start(): this {
@@ -75,7 +79,7 @@ export class Controller implements GamepadifyController {
     existing.add(root);
     roots.set(doc, existing);
     this.running = true;
-    this.renderer = new Renderer(doc);
+    this.renderer = this.features.presentation?.(doc) ?? null;
     this.dirty = true;
     this.observer = new view.MutationObserver(records => {
       if (records.some(record => !(record.target.nodeType === 1 ? record.target as Element : record.target.parentElement)?.closest('.gamepadify-layer'))) this.dirty = true;
@@ -99,7 +103,7 @@ export class Controller implements GamepadifyController {
     }, { capture: true, passive: true });
     listen(doc, 'focusin', event => {
       const target = event.target as HTMLElement;
-      if (this.mode === 'gamepad' && this.focusables().includes(target)) this.setFocus(target, false);
+      if (this.mode === 'gamepad' && this.navigation?.candidates().includes(target)) this.navigation.setFocus(target, false);
     });
     const suspend = () => { this.leaveMode(); this.previousRaw.clear(); this.cancelFrame(); };
     listen(view, 'blur', suspend);
@@ -130,12 +134,7 @@ export class Controller implements GamepadifyController {
     this.renderer?.destroy();
     this.renderer = null;
     if (this.document && this.root) roots.get(this.document)?.delete(this.root);
-    for (const [element, value] of this.tabIndices) {
-      if (element.getAttribute('tabindex') === '-1') {
-        if (value === null) element.removeAttribute('tabindex'); else element.setAttribute('tabindex', value);
-      }
-    }
-    this.tabIndices.clear();
+    this.navigation?.stop();
     this.previousRaw.clear();
     this.disconnect();
     this.entries = [];
@@ -165,7 +164,7 @@ export class Controller implements GamepadifyController {
     this.options = { ...this.options, ...options, hints: { ...this.options.hints, ...options.hints } };
     this.matcher.reset();
     this.armed = false;
-    this.direction = null;
+    this.navigation?.reset();
     this.dirty = true;
     if (this.gamepad) this.selectDevice(this.gamepad);
     if (restart) this.start();
@@ -274,7 +273,7 @@ export class Controller implements GamepadifyController {
         this.mode = 'gamepad';
         this.armed = false;
         this.matcher.reset();
-        this.ensureFocus();
+        this.navigation?.ensureFocus();
         this.emit('modechange', this.mode);
         this.emitState();
       }
@@ -287,12 +286,11 @@ export class Controller implements GamepadifyController {
         if (!this.armed) {
           if (!pad.buttons.some(button => button.pressed || button.value >= 0.5)) { this.armed = true; this.matcher.reset(pressed); }
         } else {
-          const navigation = this.options.navigation;
-          const confirm = navigation ? normalizeButton(navigation.confirm) : null;
+          const confirm = this.navigation?.confirm;
           const reservedConflicts = new Set(this.diagnostics.filter(item => item.code === 'reserved-button').flatMap(item => item.buttons));
           const targets = active.filter(entry => !this.isBlocked(entry));
           const matches = targets.map(entry => ({ id: entry.id, buttons: entry.buttons }));
-          if (confirm && !reservedConflicts.has(confirm) && this.focused && this.focusables().includes(this.focused)) matches.push({ id: 'confirm', buttons: [confirm] });
+          if (confirm && !reservedConflicts.has(confirm) && this.focused && this.navigation?.candidates().includes(this.focused)) matches.push({ id: 'confirm', buttons: [confirm] });
           const result = this.matcher.sample(pressed, matches, time, Math.max(0, this.options.chordWindow ?? 80));
           for (const ids of result.ambiguous) {
             const entries = targets.filter(entry => ids.includes(entry.id));
@@ -309,7 +307,7 @@ export class Controller implements GamepadifyController {
               if (target && inRoot(this.scope(), target.element) && onScreen(target.element)) this.activate(target.element, target.buttons, 'binding', target.binding);
             }
           }
-          if (this.mode === 'gamepad' && this.running && this.armed) this.navigate(pad, pressed, time, reservedConflicts);
+          if (this.mode === 'gamepad' && this.running && this.armed) this.navigation?.navigate(pad, this.profile, pressed, time, reservedConflicts);
         }
       }
     }
@@ -342,7 +340,7 @@ export class Controller implements GamepadifyController {
   private leaveMode(): void {
     this.matcher.reset();
     this.armed = false;
-    this.direction = null;
+    this.navigation?.reset();
     this.classes.clear();
     this.focusClasses.clear();
     this.renderer?.hide();
@@ -352,9 +350,9 @@ export class Controller implements GamepadifyController {
   private scopeChanged(): void {
     this.matcher.reset();
     this.armed = false;
-    this.direction = null;
+    this.navigation?.reset();
     this.dirty = true;
-    if (this.running) { this.reconcile(); this.ensureFocus(); if (this.focused && this.mode === 'gamepad') this.setFocus(this.focused, true); this.refresh(); }
+    if (this.running) { this.reconcile(); this.navigation?.ensureFocus(); if (this.focused && this.mode === 'gamepad') this.navigation?.setFocus(this.focused, true); this.refresh(); }
   }
 
   private query(selector: string): HTMLElement[] {
@@ -370,7 +368,7 @@ export class Controller implements GamepadifyController {
       const raw = element.getAttribute('data-gamepad');
       values.set(element, { ...(raw !== null ? { button: raw as Binding['button'] } : {}), focusable: element.hasAttribute('data-gamepad-focusable') && element.getAttribute('data-gamepad-focusable') !== 'false' });
     }
-    if (this.options.navigation) for (const element of this.query(this.options.navigation.selector ?? '[data-gamepad-focusable]:not([data-gamepad-focusable="false"])')) values.set(element, { ...values.get(element), focusable: true });
+    if (this.navigation?.selector) for (const element of this.query(this.navigation.selector)) values.set(element, { ...values.get(element), focusable: true });
     for (const [selector, input] of Object.entries(this.options.bindings ?? {})) {
       for (const element of this.query(selector)) values.set(element, { focusable: values.get(element)?.focusable, ...asBinding(input) });
     }
@@ -407,36 +405,22 @@ export class Controller implements GamepadifyController {
       groups.set(key, [...groups.get(key) ?? [], entry]);
     }
     for (const [key, group] of groups) if (group.length > 1) diagnostics.push({ code: 'duplicate-binding', message: `Multiple visible elements use ${key}. These actions are blocked until the conflict is resolved.`, buttons: group[0]!.buttons, elements: group.map(entry => entry.element) });
-    const navigation = this.options.navigation;
-    if (navigation) {
-      const confirm = normalizeButton(navigation.confirm);
-      if (!confirm) diagnostics.push({ code: 'invalid-binding', message: 'Navigation requires a valid confirm button.', buttons: [], elements: [] });
-      const reserved = [...confirm ? [confirm] : [], ...navigation.dpad ? dpad : []];
-      for (const button of reserved) {
-        const conflicts = this.entries.filter(entry => entry.buttons.includes(button));
-        if (conflicts.length) diagnostics.push({ code: 'reserved-button', message: `${button} is reserved by navigation and also appears in a binding. Both uses are blocked.`, buttons: [button], elements: conflicts.map(entry => entry.element) });
-      }
-    }
+    diagnostics.push(...(this.navigation?.diagnostics(this.entries) ?? []));
+    if (!this.navigation && this.options.navigation) diagnostics.push({ code: 'missing-feature', message: 'Navigation is not included in this entry point. Import gamepadify/navigation or gamepadify.', buttons: [], elements: [] });
+    if (!this.features.hints && this.options.showHints) diagnostics.push({ code: 'missing-feature', message: 'Hints are not included in this entry point. Import gamepadify/hints or gamepadify.', buttons: [], elements: [] });
     this.setDiagnostics(diagnostics);
     if (this.mode === 'gamepad') {
-      this.ensureFocus();
+      this.navigation?.ensureFocus();
       const wanted = new Map<HTMLElement, Set<string>>();
       const add = (element: HTMLElement, tokens: string[]) => wanted.set(element, new Set([...(wanted.get(element) ?? []), ...tokens]));
       add(this.document!.body, classTokens(this.options.bodyClass));
       add(this.root!.nodeType === 9 ? this.document!.body : this.root as HTMLElement, ['gamepadify-mode']);
       for (const entry of this.entries) add(entry.element, classTokens(this.options.elementClass));
       this.classes.sync(wanted);
-      this.focusClasses.sync(new Map(this.entries.map(entry => [entry.element, new Set(['gamepadify-native-focus'])])));
-      const hints: HintTarget[] = visible.filter(entry => entry.buttons.length).map(entry => ({ element: entry.element, buttons: entry.buttons, options: entry.binding.hint }));
-      const confirm = navigation ? normalizeButton(navigation.confirm) : null;
-      if (this.focused && confirm && onScreen(this.focused)) {
-        const index = hints.findIndex(hint => hint.element === this.focused);
-        const hint = { element: this.focused, buttons: [confirm], options: this.entries.find(entry => entry.element === this.focused)?.binding.hint };
-        if (index < 0) hints.push(hint); else hints[index] = hint;
+      if (this.renderer) {
+        this.focusClasses.sync(new Map(this.entries.map(entry => [entry.element, new Set(['gamepadify-native-focus'])])));
+        this.renderer.render({ entries: this.entries, visible, focused: this.focused, confirm: this.navigation?.confirm ?? null, scope: this.scope(), family: this.device?.family ?? 'generic', options: this.options });
       }
-      const activeElement = this.document!.activeElement as HTMLElement | null;
-      const ring = activeElement && this.entries.some(entry => entry.element === activeElement) && onScreen(activeElement) ? activeElement : null;
-      this.renderer?.render(hints, ring, this.scope(), this.device?.family ?? 'generic', this.options.hints ?? {}, this.options.showHints !== false);
     }
     return visible.filter(entry => entry.buttons.length);
   }
@@ -462,63 +446,11 @@ export class Controller implements GamepadifyController {
     this.emit('warning', issue);
   }
 
-  private focusables(): HTMLElement[] {
-    if (!this.options.navigation || !this.root) return [];
-    return this.entries.filter(entry => entry.binding.focusable && inRoot(this.scope(), entry.element) && available(entry.element)).map(entry => entry.element);
-  }
-
-  private ensureFocus(): void {
-    if (this.mode !== 'gamepad') return;
-    const candidates = this.focusables();
-    if (this.focused && candidates.includes(this.focused)) return;
-    const active = this.document?.activeElement as HTMLElement | null;
-    this.setFocus(active && candidates.includes(active) ? active : candidates[0] ?? null, true);
-  }
-
-  private setFocus(element: HTMLElement | null, move: boolean): void {
-    const changed = this.focused !== element;
-    this.focused = element;
-    if (element && move) {
-      if (element.tabIndex < 0 && !element.hasAttribute('tabindex') && !element.matches('button, input, select, textarea, a[href], [contenteditable="true"]')) {
-        this.tabIndices.set(element, null);
-        element.setAttribute('tabindex', '-1');
-      }
-      element.focus({ preventScroll: true });
-      if (!onScreen(element)) element.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
-    }
-    if (changed) { this.emit('focuschange', element); this.emitState(); }
-  }
-
   private activate(element: HTMLElement, buttons: readonly PhysicalButton[], source: Activation['source'], binding?: Binding): void {
     if (!available(element) || !inRoot(this.scope(), element)) return;
     const activation = { element, buttons, gamepad: this.gamepad, source };
     element.focus({ preventScroll: true });
     if (binding?.action) binding.action(activation); else element.click();
     this.emit('activate', activation);
-  }
-
-  private navigate(pad: Gamepad, pressed: ReadonlySet<PhysicalButton>, time: number, reservedConflicts: ReadonlySet<PhysicalButton>): void {
-    const options = this.options.navigation;
-    if (!options || !this.profile) return;
-    const axes = this.profile.axes ?? [0, 1];
-    let x = pad.axes[axes[0]] ?? 0, y = pad.axes[axes[1]] ?? 0;
-    if (options.dpad) {
-      if (pressed.has('dpad-left') && !reservedConflicts.has('dpad-left')) x = -1;
-      if (pressed.has('dpad-right') && !reservedConflicts.has('dpad-right')) x = 1;
-      if (pressed.has('dpad-up') && !reservedConflicts.has('dpad-up')) y = -1;
-      if (pressed.has('dpad-down') && !reservedConflicts.has('dpad-down')) y = 1;
-    }
-    const magnitude = Math.max(Math.abs(x), Math.abs(y));
-    if (magnitude < (options.releaseThreshold ?? 0.35)) { this.direction = null; return; }
-    if (!this.direction && magnitude < (options.threshold ?? 0.55)) return;
-    const direction: Direction = Math.abs(x) >= Math.abs(y) ? x > 0 ? 'right' : 'left' : y > 0 ? 'down' : 'up';
-    const changed = direction !== this.direction;
-    if (!changed && time < this.nextMove) return;
-    this.direction = direction;
-    this.nextMove = time + (changed ? options.repeatDelay ?? 300 : options.repeatInterval ?? 100);
-    this.ensureFocus();
-    if (!this.focused) return;
-    const target = nearest(this.focused, this.focusables(), direction);
-    if (target) this.setFocus(target, true);
   }
 }

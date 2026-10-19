@@ -1,28 +1,71 @@
 {
   "name": "gamepadify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Gamepad controls for the web: typed bindings, spatial navigation and adaptive button prompts.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/types/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" },
-    "./testing": { "types": "./dist/types/testing.d.ts", "import": "./dist/testing.js", "require": "./dist/testing.cjs" },
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./testing": {
+      "types": "./dist/types/testing.d.ts",
+      "import": "./dist/testing.js",
+      "require": "./dist/testing.cjs"
+    },
     "./styles.css": "./dist/gamepadify.css",
     "./dist/*": "./dist/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./core": {
+      "types": "./dist/types/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./navigation": {
+      "types": "./dist/types/navigation.d.ts",
+      "import": "./dist/navigation.js",
+      "require": "./dist/navigation.cjs"
+    },
+    "./hints": {
+      "types": "./dist/types/hints.d.ts",
+      "import": "./dist/hints.js",
+      "require": "./dist/hints.cjs"
+    },
+    "./core.css": "./dist/gamepadify-core.css",
+    "./navigation.css": "./dist/gamepadify-navigation.css"
   },
   "jsdelivr": "dist/gamepadify.min.js",
   "unpkg": "dist/gamepadify.min.js",
   "style": "dist/gamepadify.css",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "license": "MIT",
   "author": "gevmarlen",
-  "repository": { "type": "git", "url": "git+https://github.com/gevmarlen/gamepadify.git", "directory": "packages/core" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gevmarlen/gamepadify.git",
+    "directory": "packages/core"
+  },
   "homepage": "https://gevmarlen.github.io/gamepadify/",
   "bugs": "https://github.com/gevmarlen/gamepadify/issues",
-  "keywords": ["gamepad", "gamepad-api", "controller", "spatial-navigation", "typescript"],
-  "publishConfig": { "access": "public" }
+  "keywords": [
+    "gamepad",
+    "gamepad-api",
+    "controller",
+    "spatial-navigation",
+    "typescript"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

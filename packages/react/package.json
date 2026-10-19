@@ -1,9 +1,51 @@
 {
-  "name": "gamepadify-react", "version": "0.1.0", "description": "React bindings for Gamepadify.",
-  "type": "module", "main": "./dist/index.cjs", "module": "./dist/index.js", "types": "./dist/types/index.d.ts",
-  "exports": { ".": { "types": "./dist/types/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" } },
-  "sideEffects": false, "files": ["dist", "LICENSE"], "license": "MIT", "author": "gevmarlen",
-  "peerDependencies": { "gamepadify": "^0.1.0", "react": "^18.0.0 || ^19.0.0" },
-  "repository": { "type": "git", "url": "git+https://github.com/gevmarlen/gamepadify.git", "directory": "packages/react" },
-  "homepage": "https://gevmarlen.github.io/gamepadify/", "publishConfig": { "access": "public" }
+  "name": "gamepadify-react",
+  "version": "0.2.0",
+  "description": "React bindings for Gamepadify.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "types": "./dist/types/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./navigation": {
+      "types": "./dist/types/navigation.d.ts",
+      "import": "./dist/navigation.js",
+      "require": "./dist/navigation.cjs"
+    },
+    "./hints": {
+      "types": "./dist/types/hints.d.ts",
+      "import": "./dist/hints.js",
+      "require": "./dist/hints.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "author": "gevmarlen",
+  "peerDependencies": {
+    "gamepadify": "^0.2.0",
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gevmarlen/gamepadify.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://gevmarlen.github.io/gamepadify/",
+  "publishConfig": {
+    "access": "public"
+  }
 }

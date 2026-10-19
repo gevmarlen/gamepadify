@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 — 2026-10-19
+
+- Add optional `/core`, `/navigation` and `/hints` entry points to the core and all four adapters. The default import and API remain unchanged.
+- Add matching standalone browser scripts and image-free core/navigation stylesheets.
+- Preserve shared controller ownership, adapter contexts and Angular directive/service identities across entry points.
+- Keep native focus styling in the core-only build and report requests for excluded features through `missing-feature` diagnostics.
+- Add bundle inclusion checks, gzip budgets, browser coverage for each preset and four-preset packed consumer verification.
+
+The core-only script is 6,779 bytes gzip, 25% smaller than the 0.1.0 full script. The full 0.2.0 script is 9,400 bytes gzip. npm publication remains deferred; GitHub release archives contain all builds.
+
 ## 0.1.0 — 2026-10-19
 
 First public release.

@@ -2,6 +2,8 @@
 
 All public types are exported by `gamepadify`. See `packages/core/src/types.ts` for the complete declarations.
 
+The same factory, controller interface and types are exported by `gamepadify/core`, `gamepadify/navigation` and `gamepadify/hints`. These entry points choose the included features; see [smaller builds](bundles.md).
+
 ## Controller
 
 ```ts
@@ -31,7 +33,7 @@ Multiple instances may own disjoint roots. Overlapping running roots are rejecte
 
 `navigation` defaults to disabled. It accepts `confirm`, `selector`, `dpad`, `threshold`, `releaseThreshold`, `repeatDelay` and `repeatInterval`. Supply finite positive values for sizes/timings and a release threshold below the engagement threshold.
 
-`showHints` defaults to true. `bodyClass` and `elementClass` default to an empty string. Both class settings accept whitespace-separated names. Classes belong to the active scope and only exist during gamepad mode. Preexisting classes are preserved and disjoint controllers share reference-counted ownership.
+`showHints` defaults to true in the full and hints builds, and false in core and navigation. `bodyClass` and `elementClass` default to an empty string. Both class settings accept whitespace-separated names. Classes belong to the active scope and only exist during gamepad mode. Preexisting classes are preserved and disjoint controllers share reference-counted ownership.
 
 `hints` accepts `size`, `placement`, `offset`, `offsetX`, `offsetY` and `skin`. Placements: `top`, `top-start`, `top-end`, `bottom`, `bottom-start`, `bottom-end`, `left`, `right`. Start/end are physical left/right. Positions are clamped inside the viewport. Prompts follow moving and scrolling elements.
 
@@ -66,7 +68,9 @@ At the same precedence level, the last registered field wins. Releasing that reg
 | `warning` | `{ code, message, buttons, elements }` |
 | `statechange` | `GamepadifyState` |
 
-Diagnostic codes: `duplicate-binding`, `reserved-button`, `ambiguous-chord`, `invalid-binding`, `invalid-selector`, `unsupported-gamepad`, `unavailable`, `overlapping-root`.
+Diagnostic codes: `duplicate-binding`, `reserved-button`, `ambiguous-chord`, `invalid-binding`, `invalid-selector`, `unsupported-gamepad`, `unavailable`, `overlapping-root`, `missing-feature`.
+
+`missing-feature` reports enabled navigation or prompts absent from the selected build. Import a build containing that feature; configuration changes cannot add code that was excluded at build time.
 
 Callbacks run synchronously. Handle application errors inside your callbacks when appropriate; an uncaught error is reported by the browser while the next polling frame remains scheduled. State snapshots copy diagnostics and device metadata; element references are live DOM objects.
 

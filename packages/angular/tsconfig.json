@@ -1,6 +1,29 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": { "experimentalDecorators": true, "declaration": true, "declarationMap": true, "paths": { "gamepadify": ["../core/dist/types/index.d.ts"] } },
-  "angularCompilerOptions": { "compilationMode": "partial", "strictTemplates": true },
-  "include": ["src/**/*.ts"]
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
+    "paths": {
+      "gamepadify": [
+        "../core/dist/types/index.d.ts"
+      ],
+      "gamepadify/*": [
+        "../core/dist/types/*.d.ts"
+      ],
+      "gamepadify-angular/core": [
+        "./core/index.ts"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "strictTemplates": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "core/**/*.ts",
+    "navigation/**/*.ts",
+    "hints/**/*.ts"
+  ]
 }

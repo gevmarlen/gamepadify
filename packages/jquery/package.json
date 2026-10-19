@@ -1,9 +1,52 @@
 {
-  "name": "gamepadify-jquery", "version": "0.1.0", "description": "An explicitly installed jQuery plugin for Gamepadify.",
-  "type": "module", "main": "./dist/index.cjs", "module": "./dist/index.js", "types": "./dist/types/index.d.ts",
-  "exports": { ".": { "types": "./dist/types/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" }, "./dist/*": "./dist/*" },
-  "sideEffects": false, "files": ["dist", "LICENSE"], "license": "MIT", "author": "gevmarlen",
-  "peerDependencies": { "gamepadify": "^0.1.0", "jquery": "^3.7.0 || ^4.0.0" },
-  "repository": { "type": "git", "url": "git+https://github.com/gevmarlen/gamepadify.git", "directory": "packages/jquery" },
-  "homepage": "https://gevmarlen.github.io/gamepadify/", "publishConfig": { "access": "public" }
+  "name": "gamepadify-jquery",
+  "version": "0.2.0",
+  "description": "An explicitly installed jQuery plugin for Gamepadify.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./dist/*": "./dist/*",
+    "./core": {
+      "types": "./dist/types/core.d.ts",
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./navigation": {
+      "types": "./dist/types/navigation.d.ts",
+      "import": "./dist/navigation.js",
+      "require": "./dist/navigation.cjs"
+    },
+    "./hints": {
+      "types": "./dist/types/hints.d.ts",
+      "import": "./dist/hints.js",
+      "require": "./dist/hints.cjs"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "author": "gevmarlen",
+  "peerDependencies": {
+    "gamepadify": "^0.2.0",
+    "jquery": "^3.7.0 || ^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gevmarlen/gamepadify.git",
+    "directory": "packages/jquery"
+  },
+  "homepage": "https://gevmarlen.github.io/gamepadify/",
+  "publishConfig": {
+    "access": "public"
+  }
 }

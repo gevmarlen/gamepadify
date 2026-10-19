@@ -10,6 +10,16 @@ import { npm } from './npm.mjs';
 const target = process.argv[2];
 const supported = ['react18', 'react19', 'vue33', 'vue34', 'vue35', 'jquery3', 'jquery4', 'angular20', 'angular21', 'angular22'];
 if (!supported.includes(target)) throw new Error(`Choose one of ${supported.join(', ')}`);
+const preset = process.argv[3];
+const presets = ['full', 'core', 'navigation', 'hints'];
+if (!preset) {
+  for (const variant of presets) execFileSync(process.execPath, [process.argv[1], target, variant], { stdio: 'inherit' });
+  process.exit(0);
+}
+if (!presets.includes(preset)) throw new Error(`Choose one of ${presets.join(', ')}`);
+const suffix = preset === 'full' ? '' : '/' + preset;
+const hasHints = preset === 'full' || preset === 'hints';
+const hasNavigation = preset === 'full' || preset === 'navigation';
 const framework = target.replace(/\d+$/, '');
 const version = target.slice(framework.length);
 const root = process.cwd();
@@ -25,11 +35,15 @@ if (framework === 'angular') {
 }
 await mkdir(dir, { recursive: true });
 await writeFile(path.join(dir, 'package.json'), JSON.stringify({ name: `consumer-${target}`, private: true, type: 'module', dependencies }, null, 2));
-console.log(`Installing ${target} from packed artifacts…`);
+console.log(`Installing ${target}/${preset} from packed artifacts…`);
 npm(['install', '--no-audit', '--no-fund', manifest.core.path, manifest[framework].path], dir, 'inherit');
-assert.equal(await readFile(path.join(dir, 'node_modules/gamepadify/dist/index.js'), 'utf8'), await readFile('packages/core/dist/index.js', 'utf8'), 'consumer must install the current packed build');
+for (const file of ['index.js', 'controller.js']) assert.equal(await readFile(path.join(dir, 'node_modules/gamepadify/dist', file), 'utf8'), await readFile(`packages/core/dist/${file}`, 'utf8'), 'consumer must install the current packed build');
 const extension = framework === 'react' ? 'tsx' : 'ts';
-await cp(`tests/consumers/${framework}.${extension}`, path.join(dir, `app.${extension}`));
+let appSource = await readFile(`tests/consumers/${framework}.${extension}`, 'utf8');
+if (framework === 'react') appSource = appSource.replace("import { GamepadProvider, useGamepad, useGamepadController } from 'gamepadify-react';", `import { GamepadProvider } from 'gamepadify-react${suffix}';\nimport { useGamepad, useGamepadController } from 'gamepadify-react';`);
+if (framework === 'vue') appSource = appSource.replace("import { createGamepadifyPlugin, useGamepadify } from 'gamepadify-vue';", `import { createGamepadifyPlugin } from 'gamepadify-vue${suffix}';\nimport { useGamepadify } from 'gamepadify-vue';`);
+if (framework === 'jquery') appSource = appSource.replace("from 'gamepadify-jquery'", `from 'gamepadify-jquery${suffix}'`).replace('showHints: true', `showHints: ${hasHints}`);
+await writeFile(path.join(dir, `app.${extension}`), appSource);
 await cp('packages/core/dist', path.join(dir, 'dist'), { recursive: true });
 let serverHtml = '';
 if (framework === 'react') {
@@ -45,11 +59,11 @@ if (framework === 'react' || framework === 'vue') {
   assert.match(serverHtml, /id="action"/);
 }
 const config = { compilerOptions: { target: 'ES2022', module: 'ESNext', moduleResolution: 'Bundler', strict: true, skipLibCheck: true, lib: ['ES2022', 'DOM'], jsx: 'react-jsx', experimentalDecorators: true, noEmit: true }, include: ['*.ts', '*.tsx', '*.vue'] };
-await writeFile(path.join(dir, 'types.ts'), `import type {BindingInput, GamepadifyOptions} from 'gamepadify'; const valid: BindingInput = ['xbox:lb','south']; const opts:GamepadifyOptions={showHints:false,bodyClass:'pad',elementClass:'target'}; void valid; void opts;\n// @ts-expect-error Unprefixed face labels are deliberately unsupported.\nconst bad:BindingInput='A'; void bad;`);
+await writeFile(path.join(dir, 'types.ts'), `import type {BindingInput, GamepadifyOptions} from 'gamepadify${suffix}'; const valid: BindingInput = ['xbox:lb','south']; const opts:GamepadifyOptions={showHints:false,bodyClass:'pad',elementClass:'target'}; void valid; void opts;\n// @ts-expect-error Unprefixed face labels are deliberately unsupported.\nconst bad:BindingInput='A'; void bad;`);
 await writeFile(path.join(dir, 'tsconfig.json'), JSON.stringify(config));
 let served = path.join(dir, 'dist');
 if (framework === 'angular') {
-  await writeFile(path.join(dir, 'main.ts'), `import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {provideZonelessChangeDetection} from '@angular/core'; import {provideGamepadify} from 'gamepadify-angular'; import {createGamepadSimulator} from 'gamepadify/testing'; import {App} from './app'; const sim=createGamepadSimulator(); bootstrapApplication(App,{providers:[provideZonelessChangeDetection(),provideClientHydration(),provideGamepadify({source:sim,bodyClass:'consumer-active'})]}).then(app=>Object.assign(window,{sim,unmount:()=>app.destroy()}));`);
+  await writeFile(path.join(dir, 'main.ts'), `import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {provideZonelessChangeDetection} from '@angular/core'; import {provideGamepadify} from 'gamepadify-angular${suffix}'; import {createGamepadSimulator} from 'gamepadify/testing'; import {App} from './app'; const sim=createGamepadSimulator(); bootstrapApplication(App,{providers:[provideZonelessChangeDetection(),provideClientHydration(),provideGamepadify({source:sim,bodyClass:'consumer-active'})]}).then(app=>Object.assign(window,{sim,unmount:()=>app.destroy()}));`);
   config.compilerOptions.noEmit = false;
   config.angularCompilerOptions = { strictTemplates: true };
   await writeFile(path.join(dir, 'tsconfig.json'), JSON.stringify(config));
@@ -60,7 +74,7 @@ if (framework === 'angular') {
   await cp('packages/core/dist/gamepadify.css', path.join(served, 'gamepadify.css'));
   await cp('packages/core/dist/assets', path.join(served, 'assets'), { recursive: true });
   await build({entryPoints:[path.join(dir,'app.ts')],outfile:path.join(dir,'app.server.mjs'),bundle:true,platform:'node',format:'esm',packages:'external'});
-  const ssr = `import '@angular/compiler'; import {readFile,writeFile} from 'node:fs/promises'; import {provideZonelessChangeDetection} from '@angular/core'; import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {renderApplication,provideServerRendering} from '@angular/platform-server'; import {provideGamepadify} from 'gamepadify-angular'; import {App} from './app.server.mjs'; const file='browser-dist/browser/index.html'; const html=await renderApplication(context=>bootstrapApplication(App,{providers:[provideZonelessChangeDetection(),provideServerRendering(),provideClientHydration(),provideGamepadify()]},context),{document:await readFile(file,'utf8'),url:'http://localhost/',allowedHosts:['localhost']}); if(!html.includes('id="action"'))throw new Error('SSR failed'); await writeFile(file,html); console.log('SSR passed');`;
+  const ssr = `import '@angular/compiler'; import {readFile,writeFile} from 'node:fs/promises'; import {provideZonelessChangeDetection} from '@angular/core'; import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {renderApplication,provideServerRendering} from '@angular/platform-server'; import {provideGamepadify} from 'gamepadify-angular${suffix}'; import {App} from './app.server.mjs'; const file='browser-dist/browser/index.html'; const html=await renderApplication(context=>bootstrapApplication(App,{providers:[provideZonelessChangeDetection(),provideServerRendering(),provideClientHydration(),provideGamepadify()]},context),{document:await readFile(file,'utf8'),url:'http://localhost/',allowedHosts:['localhost']}); if(!html.includes('id="action"'))throw new Error('SSR failed'); await writeFile(file,html); console.log('SSR passed');`;
   await writeFile(path.join(dir, 'ssr.mjs'), ssr);
   execFileSync(process.execPath, ['ssr.mjs'], { cwd: dir, stdio: 'inherit' });
 } else {
@@ -113,13 +127,21 @@ try {
   await page.evaluate(() => window.toggle());
   await page.waitForSelector('#action'); await press('west');
   assert.equal(await page.locator('#count').textContent(), '2');
-  assert.equal(await page.locator('.gamepadify-hint').count(), 1);
+  assert.equal(await page.locator('.gamepadify-hint').count(), hasHints ? 1 : 0);
+  if (hasNavigation) {
+    await page.evaluate(() => window.pad.configure({ navigation: { confirm: 'south', selector: '#action' } }));
+    await page.waitForFunction(() => document.activeElement?.id === 'action');
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await press('south');
+    assert.equal(await page.locator('#count').textContent(), '3', 'confirm must reach framework state');
+  }
+  assert.deepEqual(await page.evaluate(() => window.pad.getState().diagnostics), []);
   await page.evaluate(() => window.unmount());
   assert.equal(await page.locator('.gamepadify-layer').count(), 0);
   assert.equal(await page.locator('body').evaluate(element => element.classList.contains('consumer-active')), false);
   assert.deepEqual(errors, []);
   const resolved = JSON.parse(npm(['ls', '--depth=0', '--json'], dir));
   await mkdir(path.join(root, '.artifacts/compatibility'), { recursive: true });
-  await writeFile(path.join(root, `.artifacts/compatibility/${target}.json`), JSON.stringify({ target, passed: true, node: process.version, dependencies: Object.fromEntries(Object.entries(resolved.dependencies).map(([key, item]) => [key, item.version])) }, null, 2));
-  console.log(`${target}: package installation, types, ${framework === 'jquery' ? '' : 'SSR, '}hydration/lifecycle, activation and cleanup passed.`);
+  await writeFile(path.join(root, `.artifacts/compatibility/${target}-${preset}.json`), JSON.stringify({ target, preset, passed: true, node: process.version, dependencies: Object.fromEntries(Object.entries(resolved.dependencies).map(([key, item]) => [key, item.version])) }, null, 2));
+  console.log(`${target}/${preset}: package installation, types, ${framework === 'jquery' ? '' : 'SSR, '}hydration/lifecycle, activation and cleanup passed.`);
 } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }

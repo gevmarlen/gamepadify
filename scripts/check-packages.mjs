@@ -11,8 +11,8 @@ const fixture = path.resolve('.artifacts/package-smoke');
 await mkdir(fixture, { recursive: true });
 await writeFile(path.join(fixture, 'package.json'), JSON.stringify({ private: true, type: 'module', dependencies: { gamepadify: packages.core.path } }));
 npm(['install', '--ignore-scripts', '--no-audit', '--no-fund', packages.core.path], fixture);
-assert.equal(await readFile(path.join(fixture, 'node_modules/gamepadify/dist/index.js'), 'utf8'), await readFile('packages/core/dist/index.js', 'utf8'));
-execFileSync(process.execPath, ['--input-type=module', '-e', `import assert from 'node:assert/strict'; import {createRequire} from 'node:module'; import {createGamepadify} from 'gamepadify'; import {createGamepadSimulator} from 'gamepadify/testing'; const require=createRequire(import.meta.url); assert.equal(createGamepadify().getState().running,false); assert.equal(require('gamepadify').createGamepadify().getState().mode,'pointer'); assert.equal(createGamepadSimulator().getGamepads().length,1); assert.equal(typeof window,'undefined');`], { cwd: fixture, stdio: 'inherit' });
+for (const file of ['index.js', 'controller.js']) assert.equal(await readFile(path.join(fixture, 'node_modules/gamepadify/dist', file), 'utf8'), await readFile(`packages/core/dist/${file}`, 'utf8'));
+execFileSync(process.execPath, ['--input-type=module', '-e', `import assert from 'node:assert/strict'; import {createRequire} from 'node:module'; import {createGamepadSimulator} from 'gamepadify/testing'; const require=createRequire(import.meta.url); for(const suffix of ['', '/core', '/navigation', '/hints']) { const {createGamepadify}=await import('gamepadify'+suffix); const pad=createGamepadify(); pad.start(); assert.equal(pad.getState().running,false); assert.equal(require('gamepadify'+suffix).createGamepadify().getState().mode,'pointer'); pad.destroy(); } assert.equal(createGamepadSimulator().getGamepads().length,1); assert.equal(typeof window,'undefined');`], { cwd: fixture, stdio: 'inherit' });
 for (const name of ['react', 'vue', 'jquery']) {
   const source = await readFile(`packages/${name}/dist/index.js`, 'utf8');
   assert.match(source, /from "gamepadify"/);

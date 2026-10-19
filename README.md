@@ -6,7 +6,7 @@
 
 Give your interface a gamepad. Typed button bindings, directional focus and controller prompts for ordinary DOM elements.
 
-**[Try the playground](https://gevmarlen.github.io/gamepadify/)** · [API reference](docs/api.md) · [Runnable examples](examples/README.md) · [Compatibility](docs/compatibility.md)
+**[Try the playground](https://gevmarlen.github.io/gamepadify/)** · [API reference](docs/api.md) · [Smaller builds](docs/bundles.md) · [Runnable examples](examples/README.md) · [Compatibility](docs/compatibility.md)
 
 ![Gamepadify playground with Xbox prompts and spatial focus](docs/playground.png)
 
@@ -19,9 +19,13 @@ Give your interface a gamepad. Typed button bindings, directional focus and cont
 
 ## Install
 
+Version 0.2.0 is distributed through [GitHub Releases](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.0); npm publication is deferred. Download the core archive and install it locally:
+
 ```sh
-npm install gamepadify
+npm install ./gamepadify-0.2.0.tgz
 ```
+
+Install an adapter archive alongside it when needed. The registry commands and CDN examples below apply after npm publication.
 
 ```ts
 import { createGamepadify } from 'gamepadify';
@@ -44,11 +48,11 @@ Keep the script and stylesheet on the same fixed version. PNG URLs are relative 
 
 ```html
 <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/gamepadify@0.1.0/dist/gamepadify.css">
+  href="https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/gamepadify.css">
 
 <button data-gamepad="south">Save</button>
 
-<script src="https://cdn.jsdelivr.net/npm/gamepadify@0.1.0/dist/gamepadify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/gamepadify.min.js"></script>
 <script>
   const pad = Gamepadify.createGamepadify();
   pad.start();
@@ -57,7 +61,13 @@ Keep the script and stylesheet on the same fixed version. PNG URLs are relative 
 
 The npm/CDN URLs become available when the corresponding npm version is published. Release archives are also available on [GitHub Releases](https://github.com/gevmarlen/gamepadify/releases).
 
-**0.1.0 distribution:** the GitHub release is available first. npm publication is pending owner authentication; until then, download and install its `.tgz` archives, or use the standalone browser archive locally.
+**0.2.0 distribution:** this release is available on GitHub. npm publication is deferred; download and install its `.tgz` archives, or use the standalone browser archive locally.
+
+### Smaller builds
+
+The default import keeps all features. For bindings alone, change it to `gamepadify/core` and use `gamepadify/core.css`: the standalone JS is **6.8 kB gzip**, compared with **9.4 kB** for the full build. The API stays the same.
+
+`gamepadify/navigation` adds spatial navigation without prompts; `gamepadify/hints` adds prompts without navigation. Every framework adapter exposes the same suffixes. See [build choices, sizes and examples](docs/bundles.md).
 
 ## Bindings
 
