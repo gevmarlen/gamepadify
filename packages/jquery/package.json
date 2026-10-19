@@ -1,6 +1,6 @@
 {
   "name": "gamepadify-jquery",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "An explicitly installed jQuery plugin for Gamepadify.",
   "type": "module",
   "main": "./dist/index.cjs",

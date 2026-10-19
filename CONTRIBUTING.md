@@ -12,6 +12,8 @@ npm run dev
 
 Core sources live in `packages/core/src`; each adapter has a separate package. Keep runtime dependencies out of the core and framework internals out of adapters. Do not introduce import-time DOM access. Prefer clear names and small functions; comments should explain a non-obvious constraint.
 
+Work on short-lived branches and merge through pull requests. GitHub deletes merged source branches automatically. After updating your local `main`, remove your merged branch with `git branch -d <branch>` and prune stale remote references with `git fetch --prune`.
+
 Add behavioral tests for input state, timing, focus, conflicts and lifecycle changes. For framework changes, run the relevant packed consumer tests:
 
 ```sh
