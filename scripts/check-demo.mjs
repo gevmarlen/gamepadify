@@ -63,7 +63,20 @@ try {
       const visible = () => page.locator('#collection .world:visible').evaluateAll(cards => cards.map(card => card.dataset.world));
       const settle = () => page.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
       const route = async key => {
-        await page.waitForFunction(value => location.hash === `#/${value}`, key);
+        try { await page.waitForFunction(value => location.hash === `#/${value}`, key); }
+        catch (error) {
+          await mkdir('test-results', { recursive: true });
+          await page.screenshot({ path: `test-results/demo-${name}-route.png`, fullPage: true });
+          console.error(await page.evaluate(() => ({
+            hash: location.hash,
+            mode: document.querySelector('#mode').textContent,
+            focused: document.activeElement.outerHTML,
+            back: document.querySelector('#back-page').getBoundingClientRect().toJSON(),
+            viewport: { width: innerWidth, height: innerHeight, scrollY },
+            events: document.querySelector('#log').textContent,
+          })));
+          throw error;
+        }
         await frames();
         assert.equal(await page.locator('[data-page]:visible').count(), 1);
       };
