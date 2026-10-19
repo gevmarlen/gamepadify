@@ -1,0 +1,44 @@
+.menu-panel, .help-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transform-origin: top left;
+  transition: opacity .18s ease, transform .22s cubic-bezier(.2,.75,.25,1), visibility 0s;
+}
+.help-panel { transform-origin: top right; }
+.menu-panel[hidden], .help-panel[hidden] {
+  display: block !important;
+  visibility: hidden;
+  opacity: .01;
+  transform: translateY(-8px) scale(.97);
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease, visibility 0s .16s;
+}
+.menu-toggle path { transform-origin: 12px 12px; transition: transform .2s ease, opacity .15s ease; }
+.menu-toggle path:first-child { transform: translateY(-6px); }
+.menu-toggle path:last-child { transform: translateY(6px); }
+.menu-toggle[aria-expanded=true] path:first-child { transform: rotate(45deg); }
+.menu-toggle[aria-expanded=true] path:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded=true] path:last-child { transform: rotate(-45deg); }
+
+.world, .journey { transition: translate .18s ease, border-color .18s, background-color .18s, box-shadow .18s; }
+.world:focus-visible, .journey:focus-visible, .gamepadify-mode :is(.world, .journey):focus { translate: 0 -2px; box-shadow: 0 7px 16px #080f1638; }
+.stage-button, .icon-button, .menu-toggle, .text-button, .page-links a { transition: transform .15s ease, background-color .15s, border-color .15s, color .15s, box-shadow .15s; }
+:is(.stage-button, .icon-button, .menu-toggle, .text-button, .page-links a):active { transform: translateY(1px) scale(.98); }
+.journey-arrow, .text-button > span { transition: transform .18s ease; }
+.journey:focus-visible .journey-arrow, .gamepadify-mode .journey:focus .journey-arrow { transform: translate(2px, -2px); }
+#shuffle > svg { transition: transform .25s ease; }
+#shuffle:active > svg { transform: rotate(-25deg); }
+@media (hover: hover) {
+  .stage:not(.gamepadify-mode) :is(.world, .journey):hover { translate: 0 -2px; box-shadow: 0 7px 16px #080f1638; }
+  .stage:not(.gamepadify-mode) .journey:hover .journey-arrow, .text-button:hover > span { transform: translate(2px, -2px); }
+  .stage-button:hover { box-shadow: 0 4px 12px #08100e24; }
+}
+
+dialog[open] { animation: dialog-enter .24s cubic-bezier(.2,.75,.25,1); }
+dialog.closing { animation: none; pointer-events: none; }
+dialog::backdrop { opacity: 1; transition: opacity .16s ease; }
+dialog[open]::backdrop { animation: backdrop-enter .24s ease; }
+dialog.closing::backdrop { animation: none; opacity: 0; }
+@keyframes dialog-enter { from { opacity: .01; transform: translateY(16px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes backdrop-enter { from { opacity: 0; } to { opacity: 1; } }

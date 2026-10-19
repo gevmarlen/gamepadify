@@ -35,11 +35,17 @@ try {
       page.on('console', message => { if (message.type() === 'warning' && message.text().startsWith('[gamepadify:')) warnings.push(message.text()); });
       await page.addInitScript(() => {
         window.__demoAnimations = [];
+        window.__demoPopupEvents = [];
+        for (const type of ['animationstart', 'transitionrun']) document.addEventListener(type, event => {
+          if (event.target.matches('#detail-dialog, #menu-panel, #help-panel')) window.__demoPopupEvents.push({ id: event.target.id, type });
+        });
         const animate = Element.prototype.animate;
         Element.prototype.animate = function (...args) {
           const animation = animate.apply(this, args);
-          if (this.matches('#collection > .world, .demo-page')) window.__demoAnimations.push({
+          if (this.matches('#collection > .world, .demo-page, #detail-dialog')) window.__demoAnimations.push({
+            target: this.id || this.className,
             duration: animation.effect.getTiming().duration,
+            delay: animation.effect.getTiming().delay,
             moves: animation.effect.getKeyframes().some(frame => frame.transform && frame.transform !== 'none'),
           });
           return animation;
@@ -62,6 +68,11 @@ try {
       const mode = () => page.locator('#mode').textContent();
       const visible = () => page.locator('#collection .world:visible').evaluateAll(cards => cards.map(card => card.dataset.world));
       const settle = () => page.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
+      const closedPanel = async id => {
+        const panel = page.locator(`#${id}`);
+        assert(await panel.evaluate(element => element.hidden && element.inert), 'closing panels must stop accepting input immediately');
+        await panel.waitFor({ state: 'hidden' });
+      };
       const route = async key => {
         try { await page.waitForFunction(value => location.hash === `#/${value}`, key); }
         catch (error) {
@@ -108,24 +119,27 @@ try {
       await press('z');
       await page.waitForFunction(() => document.querySelector('dialog').open);
       assert.equal(await page.locator('#detail-title').textContent(), 'Orbit');
+      await page.waitForFunction(() => window.__demoPopupEvents.some(event => event.id === 'detail-dialog' && event.type === 'animationstart'));
       assert.equal(await page.locator('dialog .gamepadify-glyph[data-button=east]').count(), 1);
       assert.equal(await page.locator('dialog .gamepadify-glyph[data-button=south]').count(), 0);
       await press('v');
       await page.waitForFunction(() => !document.querySelector('dialog').open);
+      assert(await page.evaluate(() => window.__demoAnimations.some(animation => animation.target === 'detail-dialog' && animation.moves)), 'dialog dismissal must animate');
       await press('x');
       assert.equal(await page.locator('#help').getAttribute('aria-expanded'), 'true');
       assert(await page.locator('#help-panel').isVisible());
       assert.equal(await page.locator('.gamepadify-glyph').count(), 1, 'help scope must hide background prompts');
       if (name === 'chromium') await page.screenshot({ path: '.artifacts/playground-help.png', fullPage: true });
       await press('v');
-      assert(!(await page.locator('#help-panel').isVisible()));
+      await closedPanel('help-panel');
+      assert(await page.evaluate(() => window.__demoPopupEvents.filter(event => event.id === 'help-panel' && event.type === 'transitionrun').length >= 4), 'help must transition on entry and exit');
       const nativeFocus = () => page.evaluate(() => ({ tag: document.activeElement.tagName, id: document.activeElement.id }));
       await page.locator('#size').click();
       const settingsFocus = await nativeFocus();
       await page.locator('[data-pad-button=west]').click();
       await page.waitForFunction(() => !document.querySelector('#help-panel').hidden);
       await page.locator('#size').click();
-      assert(!(await page.locator('#help-panel').isVisible()));
+      await closedPanel('help-panel');
       assert.deepEqual(await nativeFocus(), settingsFocus, 'dismissing help must preserve native settings focus');
       assert.equal(await mode(), 'GAMEPAD MODE');
 
@@ -155,6 +169,7 @@ try {
       assert.equal(await mode(), 'GAMEPAD MODE');
       await page.locator('[data-pad-button=left-shoulder]').click();
       await page.waitForFunction(() => !document.querySelector('#menu-panel').hidden);
+      await page.waitForFunction(() => document.querySelectorAll('.gamepadify-glyph').length === 3);
       assert.equal(await mode(), 'GAMEPAD MODE');
       assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'collection');
       assert.equal(await page.locator('.gamepadify-glyph').count(), 3, 'menu must contain only LB, B and the selected link prompt');
@@ -162,16 +177,16 @@ try {
       await press('c');
       assert.deepEqual(await visible(), menuOrder, 'menu scope must block background shortcuts');
       await press('q');
-      assert(!(await page.locator('#menu-panel').isVisible()));
+      await closedPanel('menu-panel');
       assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Orbit');
       await press('q');
       await press('v');
-      assert(!(await page.locator('#menu-panel').isVisible()));
+      await closedPanel('menu-panel');
       assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Orbit');
 
       await press('q');
       await page.locator('#size').click();
-      assert(!(await page.locator('#menu-panel').isVisible()));
+      await closedPanel('menu-panel');
       assert.deepEqual(await nativeFocus(), settingsFocus, 'dismissing the menu must preserve native settings focus');
       assert.equal(await mode(), 'GAMEPAD MODE');
       await page.locator('[data-pad-button=left-shoulder]').click();
@@ -183,7 +198,7 @@ try {
       assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'journeys');
       await press('z');
       await route('journeys');
-      assert(!(await page.locator('#menu-panel').isVisible()));
+      await closedPanel('menu-panel');
       assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'), 'false');
       assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'journeys/slow');
       assert(await animatedSince(pageTransition), 'page changes must animate');
@@ -239,6 +254,11 @@ try {
       assert.notDeepEqual(await visible(), before);
       assert.equal(await page.evaluate(() => document.activeElement.dataset.world), focused);
       assert(await animatedSince(shuffling), 'shuffle must animate its layout');
+      assert(await page.evaluate(index => window.__demoAnimations.slice(index).some(animation => animation.delay > 0), shuffling), 'shuffle must stagger card movement');
+      await press('c');
+      await press('c');
+      assert.equal(new Set(await visible()).size, 6, 'repeated shuffle must preserve every world');
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.world), focused, 'repeated shuffle must preserve gamepad focus');
       await settle();
       await page.locator('[data-pad-button=west]').click();
       await page.waitForFunction(() => !document.querySelector('#help-panel').hidden);
@@ -255,7 +275,12 @@ try {
       await page.waitForFunction(() => document.querySelector('.direction-down').classList.contains('pressed'));
       await page.keyboard.up('ArrowDown');
 
+      await press('z');
+      await page.waitForFunction(() => document.querySelector('dialog').open);
+      await press('v');
       await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.waitForFunction(() => !document.querySelector('dialog').open);
+      assert.equal(await page.evaluate(() => document.getAnimations().length), 0, 'reduced motion must finish an in-progress dialog dismissal');
       await press('c');
       assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
       await press('q');
@@ -290,7 +315,7 @@ try {
       assert.equal(await mode(), 'POINTER MODE');
       await page.locator('#menu-toggle').click();
       await page.keyboard.press('Escape');
-      assert(!(await page.locator('#menu-panel').isVisible()));
+      await closedPanel('menu-panel');
       assert.equal(await page.evaluate(() => document.activeElement.id), 'menu-toggle');
       await page.locator('#menu-toggle').click();
       await page.locator('.page-links [data-route=journeys]').focus();
