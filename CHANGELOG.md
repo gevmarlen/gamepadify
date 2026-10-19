@@ -6,6 +6,7 @@
 - Refresh the playground with a shared SVG logo/favicon, corrected card artwork, controller-shaped simulator and platform-specific button labels.
 - Add an LB navigation menu, curated journeys and a session journal, with URL history and gamepad-only navigation. Animate page transitions and random shuffling with reduced-motion support; remove placeholder favorite, text search and class/conflict controls from the playground.
 - Add scoped control tips, map dialog back to the right face button (Xbox B), and preserve controller mode while using Live Settings.
+- Align popup action labels and arrows inside evenly padded buttons so the controller focus ring has balanced spacing.
 - Type-check the demo and exercise its interactions in Chromium, Firefox and WebKit in CI.
 
 ## 0.2.1 — 2026-10-19
