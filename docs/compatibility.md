@@ -35,10 +35,10 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 | --- | ---: |
 | Core IIFE, minified | 25502 |
 | Core IIFE, gzip | 8982 |
-| gamepadify npm archive | 122976 |
+| gamepadify npm archive | 122961 |
 | gamepadify-react npm archive | 3189 |
-| gamepadify-vue npm archive | 3875 |
-| gamepadify-jquery npm archive | 3262 |
+| gamepadify-vue npm archive | 3876 |
+| gamepadify-jquery npm archive | 3263 |
 | gamepadify-angular npm archive | 3911 |
 
 The core archive includes ESM, CommonJS, declarations, source maps, the optional test simulator, CSS and 50 PNGs. Runtime core dependencies: zero. Sizes are uncompressed byte counts except the explicitly gzip row and already-compressed npm archives.

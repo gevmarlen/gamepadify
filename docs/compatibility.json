@@ -15,10 +15,10 @@
     "minified": 25502,
     "gzip": 8982,
     "tarballs": {
-      "core": 122976,
+      "core": 122961,
       "react": 3189,
-      "vue": 3875,
-      "jquery": 3262,
+      "vue": 3876,
+      "jquery": 3263,
       "angular": 3911
     }
   },

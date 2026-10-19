@@ -26,12 +26,13 @@ try {
   assert.match(await page.locator('#last-action').textContent(), /favorites/);
   await page.locator('#show-hints').uncheck();
   await page.locator('#simulate').focus();
+  await page.keyboard.press('Escape');
   await press('z');
   await page.waitForFunction(() => document.querySelector('#mode').textContent === 'GAMEPAD MODE');
   assert.equal(await page.locator('.gamepadify-hint').count(), 0);
   await page.locator('#body-class').fill('pad-active');
   await page.locator('#element-class').fill('pad-target');
-  await page.locator('#simulate').focus(); await press('z');
+  await page.locator('#simulate').focus(); await page.keyboard.press('Escape'); await press('z');
   await page.waitForFunction(() => document.body.classList.contains('pad-active'));
   assert.ok(await page.locator('#stage .pad-target').count() > 0);
   await page.locator('#conflict').check();
