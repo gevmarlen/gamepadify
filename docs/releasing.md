@@ -4,7 +4,7 @@ All five packages use the same version. Update their manifests, adapter peer ran
 
 Changes after a version tag are not part of that release. Choose a new version and tag before publishing them; do not replace existing release archives with development builds carrying the same version.
 
-The unreleased React options fix depends on the matching core reset behavior. When releasing it, raise the React adapter's minimum core peer version to that new release. Existing 0.2.2 manifests and published packages remain unchanged until then.
+The React adapter's declarative options behavior introduced in 0.2.3 requires `gamepadify@^0.2.3`. The other adapters retain their `^0.2.1` core peer range. Keep peer floors aligned with the core behavior each adapter uses.
 
 ## Validation
 

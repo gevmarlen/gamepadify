@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.2.3 — 2026-10-20
 
 - Make React Provider options declarative: restore defaults for removed options and hint fields, compare nested values and callback identities, and retain the controller and explicit registrations.
 - Let explicit `undefined` in `configure()` restore an option's default while preserving partial updates for omitted keys. Restore native source/document defaults and CSS hint sizing correctly.
 - Record the author's basic Xbox controller check in Chrome on Windows, with model, transport and versions unrecorded. Correct current CDN/release references while preserving historical measurements.
+
+All five packages share version 0.2.3. The React adapter requires `gamepadify@^0.2.3` for the matching core reset behavior; the other adapters retain their `^0.2.1` core peer range. Existing imports and public type signatures remain unchanged.
 
 ## 0.2.2 — 2026-10-19
 

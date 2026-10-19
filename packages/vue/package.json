@@ -1,6 +1,6 @@
 {
   "name": "gamepadify-vue",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Vue directives and composables for Gamepadify.",
   "type": "module",
   "main": "./dist/index.cjs",
