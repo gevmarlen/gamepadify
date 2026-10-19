@@ -31,14 +31,39 @@ try {
       page.setDefaultTimeout(10000);
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
-      const press = async key => { await page.keyboard.press(key, { delay: 65 }); await page.waitForTimeout(50); };
+      await page.addInitScript(() => {
+        window.__demoAnimations = [];
+        const animate = Element.prototype.animate;
+        Element.prototype.animate = function (...args) {
+          const animation = animate.apply(this, args);
+          if (this.matches('#collection > .world')) window.__demoAnimations.push({
+            duration: animation.effect.getTiming().duration,
+            moves: animation.effect.getKeyframes().some(frame => frame.transform && frame.transform !== 'none'),
+          });
+          return animation;
+        };
+      });
+      const keyTargets = { ArrowRight: '.direction-right', ArrowLeft: '.direction-left', z: '.face-south', v: '.face-east', x: '.face-west', c: '.face-north' };
+      const frames = () => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+      const press = async key => {
+        const native = await page.evaluate(() => document.activeElement.matches('input, select, textarea, [contenteditable]'));
+        if (native) { await page.keyboard.press(key); return; }
+        const target = keyTargets[key];
+        assert(target, `Missing simulator selector for ${key}`);
+        await page.keyboard.down(key);
+        try { await page.waitForFunction(selector => document.querySelector(selector).classList.contains('pressed'), target); }
+        finally { await page.keyboard.up(key); }
+        await page.waitForFunction(selector => !document.querySelector(selector).classList.contains('pressed'), target);
+      };
+      const animationCount = () => page.evaluate(() => window.__demoAnimations.length);
+      const animatedSince = count => page.evaluate(index => window.__demoAnimations.slice(index).some(animation => animation.moves && animation.duration > 0), count);
       const mode = () => page.locator('#mode').textContent();
       const visible = () => page.locator('#collection .world:visible').evaluateAll(cards => cards.map(card => card.dataset.world));
       const settle = () => page.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
       const simulate = async () => {
         await page.locator('#simulate').click();
         await page.waitForFunction(() => document.querySelector('#mode').textContent === 'GAMEPAD MODE');
-        await page.waitForTimeout(140);
+        await frames();
       };
       await page.goto(url);
       await page.bringToFront();
@@ -107,10 +132,11 @@ try {
 
       await page.locator('#search').click();
       assert.equal(await mode(), 'POINTER MODE', 'pointer input in the preview must still exit controller mode');
+      const filtering = await animationCount();
       await page.locator('#search').fill('o');
       await page.waitForFunction(() => document.querySelector('#collection-count').textContent === '4 worlds');
       assert.deepEqual(await visible(), ['Orbit', 'Mono', 'Bloom', 'Echo']);
-      assert(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running')), 'filter must animate its layout');
+      assert(await animatedSince(filtering), 'filter must animate its layout');
       await page.locator('#search').fill('orb');
       await page.locator('#search').fill('missing');
       await page.locator('#search').fill('tide');
@@ -126,22 +152,22 @@ try {
       await simulate();
       const before = await visible();
       const focused = await page.evaluate(() => document.activeElement.dataset.world);
+      const shuffling = await animationCount();
       await press('c');
       assert.notDeepEqual(await visible(), before);
       assert.equal(await page.evaluate(() => document.activeElement.dataset.world), focused);
-      assert(await page.evaluate(() => document.getAnimations().some(animation => animation.playState === 'running')), 'shuffle must animate its layout');
+      assert(await animatedSince(shuffling), 'shuffle must animate its layout');
       await settle();
       await page.locator('[data-pad-button=west]').click();
       await page.waitForFunction(() => !document.querySelector('#help-panel').hidden);
       await page.locator('[data-pad-button=east]').click();
       await page.waitForFunction(() => document.querySelector('#help-panel').hidden);
-      await page.waitForTimeout(120);
       await page.locator('[data-pad-button=south]').click();
       await page.waitForFunction(() => document.querySelector('dialog').open);
       await press('v');
       await page.waitForFunction(() => !document.querySelector('dialog').open);
       await page.locator('[data-pad-direction=down]').click();
-      await page.waitForTimeout(150);
+      await frames();
       assert.equal(await page.locator('#virtual-pad .pressed').count(), 0);
       await page.keyboard.down('ArrowDown');
       await page.waitForFunction(() => document.querySelector('.direction-down').classList.contains('pressed'));
