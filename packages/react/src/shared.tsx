@@ -7,9 +7,17 @@ const defaults: GamepadifyOptions = {};
 const action = (value: BindingInput) => typeof value === 'object' && 'action' in value ? value.action : undefined;
 
 function optionValues(options: GamepadifyOptions): Map<string, readonly unknown[]> {
-  return new Map(Object.entries(options).map(([key, value]) => {
-    if (key === 'bindings') return [key, [JSON.stringify(value), ...Object.values(options.bindings ?? {}).map(action)]];
-    return [key, [key === 'hints' || key === 'navigation' ? JSON.stringify(value) : value]];
+  return new Map(Object.entries(options).filter(([, value]) => value !== undefined).map(([key, value]) => {
+    if (key === 'root') return [key, [value]];
+    if (key === 'source') return [key, [value, options.source?.getGamepads]];
+    const callbacks: unknown[] = [];
+    const signature = JSON.stringify(value, (_, current) => {
+      if (typeof current === 'function') return callbacks.push(current);
+      if (Object.prototype.toString.call(current) === '[object RegExp]') return { source: current.source, flags: current.flags };
+      if (current && typeof current === 'object' && !Array.isArray(current)) return Object.fromEntries(Object.keys(current).sort().map(key => [key, current[key]]));
+      return current;
+    });
+    return [key, [signature, ...callbacks]];
   }));
 }
 
@@ -17,15 +25,18 @@ export interface GamepadProviderProps { options?: GamepadifyOptions; children?: 
 
 export function Provider({ options = defaults, children, factory }: GamepadProviderProps & { factory: GamepadifyFactory }): ReactNode {
   const [controller] = useState(() => factory(options));
-  const previous = useRef<ReturnType<typeof optionValues> | undefined>(undefined);
+  const previous = useRef<{ values: ReturnType<typeof optionValues>; hints: string[] } | undefined>(undefined);
   useEffect(() => {
     const current = optionValues(options);
     const prior = previous.current;
-    previous.current = current;
+    previous.current = { values: current, hints: Object.keys(options.hints ?? {}) };
     if (!prior) return;
-    const changed = Object.entries(options).filter(([key]) => {
-      const before = prior.get(key), after = current.get(key)!;
-      return !before || before.length !== after.length || after.some((value, index) => !Object.is(value, before[index]));
+    const changed = [...new Set([...prior.values.keys(), ...current.keys()])].filter(key => {
+      const before = prior.values.get(key), after = current.get(key);
+      return !before || !after || before.length !== after.length || after.some((value, index) => !Object.is(value, before[index]));
+    }).map(key => {
+      const value = options[key as keyof GamepadifyOptions];
+      return [key, key === 'hints' && options.hints ? { ...Object.fromEntries(prior.hints.map(field => [field, undefined])), ...options.hints } : value];
     });
     if (changed.length) controller.configure(Object.fromEntries(changed));
   });

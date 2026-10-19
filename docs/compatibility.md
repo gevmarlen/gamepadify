@@ -1,6 +1,6 @@
 # Compatibility and verification
 
-The 0.2.2 release updates documentation and the playground; library runtime code is unchanged. Its fresh package, browser and consumer checks, archive integrities and public CDN verification are recorded with the [0.2.2 release](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2). The detailed 0.2.1 measurements below remain available as the runtime baseline.
+The published 0.2.2 release updates documentation and the playground; its library runtime code is unchanged from 0.2.1. Its fresh package, browser and consumer checks, archive integrities and public CDN verification are recorded with the [0.2.2 release](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2). The detailed 0.2.1 measurements below remain available as the runtime baseline. Unreleased changes are tracked in the [changelog](../CHANGELOG.md#unreleased), separately from these historical measurements.
 
 These are local validation results for 0.2.1, recorded on 2026-10-19 with Node v24.22.0 on Windows. GitHub Actions repeats the tests on Ubuntu; its results are available in the [Checks workflow](https://github.com/gevmarlen/gamepadify/actions/workflows/ci.yml). Exact versions, archive integrities, baseline measurements and run summaries are in [compatibility.json](compatibility.json).
 
@@ -79,22 +79,29 @@ Dense overlays intentionally add about two layout/style updates per frame while 
 
 Run `npm run benchmark` or see [reproduction commands](../CONTRIBUTING.md#performance). Raw local samples are under `.artifacts/audit/before.json` and `after.json`; compact run data and build hashes are retained in [compatibility.json](compatibility.json).
 
-## Remaining verification
+## Hardware testing
 
-Physical controllers have not been tested. Browser tests use controlled Gamepad sources; they do not certify USB/Bluetooth detection or operating-system mappings.
+The author has manually tested Gamepadify with an Xbox controller in Google Chrome on Windows and confirmed that the basic functionality works. The exact controller model, connection method and software versions were not recorded. Other controllers, browsers and operating systems have not been manually verified. Automated tests cover simulated gamepad input across Chromium, Firefox and WebKit; they do not certify USB/Bluetooth detection or operating-system mappings.
 
-Release files and checksums are attached to [v0.2.1](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.1). Use matching core and adapter versions. CDN scripts and stylesheets are pinned to 0.2.1 in the README.
+| Controller | Browser | OS | Manual result | USB/Bluetooth |
+| --- | --- | --- | --- | --- |
+| Xbox controller (exact model not recorded) | Google Chrome (version not recorded) | Windows (version not recorded) | Manually tested: basic functionality works | Not recorded |
+| All other controller/browser/OS combinations | — | — | Not verified | Not verified |
+
+The report does not identify a library version or establish per-button, per-transport or edge-case coverage.
+
+Current release files and checksums are attached to [v0.2.2](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2). Use matching core and adapter versions. The README pins both CDN scripts and stylesheets to 0.2.2; the 0.2.1 tables above remain historical results.
 
 ## Manual hardware checklist
 
-Every cell below is **not run**. Record USB and Bluetooth separately; a successful simulated run does not fill a cell.
+The author's basic check above has no transport-specific record. Use the checklist below for detailed follow-up testing; no individual checklist item is confirmed by that report. Record USB and Bluetooth separately; a successful simulated run does not fill a cell.
 
 | Controller | USB | Bluetooth |
 | --- | --- | --- |
-| Xbox Controller (record exact generation) | Not run | Not run |
-| Sony DualSense | Not run | Not run |
-| Sony DualShock 4 | Not run | Not run |
-| Nintendo Switch Pro Controller | Not run | Not run |
+| Xbox Controller (record exact generation) | Not recorded | Not recorded |
+| Sony DualSense | Not verified | Not verified |
+| Sony DualShock 4 | Not verified | Not verified |
+| Nintendo Switch Pro Controller | Not verified | Not verified |
 
 Repeat for Chrome and Firefox on each available OS, and Safari on macOS. If an OS/controller combination cannot connect, record it as unavailable with a reason, not passed. Record the library commit/version, OS, browser version, controller firmware, transport, reported `Gamepad.id`, `mapping` and any custom profile.
 

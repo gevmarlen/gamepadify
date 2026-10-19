@@ -13,6 +13,7 @@ function Surface() {
 }
 export function App({ options }: { options?: GamepadifyOptions }) {
   const [, refresh] = useState(0);
-  useEffect(() => { Object.assign(window, { rerender: () => refresh(value => value + 1) }); }, []);
-  return createElement(StrictMode, null, createElement(GamepadProvider, { options: { ...options, hints: { offset: 6 } } }, createElement(Surface)));
+  const [settings, changeOptions] = useState(options);
+  useEffect(() => { Object.assign(window, { rerender: () => refresh(value => value + 1), changeOptions }); }, []);
+  return createElement(StrictMode, null, createElement(GamepadProvider, { options: { ...settings, hints: settings?.hints && { ...settings.hints } } }, createElement(Surface)));
 }

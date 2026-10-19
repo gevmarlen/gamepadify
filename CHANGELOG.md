@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Make React Provider options declarative: restore defaults for removed options and hint fields, compare nested values and callback identities, and retain the controller and explicit registrations.
+- Let explicit `undefined` in `configure()` restore an option's default while preserving partial updates for omitted keys. Restore native source/document defaults and CSS hint sizing correctly.
+- Record the author's basic Xbox controller check in Chrome on Windows, with model, transport and versions unrecorded. Correct current CDN/release references while preserving historical measurements.
+
 ## 0.2.2 — 2026-10-19
 
 - Use Xbox aliases throughout the README, integration snippets and runnable examples; explain neutral button positions and cross-controller mappings separately.
@@ -26,7 +32,7 @@ Core and adapter runtime code is unchanged from 0.2.1. All five packages share v
 - Supply separate ESM/CommonJS declaration conditions so TypeScript Node16 consumers can use `require` without TS1479.
 - Add repeatable DOM benchmarks, regression tests, expanded packed-consumer checks and a manual hardware checklist.
 
-The public API and all four entry points are unchanged. Adapters require core `^0.2.1`. The full script is 10,150 bytes gzip; the core-only script is 7,242 bytes gzip. See [performance measurements](docs/compatibility.md#performance) for the CPU, allocation and bundle-size tradeoffs. Physical controllers have not been tested.
+The public API and all four entry points are unchanged. Adapters require core `^0.2.1`. The full script is 10,150 bytes gzip; the core-only script is 7,242 bytes gzip. See [performance measurements](docs/compatibility.md#performance) for the CPU, allocation and bundle-size tradeoffs, and the [current hardware test record](docs/compatibility.md#hardware-testing) for the author's manual check and its limits.
 
 ## 0.2.0 — 2026-10-19
 
@@ -53,4 +59,4 @@ First public release.
 - SSR-safe imports, ESM/CommonJS builds, browser IIFE and TypeScript declarations.
 - Interactive playground, controlled-input simulator and automated package/consumer checks.
 
-Physical controller verification remains pending; automated browser tests use a controlled Gamepad source.
+Automated browser tests use a controlled Gamepad source. See the [current hardware test record](docs/compatibility.md#hardware-testing) for manual verification and its limits.
