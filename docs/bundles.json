@@ -1,14 +1,14 @@
 {
   "full": {
     "consumer": {
-      "bytes": 28638,
-      "gzip": 9864,
-      "brotli": 8873
+      "bytes": 28894,
+      "gzip": 9946,
+      "brotli": 8978
     },
     "script": {
-      "bytes": 29264,
-      "gzip": 10150,
-      "brotli": 9156
+      "bytes": 29521,
+      "gzip": 10235,
+      "brotli": 9224
     },
     "css": {
       "bytes": 7942,
@@ -18,14 +18,14 @@
   },
   "core": {
     "consumer": {
-      "bytes": 20505,
-      "gzip": 6952,
-      "brotli": 6207
+      "bytes": 20756,
+      "gzip": 7036,
+      "brotli": 6296
     },
     "script": {
-      "bytes": 21118,
-      "gzip": 7242,
-      "brotli": 6487
+      "bytes": 21369,
+      "gzip": 7327,
+      "brotli": 6560
     },
     "css": {
       "bytes": 66,
@@ -35,14 +35,14 @@
   },
   "navigation": {
     "consumer": {
-      "bytes": 25035,
-      "gzip": 8481,
-      "brotli": 7575
+      "bytes": 25286,
+      "gzip": 8563,
+      "brotli": 7665
     },
     "script": {
-      "bytes": 25654,
-      "gzip": 8770,
-      "brotli": 7852
+      "bytes": 25908,
+      "gzip": 8854,
+      "brotli": 7925
     },
     "css": {
       "bytes": 699,
@@ -52,14 +52,14 @@
   },
   "hints": {
     "consumer": {
-      "bytes": 25151,
-      "gzip": 8728,
-      "brotli": 7861
+      "bytes": 25407,
+      "gzip": 8809,
+      "brotli": 7949
     },
     "script": {
-      "bytes": 25783,
-      "gzip": 9011,
-      "brotli": 8114
+      "bytes": 26040,
+      "gzip": 9091,
+      "brotli": 8200
     },
     "css": {
       "bytes": 7942,

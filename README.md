@@ -10,7 +10,7 @@ Add gamepad controls to ordinary web buttons: direct bindings, stick navigation,
 
 ## Install and start
 
-The latest release is [0.2.2 on npm](https://www.npmjs.com/package/gamepadify/v/0.2.2). Archives are also available on [GitHub Releases](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2).
+The latest release is [0.2.3 on npm](https://www.npmjs.com/package/gamepadify/v/0.2.3). Archives are also available on [GitHub Releases](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.3).
 
 ```sh
 npm install gamepadify
@@ -36,8 +36,8 @@ Press **X** to save or **LB + Y** together for More on an Xbox controller. These
 For a plain script tag, load the script and stylesheet from the same fixed version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gamepadify@0.2.2/dist/gamepadify.css">
-<script src="https://cdn.jsdelivr.net/npm/gamepadify@0.2.2/dist/gamepadify.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gamepadify@0.2.3/dist/gamepadify.css">
+<script src="https://cdn.jsdelivr.net/npm/gamepadify@0.2.3/dist/gamepadify.min.js"></script>
 <script>Gamepadify.createGamepadify().start();</script>
 ```
 

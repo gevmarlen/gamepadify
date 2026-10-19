@@ -1,6 +1,8 @@
 # Compatibility and verification
 
-The published 0.2.2 release updates documentation and the playground; its library runtime code is unchanged from 0.2.1. Its fresh package, browser and consumer checks, archive integrities and public CDN verification are recorded with the [0.2.2 release](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2). The detailed 0.2.1 measurements below remain available as the runtime baseline. Unreleased changes are tracked in the [changelog](../CHANGELOG.md#unreleased), separately from these historical measurements.
+Version 0.2.3 fixes declarative React options and explicit option resets in core. Its release assets contain fresh package, browser and consumer checks, archive integrities and public CDN verification: [0.2.3 release](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.3). Current validation includes 66 unit tests and 84 browser tests; the React consumer scenarios also cover removed options, equivalent nested values, callback identity and retained registrations. Current bundle sizes are in [bundles.md](bundles.md).
+
+A local comparison against the published 0.2.2 script found unchanged DOM-read counts in all eight steady-frame scenarios. All 58 interaction/insertion cases, including a reverse-order follow-up for navigation, passed. Timing differences varied with run order, so this does not establish a speedup or a consistent regression. The release compatibility report retains the compared script hashes and samples. The detailed 0.2.1 measurements below remain historical baseline results.
 
 These are local validation results for 0.2.1, recorded on 2026-10-19 with Node v24.22.0 on Windows. GitHub Actions repeats the tests on Ubuntu; its results are available in the [Checks workflow](https://github.com/gevmarlen/gamepadify/actions/workflows/ci.yml). Exact versions, archive integrities, baseline measurements and run summaries are in [compatibility.json](compatibility.json).
 
@@ -90,7 +92,7 @@ The author has manually tested Gamepadify with an Xbox controller in Google Chro
 
 The report does not identify a library version or establish per-button, per-transport or edge-case coverage.
 
-Current release files and checksums are attached to [v0.2.2](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2). Use matching core and adapter versions. The README pins both CDN scripts and stylesheets to 0.2.2; the 0.2.1 tables above remain historical results.
+Current release files and checksums are attached to [v0.2.3](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.3). Use matching core and adapter versions; the React adapter requires core `^0.2.3`. The README pins both CDN scripts and stylesheets to 0.2.3; the 0.2.1 tables above remain historical results.
 
 ## Manual hardware checklist
 
