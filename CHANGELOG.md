@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.1 — 2026-10-19
 
 - Share DOM measurements within each frame, update registrations only when needed, and separate visibility reads from prompt writes. Exclude the prompt layer during hit tests to avoid traversing its glyphs repeatedly.
 - Preserve input on presentation-only configuration updates and avoid equivalent React/Vue registrations. Track Vue reactive object and tuple mutations.
@@ -9,7 +9,9 @@
 - Keep consecutive quick taps working when actions resolve on release inside the chord window.
 - Keep jQuery instances tied to their selected root and remove destroyed instances even when cleanup reports an error.
 - Supply separate ESM/CommonJS declaration conditions so TypeScript Node16 consumers can use `require` without TS1479.
-- Add repeatable DOM benchmarks, regression tests, expanded packed-consumer checks and a manual hardware checklist. No new release has been published.
+- Add repeatable DOM benchmarks, regression tests, expanded packed-consumer checks and a manual hardware checklist.
+
+The public API and all four entry points are unchanged. Adapters require core `^0.2.1`. The full script is 10,150 bytes gzip; the core-only script is 7,242 bytes gzip. See [performance measurements](docs/compatibility.md#performance) for the CPU, allocation and bundle-size tradeoffs. Physical controllers have not been tested.
 
 ## 0.2.0 — 2026-10-19
 

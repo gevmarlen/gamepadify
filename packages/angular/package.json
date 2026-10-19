@@ -1,13 +1,13 @@
 {
   "name": "gamepadify-angular",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Standalone Angular directives for Gamepadify.",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
   "author": "gevmarlen",
   "peerDependencies": {
-    "gamepadify": "^0.2.0",
+    "gamepadify": "^0.2.1",
     "@angular/core": "^20.0.0 || ^21.0.0 || ^22.0.0",
     "@angular/common": "^20.0.0 || ^21.0.0 || ^22.0.0"
   },
