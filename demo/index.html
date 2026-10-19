@@ -93,25 +93,28 @@
         <p id="input-note" class="note">Connect a gamepad and press any button. The first press shows your controls.</p>
         <div id="simulator" hidden>
           <div class="virtual-pad" id="virtual-pad" role="group" aria-label="Controller simulator">
-            <svg class="pad-shell" viewBox="0 0 320 210" aria-hidden="true">
-              <path d="M73 42h174c16 0 24 15 30 37l20 79c7 29-10 44-28 31l-42-35H93l-42 35c-18 13-35-2-28-31l20-79c6-22 14-37 30-37z" fill="#293732" stroke="#18251f" stroke-width="2"/>
-              <path d="M102 56h116l-15 30h-86z" fill="#35453c"/>
-              <circle cx="82" cy="91" r="28" fill="#17251e" stroke="#4b5c4e" stroke-width="2"/>
-              <circle cx="209" cy="140" r="22" fill="#17251e" stroke="#4b5c4e" stroke-width="2"/><circle cx="209" cy="140" r="15" fill="#35453c" stroke="#60705d"/>
-              <path d="M113 119h14v14h14v14h-14v14h-14v-14H99v-14h14z" fill="#17251e" stroke="#52614f"/>
-              <circle cx="160" cy="66" r="9" fill="#c5f778"/><path d="M157 61h6v10h-6zM155 63h10v6h-10z" fill="#293732"/>
-              <path d="M146 108h6m-3-3v6m19-6h7m-7 3h7m-7 3h7" stroke="#8c9c83" stroke-width="2"/>
+            <svg class="pad-shell" viewBox="0 0 400 280" aria-hidden="true">
+              <path d="M106 44h188c29 0 44 23 54 59l26 96c10 37-4 58-24 49-11-5-24-21-39-40l-24-27c-22 21-50 31-87 31s-65-10-87-31l-24 27c-15 19-28 35-39 40-20 9-34-12-24-49l26-96c10-36 25-59 54-59Z" fill="#2c3c35" stroke="#18271f" stroke-width="3"/>
+              <path d="M66 102c10-33 23-46 46-46h176c23 0 36 13 46 46M59 157l-14 54m296-54 14 54" fill="none" stroke="#536457" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="112" cy="104" r="32" fill="#18271f" stroke="#61745c" stroke-width="2"/>
+              <circle cx="288" cy="104" r="49" fill="#23332a"/>
+              <circle cx="244" cy="166" r="32" fill="#18271f" stroke="#61745c" stroke-width="2"/>
+              <path d="M148 139h16v19h19v16h-19v19h-16v-19h-19v-16h19Z" fill="#19291f" stroke="#73866a" stroke-width="1.5" stroke-linejoin="round"/>
+              <circle cx="200" cy="78" r="13" fill="#1c2c23" stroke="#677b5c" stroke-width="1.5"/>
+              <path d="M197 70h6v5h5v6h-5v5h-6v-5h-5v-6h5Z" fill="#c5f778"/>
+              <g fill="none" stroke="#94a18a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M175 117h8v6h-8Zm3-3h8v6M214 115h10m-10 4h10m-10 4h10"/></g>
             </svg>
             <span id="sim-stick" class="sim-stick" aria-hidden="true"></span>
+            <span class="sim-stick resting-stick" aria-hidden="true"></span>
             <button class="pad-shoulder" data-pad-button="left-shoulder" aria-label="LB — menu"><span data-button-label="left-shoulder">LB</span></button>
             <span class="pad-shoulder right-shoulder" aria-hidden="true"><span data-button-label="right-shoulder">RB</span></span>
             <button class="pad-face face-south" data-pad-button="south" aria-label="A — select"><span data-button-label="south">A</span></button>
             <button class="pad-face face-east" data-pad-button="east" aria-label="B — go back"><span data-button-label="east">B</span></button>
             <button class="pad-face face-west" data-pad-button="west" aria-label="X — help"><span data-button-label="west">X</span></button>
             <button class="pad-face face-north" data-pad-button="north" aria-label="Y — shuffle"><span data-button-label="north">Y</span></button>
-            <button class="pad-direction direction-up" data-pad-direction="up" aria-label="Move up">↑</button><button class="pad-direction direction-right" data-pad-direction="right" aria-label="Move right">→</button><button class="pad-direction direction-down" data-pad-direction="down" aria-label="Move down">↓</button><button class="pad-direction direction-left" data-pad-direction="left" aria-label="Move left">←</button>
+            <button class="pad-direction direction-up" data-pad-direction="up" aria-label="Move up"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 7 3-3 3 3"/></svg></button><button class="pad-direction direction-right" data-pad-direction="right" aria-label="Move right"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m5 3 3 3-3 3"/></svg></button><button class="pad-direction direction-down" data-pad-direction="down" aria-label="Move down"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3 5 3 3 3-3"/></svg></button><button class="pad-direction direction-left" data-pad-direction="left" aria-label="Move left"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m7 3-3 3 3 3"/></svg></button>
           </div>
-          <p class="sim-caption">Click a button. Press and hold to move.</p>
+          <p class="sim-caption">Use the D-pad to move. Click a button to press.</p>
           <dl class="sim-legend"><div><dt><kbd>↑ ↓ ← →</kbd></dt><dd>Move</dd></div><div><dt><kbd>Z</kbd> <span data-button-label="south">A</span></dt><dd>Select</dd></div><div><dt><kbd>V</kbd> <span data-button-label="east">B</span></dt><dd>Back</dd></div><div><dt><kbd>X</kbd> <span data-button-label="west">X</span></dt><dd>Help</dd></div><div><dt><kbd>C</kbd> <span data-button-label="north">Y</span></dt><dd>Shuffle</dd></div><div><dt><kbd>Q</kbd> <span data-button-label="left-shoulder">LB</span></dt><dd>Menu</dd></div></dl>
         </div>
         <div class="settings-group">
