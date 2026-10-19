@@ -22,7 +22,7 @@ import { createGamepadify } from 'gamepadify/core';
 import 'gamepadify/core.css';
 
 const pad = createGamepadify({
-  bindings: { '#save': 'south' },
+  bindings: { '#save': 'xbox:x' },
   bodyClass: 'using-gamepad',
 });
 pad.start();
@@ -36,7 +36,7 @@ To include navigation without prompts:
 import { createGamepadify } from 'gamepadify/navigation';
 import 'gamepadify/navigation.css';
 
-const pad = createGamepadify({ navigation: { confirm: 'south' } });
+const pad = createGamepadify({ navigation: { confirm: 'xbox:a' } });
 pad.start();
 ```
 

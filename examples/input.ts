@@ -3,7 +3,7 @@ import type { Button, GamepadifyOptions } from 'gamepadify';
 
 const simulated = new URLSearchParams(location.search).has('simulate');
 const source = createGamepadSimulator();
-const buttons: Record<string, Button> = { z: 'south', x: 'west' };
+const buttons: Record<string, Button> = { z: 'xbox:a', x: 'xbox:x' };
 const held = new Set<string>();
 function update() {
   source.axes(Number(held.has('ArrowRight')) - Number(held.has('ArrowLeft')), Number(held.has('ArrowDown')) - Number(held.has('ArrowUp')));
@@ -23,6 +23,6 @@ if (simulated) {
 }
 export const options: GamepadifyOptions = {
   source: simulated ? source : undefined,
-  navigation: { confirm: 'south' },
+  navigation: { confirm: 'xbox:a' },
   bodyClass: 'using-gamepad',
 };

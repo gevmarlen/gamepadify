@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Use Xbox aliases throughout the README, integration snippets and runnable examples; explain neutral button positions and cross-controller mappings separately.
 - Refresh the playground with a shared SVG logo/favicon, corrected card artwork, controller-shaped simulator and platform-specific button labels.
 - Add search, animated filtering and random shuffling with reduced-motion support. Replace the placeholder favorite action and remove class/conflict controls from the playground.
 - Add scoped control tips, map dialog back to the right face button (Xbox B), and preserve controller mode while using Live Settings.
