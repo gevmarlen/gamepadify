@@ -40,7 +40,7 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 | Core-only IIFE, gzip | 6779 |
 | Navigation IIFE, gzip | 8200 |
 | Hints IIFE, gzip | 8322 |
-| gamepadify npm archive | 176612 |
+| gamepadify npm archive | 176606 |
 | gamepadify-react npm archive | 4634 |
 | gamepadify-vue npm archive | 5232 |
 | gamepadify-jquery npm archive | 4488 |

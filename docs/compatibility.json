@@ -1,6 +1,6 @@
 {
   "version": "0.2.0",
-  "verifiedAt": "2026-10-19T14:33:54.909Z",
+  "verifiedAt": "2026-10-19T14:34:53.568Z",
   "platform": "win32",
   "node": "v24.22.0",
   "unitTests": 37,
@@ -15,7 +15,7 @@
     "minified": 27018,
     "gzip": 9400,
     "tarballs": {
-      "core": 176612,
+      "core": 176606,
       "react": 4634,
       "vue": 5232,
       "jquery": 4488,

@@ -16,4 +16,3 @@ export function nearest(current: HTMLElement, candidates: readonly HTMLElement[]
   ranked.sort((a, b) => a.lane - b.lane || a.distance - b.distance || a.order - b.order);
   return ranked[0]?.element ?? null;
 }
-
