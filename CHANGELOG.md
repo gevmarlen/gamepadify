@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Refresh the playground with a shared SVG logo/favicon, corrected card artwork, controller-shaped simulator and platform-specific button labels.
+- Add search, animated filtering and random shuffling with reduced-motion support. Replace the placeholder favorite action and remove class/conflict controls from the playground.
+- Add scoped control tips, map dialog back to the right face button (Xbox B), and preserve controller mode while using Live Settings.
+- Type-check the demo and exercise its interactions in Chromium, Firefox and WebKit in CI.
+
 ## 0.2.1 — 2026-10-19
 
 - Share DOM measurements within each frame, update registrations only when needed, and separate visibility reads from prompt writes. Exclude the prompt layer during hit tests to avoid traversing its glyphs repeatedly.

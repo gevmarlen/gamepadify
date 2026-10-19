@@ -16,7 +16,7 @@
     "test:consumer": "node scripts/check-consumer.mjs",
     "check": "npm run build && npm run typecheck && npm test && npm run test:packages && npm run test:bundles",
     "dev": "vite demo --host 127.0.0.1",
-    "demo:build": "vite build demo --base=/gamepadify/",
+    "demo:build": "tsc -p demo/tsconfig.json --noEmit && vite build demo --base=/gamepadify/",
     "pack": "node scripts/pack.mjs"
   },
   "engines": {
