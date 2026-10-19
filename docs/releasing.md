@@ -2,7 +2,7 @@
 
 All five packages use the same version. Update their manifests, adapter peer ranges when necessary, changelog and fixed CDN examples together.
 
-Changes under `Unreleased` are not part of the existing `v0.2.0` release. Choose a new version and tag before publishing them; do not replace existing release archives with development builds carrying the same version.
+Changes after a version tag are not part of that release. Choose a new version and tag before publishing them; do not replace existing release archives with development builds carrying the same version.
 
 ## Validation
 

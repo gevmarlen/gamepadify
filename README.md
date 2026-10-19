@@ -10,7 +10,7 @@ Add gamepad controls to ordinary web buttons: direct bindings, stick navigation,
 
 ## Install and start
 
-The latest release is [0.2.0 on npm](https://www.npmjs.com/package/gamepadify/v/0.2.0). Archives are also available on [GitHub Releases](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.0).
+The latest release is [0.2.1 on npm](https://www.npmjs.com/package/gamepadify/v/0.2.1). Archives are also available on [GitHub Releases](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.1).
 
 ```sh
 npm install gamepadify
@@ -36,12 +36,12 @@ Names refer to physical positions: `south`, `east`, `west`, `north`, shoulder bu
 For a plain script tag, load the script and stylesheet from the same fixed version:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/gamepadify.css">
-<script src="https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/gamepadify.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gamepadify@0.2.1/dist/gamepadify.css">
+<script src="https://cdn.jsdelivr.net/npm/gamepadify@0.2.1/dist/gamepadify.min.js"></script>
 <script>Gamepadify.createGamepadify().start();</script>
 ```
 
-To self-host, unpack the browser ZIP and keep its `assets/` directory beside the stylesheet. Changes after the `v0.2.0` tag are unreleased and are not in the npm package or release archive.
+To self-host, unpack the browser ZIP and keep its `assets/` directory beside the stylesheet. Use matching versions of the script, stylesheet and adapters.
 
 ## Configure
 

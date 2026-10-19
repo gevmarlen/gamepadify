@@ -1,7 +1,7 @@
 {
-  "version": "0.2.0",
-  "status": "unreleased changes after v0.2.0",
-  "verifiedAt": "2026-10-19T16:19:21.710Z",
+  "version": "0.2.1",
+  "status": "release validation",
+  "verifiedAt": "2026-10-19T17:13:30.371Z",
   "platform": "win32",
   "node": "v24.22.0",
   "unitTests": 53,
@@ -102,10 +102,10 @@
     "minified": 29264,
     "gzip": 10150,
     "tarballs": {
-      "core": 188296,
-      "react": 5569,
-      "vue": 5669,
-      "jquery": 4670,
+      "core": 188275,
+      "react": 5559,
+      "vue": 5658,
+      "jquery": 4660,
       "angular": 4767
     }
   },
@@ -185,11 +185,11 @@
       "preset": "core",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:51.555Z",
+      "verifiedAt": "2026-10-19T17:09:02.516Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "20.3.40",
@@ -200,8 +200,8 @@
         "@angular/core": "20.3.34",
         "@angular/platform-browser": "20.3.34",
         "@angular/platform-server": "20.3.34",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -212,11 +212,11 @@
       "preset": "full",
       "changeDetection": "zone.js",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:42.089Z",
+      "verifiedAt": "2026-10-19T17:09:52.822Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "20.3.40",
@@ -227,8 +227,8 @@
         "@angular/core": "20.3.34",
         "@angular/platform-browser": "20.3.34",
         "@angular/platform-server": "20.3.34",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3",
@@ -240,11 +240,11 @@
       "preset": "full",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:47.215Z",
+      "verifiedAt": "2026-10-19T17:08:58.247Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "20.3.40",
@@ -255,8 +255,8 @@
         "@angular/core": "20.3.34",
         "@angular/platform-browser": "20.3.34",
         "@angular/platform-server": "20.3.34",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -267,11 +267,11 @@
       "preset": "hints",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:00.311Z",
+      "verifiedAt": "2026-10-19T17:09:11.362Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "20.3.40",
@@ -282,8 +282,8 @@
         "@angular/core": "20.3.34",
         "@angular/platform-browser": "20.3.34",
         "@angular/platform-server": "20.3.34",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -294,11 +294,11 @@
       "preset": "navigation",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:55.903Z",
+      "verifiedAt": "2026-10-19T17:09:06.962Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "20.3.40",
@@ -309,8 +309,8 @@
         "@angular/core": "20.3.34",
         "@angular/platform-browser": "20.3.34",
         "@angular/platform-server": "20.3.34",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -321,11 +321,11 @@
       "preset": "core",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:10.151Z",
+      "verifiedAt": "2026-10-19T17:09:21.124Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "21.2.27",
@@ -336,8 +336,8 @@
         "@angular/core": "21.2.25",
         "@angular/platform-browser": "21.2.25",
         "@angular/platform-server": "21.2.25",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -348,11 +348,11 @@
       "preset": "full",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:05.581Z",
+      "verifiedAt": "2026-10-19T17:09:16.593Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "21.2.27",
@@ -363,8 +363,8 @@
         "@angular/core": "21.2.25",
         "@angular/platform-browser": "21.2.25",
         "@angular/platform-server": "21.2.25",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -375,11 +375,11 @@
       "preset": "hints",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:19.515Z",
+      "verifiedAt": "2026-10-19T17:09:30.401Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "21.2.27",
@@ -390,8 +390,8 @@
         "@angular/core": "21.2.25",
         "@angular/platform-browser": "21.2.25",
         "@angular/platform-server": "21.2.25",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -402,11 +402,11 @@
       "preset": "navigation",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:14.877Z",
+      "verifiedAt": "2026-10-19T17:09:25.775Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "21.2.27",
@@ -417,8 +417,8 @@
         "@angular/core": "21.2.25",
         "@angular/platform-browser": "21.2.25",
         "@angular/platform-server": "21.2.25",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "5.9.3"
@@ -429,11 +429,11 @@
       "preset": "core",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:28.673Z",
+      "verifiedAt": "2026-10-19T17:09:39.536Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "22.2.3",
@@ -444,8 +444,8 @@
         "@angular/core": "22.2.3",
         "@angular/platform-browser": "22.2.3",
         "@angular/platform-server": "22.2.3",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "6.0.3"
@@ -456,11 +456,11 @@
       "preset": "full",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:24.346Z",
+      "verifiedAt": "2026-10-19T17:09:35.316Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "22.2.3",
@@ -471,8 +471,8 @@
         "@angular/core": "22.2.3",
         "@angular/platform-browser": "22.2.3",
         "@angular/platform-server": "22.2.3",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "6.0.3"
@@ -483,11 +483,11 @@
       "preset": "hints",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:37.389Z",
+      "verifiedAt": "2026-10-19T17:09:48.195Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "22.2.3",
@@ -498,8 +498,8 @@
         "@angular/core": "22.2.3",
         "@angular/platform-browser": "22.2.3",
         "@angular/platform-server": "22.2.3",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "6.0.3"
@@ -510,11 +510,11 @@
       "preset": "navigation",
       "changeDetection": "zoneless",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:33.016Z",
+      "verifiedAt": "2026-10-19T17:09:43.886Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-angular": "sha512-beVtDqCAHrdfnlr8QmT7ISiLEBpZD2aLZQPd1CA0c0+Q0zcVYv5KxJGUzzRELPPt9vSesNmThAkIrJbS3CXERg=="
       },
       "dependencies": {
         "@angular/build": "22.2.3",
@@ -525,8 +525,8 @@
         "@angular/core": "22.2.3",
         "@angular/platform-browser": "22.2.3",
         "@angular/platform-server": "22.2.3",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-angular": "0.2.1",
+        "gamepadify": "0.2.1",
         "rxjs": "7.8.2",
         "tslib": "2.8.1",
         "typescript": "6.0.3"
@@ -536,16 +536,16 @@
       "target": "jquery3",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:21.448Z",
+      "verifiedAt": "2026-10-19T17:10:32.010Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "3.5.34",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "3.7.1",
         "typescript": "5.9.3"
       }
@@ -554,16 +554,16 @@
       "target": "jquery3",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:18.298Z",
+      "verifiedAt": "2026-10-19T17:10:28.915Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "3.5.34",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "3.7.1",
         "typescript": "5.9.3"
       }
@@ -572,16 +572,16 @@
       "target": "jquery3",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:27.837Z",
+      "verifiedAt": "2026-10-19T17:10:39.281Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "3.5.34",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "3.7.1",
         "typescript": "5.9.3"
       }
@@ -590,16 +590,16 @@
       "target": "jquery3",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:24.708Z",
+      "verifiedAt": "2026-10-19T17:10:35.273Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "3.5.34",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "3.7.1",
         "typescript": "5.9.3"
       }
@@ -608,16 +608,16 @@
       "target": "jquery4",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:34.645Z",
+      "verifiedAt": "2026-10-19T17:10:50.182Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "4.0.1",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "4.0.0",
         "typescript": "5.9.3"
       }
@@ -626,16 +626,16 @@
       "target": "jquery4",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:31.501Z",
+      "verifiedAt": "2026-10-19T17:10:45.255Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "4.0.1",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "4.0.0",
         "typescript": "5.9.3"
       }
@@ -644,16 +644,16 @@
       "target": "jquery4",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:41.048Z",
+      "verifiedAt": "2026-10-19T17:10:57.203Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "4.0.1",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "4.0.0",
         "typescript": "5.9.3"
       }
@@ -662,16 +662,16 @@
       "target": "jquery4",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:37.919Z",
+      "verifiedAt": "2026-10-19T17:10:54.086Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-jquery": "sha512-KU/JmnExIPL2Y9l3kfV8WA+lXxKbIz+mxSww/ultZWjxym18vnkwYVbpIRFbuJCy7utVoTdQ7wRdfT7jmW05eQ=="
       },
       "dependencies": {
         "@types/jquery": "4.0.1",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-jquery": "0.2.1",
+        "gamepadify": "0.2.1",
         "jquery": "4.0.0",
         "typescript": "5.9.3"
       }
@@ -680,17 +680,17 @@
       "target": "react18",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:49.551Z",
+      "verifiedAt": "2026-10-19T17:09:00.440Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "18.3.1",
         "react": "18.3.1",
         "typescript": "5.9.3"
@@ -700,17 +700,17 @@
       "target": "react18",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:46.209Z",
+      "verifiedAt": "2026-10-19T17:08:57.090Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "18.3.1",
         "react": "18.3.1",
         "typescript": "5.9.3"
@@ -720,17 +720,17 @@
       "target": "react18",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:56.394Z",
+      "verifiedAt": "2026-10-19T17:09:07.303Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "18.3.1",
         "react": "18.3.1",
         "typescript": "5.9.3"
@@ -740,17 +740,17 @@
       "target": "react18",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:16:53.040Z",
+      "verifiedAt": "2026-10-19T17:09:03.905Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "18.3.1",
         "react": "18.3.1",
         "typescript": "5.9.3"
@@ -760,17 +760,17 @@
       "target": "react19",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:03.828Z",
+      "verifiedAt": "2026-10-19T17:09:14.856Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "19.3.1",
         "react": "19.3.1",
         "typescript": "5.9.3"
@@ -780,17 +780,17 @@
       "target": "react19",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:00.368Z",
+      "verifiedAt": "2026-10-19T17:09:11.405Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "19.3.1",
         "react": "19.3.1",
         "typescript": "5.9.3"
@@ -800,17 +800,17 @@
       "target": "react19",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:10.771Z",
+      "verifiedAt": "2026-10-19T17:09:21.819Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "19.3.1",
         "react": "19.3.1",
         "typescript": "5.9.3"
@@ -820,17 +820,17 @@
       "target": "react19",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:07.367Z",
+      "verifiedAt": "2026-10-19T17:09:18.408Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-react": "sha512-WSrE8OhBRQPNh60jYYW/k72MejUMQr6gAGAiNrAh92W5YAk6Nf3qTYjtzbuOYBPPdQmq67p0iRjzKnElkEeQCQ=="
       },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-react": "0.2.1",
+        "gamepadify": "0.2.1",
         "react-dom": "19.3.1",
         "react": "19.3.1",
         "typescript": "5.9.3"
@@ -840,16 +840,16 @@
       "target": "vue33",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:21.857Z",
+      "verifiedAt": "2026-10-19T17:09:32.952Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.3.13"
@@ -859,16 +859,16 @@
       "target": "vue33",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:16.658Z",
+      "verifiedAt": "2026-10-19T17:09:27.706Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.3.13"
@@ -878,16 +878,16 @@
       "target": "vue33",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:32.289Z",
+      "verifiedAt": "2026-10-19T17:09:43.262Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.3.13"
@@ -897,16 +897,16 @@
       "target": "vue33",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:27.135Z",
+      "verifiedAt": "2026-10-19T17:09:38.233Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.3.13"
@@ -916,16 +916,16 @@
       "target": "vue34",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:43.251Z",
+      "verifiedAt": "2026-10-19T17:09:54.059Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.4.38"
@@ -935,16 +935,16 @@
       "target": "vue34",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:38.008Z",
+      "verifiedAt": "2026-10-19T17:09:48.910Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.4.38"
@@ -954,16 +954,16 @@
       "target": "vue34",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:53.472Z",
+      "verifiedAt": "2026-10-19T17:10:04.281Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.4.38"
@@ -973,16 +973,16 @@
       "target": "vue34",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:48.442Z",
+      "verifiedAt": "2026-10-19T17:09:59.220Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.4.38"
@@ -992,16 +992,16 @@
       "target": "vue35",
       "preset": "core",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:04.162Z",
+      "verifiedAt": "2026-10-19T17:10:14.869Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.5.44"
@@ -1011,16 +1011,16 @@
       "target": "vue35",
       "preset": "full",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:17:59.131Z",
+      "verifiedAt": "2026-10-19T17:10:09.814Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.5.44"
@@ -1030,16 +1030,16 @@
       "target": "vue35",
       "preset": "hints",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:14.494Z",
+      "verifiedAt": "2026-10-19T17:10:25.101Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.5.44"
@@ -1049,16 +1049,16 @@
       "target": "vue35",
       "preset": "navigation",
       "passed": true,
-      "verifiedAt": "2026-10-19T16:18:09.364Z",
+      "verifiedAt": "2026-10-19T17:10:20.044Z",
       "node": "v24.22.0",
       "archives": {
-        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
-        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+        "gamepadify": "sha512-7gn1Gh6iCF+lG6sU0HVcewwrMEKnC/qT6KKQNP7lYWQ5aPWF5uLAm6IDA+LVf3Qa5e7q3TBQSOopoq1klm0YkQ==",
+        "gamepadify-vue": "sha512-5Svyw+d15osujViT5NftzbPSSiyUI8K8zK4HmA2J24qlF2V0tIUQWpPP/TW0jJ72zc21wunpHGjWTmM8Wsjmug=="
       },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
+        "gamepadify-vue": "0.2.1",
+        "gamepadify": "0.2.1",
         "typescript": "5.9.3",
         "vue-tsc": "3.3.13",
         "vue": "3.5.44"
@@ -1896,9 +1896,10 @@
           "insertionPassed": true
         }
       }
-    ]
+    ],
+    "releaseRuntimeMatchesMeasuredBuild": true
   },
-  "publishedRelease": {
+  "baselinePublishedRelease": {
     "verifiedAt": "2026-10-19T16:17:28.054Z",
     "version": "0.2.0",
     "packages": [

@@ -1,6 +1,6 @@
 {
   "name": "gamepadify-vue",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Vue directives and composables for Gamepadify.",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -56,7 +56,7 @@
   "license": "MIT",
   "author": "gevmarlen",
   "peerDependencies": {
-    "gamepadify": "^0.2.0",
+    "gamepadify": "^0.2.1",
     "vue": "^3.3.0"
   },
   "repository": {

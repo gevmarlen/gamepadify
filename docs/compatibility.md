@@ -1,6 +1,6 @@
 # Compatibility and verification
 
-These are local results for the unreleased audit changes after `v0.2.0`, measured on 2026-10-19 with Node v24.22.0 on Windows. The release archive still contains the original 0.2.0 code. GitHub Actions is configured to repeat the tests on Ubuntu; local results do not imply that CI ran this revision. Exact versions, archive integrities, baseline measurements and run summaries are in [compatibility.json](compatibility.json).
+These are local validation results for 0.2.1, recorded on 2026-10-19 with Node v24.22.0 on Windows. GitHub Actions repeats the tests on Ubuntu; its results are available in the [Checks workflow](https://github.com/gevmarlen/gamepadify/actions/workflows/ci.yml). Exact versions, archive integrities, baseline measurements and run summaries are in [compatibility.json](compatibility.json).
 
 ## Packed consumers
 
@@ -41,17 +41,17 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 | Core-only IIFE, gzip | 7242 |
 | Navigation IIFE, gzip | 8770 |
 | Hints IIFE, gzip | 9011 |
-| gamepadify npm archive | 188296 |
-| gamepadify-react npm archive | 5569 |
-| gamepadify-vue npm archive | 5669 |
-| gamepadify-jquery npm archive | 4670 |
+| gamepadify npm archive | 188275 |
+| gamepadify-react npm archive | 5559 |
+| gamepadify-vue npm archive | 5658 |
+| gamepadify-jquery npm archive | 4660 |
 | gamepadify-angular npm archive | 4767 |
 
 The core archive includes all four presets, ESM, CommonJS, declarations, source maps, the optional simulator, CSS and 50 PNGs. Its archive size is not the size transferred to a browser. Runtime core dependencies: zero. See [build measurements and tradeoffs](bundles.md) for CSS, Brotli and consumer-bundled sizes.
 
 ## Performance
 
-Baseline: commit `5f0daaa` (0.2.0). Both builds ran sequentially on 13th Gen Intel(R) Core(TM) i9-13900K, Windows x64, headless Chromium 156.0.8078.4. Each case used 30 warm-up frames and three 60-frame measured runs. CPU below is the median of the three run means; run means and frame p95 are also recorded in the JSON. The harness instruments DOM calls and uses CDP sampling, so these are comparisons with profiling overhead, not a universal frame-time promise.
+Baseline: commit `5f0daaa` (0.2.0). The 0.2.1 standalone script has the same SHA-256 as the audited build measured below, so its timing samples are retained. Both builds ran sequentially on 13th Gen Intel(R) Core(TM) i9-13900K, Windows x64, headless Chromium 156.0.8078.4. Each case used 30 warm-up frames and three 60-frame measured runs. CPU below is the median of the three run means; run means and frame p95 are also recorded in the JSON. The harness instruments DOM calls and uses CDP sampling, so these are comparisons with profiling overhead, not a universal frame-time promise.
 
 The navigation case has N focusable elements, one mapped action and a stationary stick. The hints case deliberately stresses N visible actions with unique chords and neutral text prompts. CPU measures steady frames; navigation candidate scans still run when the stick moves. Latency is simulated source press to click, not physical controller latency. Insertion adds 10% extra focusable elements and waits for their assigned class.
 
@@ -81,7 +81,7 @@ Run `npm run benchmark` or see [reproduction commands](../CONTRIBUTING.md#perfor
 
 Physical controllers have not been tested. Browser tests use controlled Gamepad sources; they do not certify USB/Bluetooth detection or operating-system mappings.
 
-All five existing 0.2.0 packages are available on npm. The jsDelivr script, stylesheet and Xbox PNG match the baseline release bytes; a Chromium smoke test also verified CDN script activation and PNG loading. These published artifacts do not contain the unreleased changes measured above. This audit did not publish or replace a release.
+Release files and checksums are attached to [v0.2.1](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.1). Use matching core and adapter versions. CDN scripts and stylesheets are pinned to 0.2.1 in the README.
 
 ## Manual hardware checklist
 
