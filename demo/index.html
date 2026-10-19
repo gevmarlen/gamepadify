@@ -6,11 +6,11 @@
   <meta name="description" content="Gamepad controls for the web. Try typed bindings, spatial navigation, adaptive button prompts and framework adapters.">
   <meta name="theme-color" content="#eeeee7">
   <title>Gamepadify — The web, within reach.</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231b2228'/%3E%3Cpath d='M10 20h10m-5-5v10' stroke='%23b9ef67' stroke-width='3'/%3E%3Ccircle cx='28' cy='17' r='2' fill='%23b9ef67'/%3E%3Ccircle cx='25' cy='24' r='2' fill='%23b9ef67'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="/mark.svg">
 </head>
 <body>
   <header class="site-header">
-    <a class="wordmark" href="./" aria-label="Gamepadify home"><span class="brand-mark">✚</span> gamepadify<span class="version">0.2.1</span></a>
+    <a class="wordmark" href="./" aria-label="Gamepadify home"><img class="brand-mark" src="/mark.svg" width="34" height="34" alt=""> gamepadify<span class="version">0.2.1</span></a>
     <nav aria-label="Main"><a href="https://github.com/gevmarlen/gamepadify#readme">Documentation ↗</a><a href="https://github.com/gevmarlen/gamepadify">GitHub ↗</a></nav>
   </header>
   <main>
@@ -18,50 +18,92 @@
       <div><p class="eyebrow">SMALL LIBRARY. ANOTHER WAY IN.</p><h1>The web,<br>within reach<span>.</span></h1></div>
       <div class="intro-copy"><p>Give your interface a gamepad.<br>Keep your markup. Keep your framework.</p><code>npm install gamepadify</code><p class="frameworks">Vanilla JS <span>/</span> Angular <span>/</span> React <span>/</span> Vue <span>/</span> jQuery</p></div>
     </section>
-    <div class="workbench-heading"><h2>01 <span>THE PLAYGROUND</span></h2><span>Real controls. Real DOM. No canvas.</span></div>
+    <div class="workbench-heading"><h2>01 <span>THE PLAYGROUND</span></h2></div>
     <section class="workbench" aria-label="Interactive playground">
       <div class="preview-column">
         <div class="preview-toolbar"><span class="preview-label"><i></i> EXAMPLE INTERFACE</span><span id="mode" class="mode-label">POINTER MODE</span></div>
         <div id="stage" class="stage">
-          <div class="archive-heading"><div><p class="eyebrow">YOUR COLLECTION</p><h3>Small worlds.</h3></div><button class="icon-button" id="help" data-gamepad="west" aria-label="Show help">?</button></div>
+          <div class="archive-heading">
+            <div><p class="eyebrow">YOUR COLLECTION</p><h3>Small worlds.</h3></div>
+            <div class="help-anchor">
+              <button class="icon-button" id="help" data-gamepad="xbox:x" aria-label="Show controls" aria-expanded="false" aria-controls="help-panel">?</button>
+              <section id="help-panel" class="help-panel" role="dialog" aria-modal="false" aria-labelledby="help-title" hidden>
+                <p class="eyebrow">QUICK GUIDE</p><h4 id="help-title">Your controls</h4>
+                <dl class="control-guide">
+                  <div><dt>Left stick</dt><dd>Move between worlds</dd></div>
+                  <div><dt><span data-button-label="south">A</span></dt><dd>Open a world</dd></div>
+                  <div><dt><span data-button-label="east">B</span></dt><dd>Go back</dd></div>
+                  <div><dt><span data-button-label="west">X</span></dt><dd>Show these controls</dd></div>
+                  <div><dt><span data-button-label="north">Y</span></dt><dd>Shuffle the collection</dd></div>
+                  <div><dt><span data-button-label="left-shoulder">LB</span></dt><dd>Focus search, then type</dd></div>
+                </dl>
+                <button id="close-help" class="text-button" data-gamepad="xbox:b">Got it <span aria-hidden="true">↗</span></button>
+              </section>
+            </div>
+          </div>
+          <div class="collection-tools">
+            <div class="search-field"><label class="sr-only" for="search">Search worlds</label><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 5 5"/></svg><input id="search" type="search" placeholder="Search worlds…" data-gamepad="xbox:lb" autocomplete="off" aria-controls="collection"><button id="clear-search" type="button" aria-label="Clear search" hidden>×</button></div>
+            <span id="collection-count" role="status">6 worlds</span>
+          </div>
           <div class="collection" id="collection">
             <button class="world" data-gamepad-focusable data-world="Dune"><span class="art art-dune"><i></i><i></i><b></b></span><span class="world-meta"><span>Dune</span><small>01 / TERRAIN</small></span></button>
-            <button class="world" data-gamepad-focusable data-world="Orbit"><span class="art art-orbit"><i></i><b></b></span><span class="world-meta"><span>Orbit</span><small>02 / MOTION</small></span></button>
-            <button class="world" data-gamepad-focusable data-world="Tide"><span class="art art-tide"><i></i><i></i><i></i></span><span class="world-meta"><span>Tide</span><small>03 / RHYTHM</small></span></button>
-            <button class="world" data-gamepad-focusable data-world="Mono"><span class="art art-mono"><i></i><b></b></span><span class="world-meta"><span>Mono</span><small>04 / FORM</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Orbit"><span class="art art-orbit"><svg viewBox="0 0 270 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g transform="rotate(-28 135 60)"><ellipse cx="135" cy="60" rx="66" ry="18" fill="none" stroke="#d8e5e5" stroke-width="4"/><circle cx="135" cy="60" r="35" fill="#293d58"/><path d="M69 60a66 18 0 0 0 132 0" fill="none" stroke="#d8e5e5" stroke-width="4"/></g></svg></span><span class="world-meta"><span>Orbit</span><small>02 / MOTION</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Tide"><span class="art art-tide"><svg viewBox="0 0 270 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="#d4dfc9" stroke-width="2"><path d="M-30 110C55 110 82 38 162 38S248 74 300 10"/><path d="M-30 90C55 90 82 18 162 18S248 54 300-10"/><path d="M-30 130C55 130 82 58 162 58S248 94 300 30"/></g></svg></span><span class="world-meta"><span>Tide</span><small>03 / RHYTHM</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Mono"><span class="art art-mono"><svg viewBox="0 0 270 120" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><path d="m135 18 42 42-42 42-42-42z" fill="#3d494b"/><path d="m135 28 32 32-32 32-32-32z" fill="none" stroke="#f4f0df" stroke-width="2"/></svg></span><span class="world-meta"><span>Mono</span><small>04 / FORM</small></span></button>
             <button class="world" data-gamepad-focusable data-world="Bloom"><span class="art art-bloom"><i></i><b></b></span><span class="world-meta"><span>Bloom</span><small>05 / GROWTH</small></span></button>
             <button class="world" data-gamepad-focusable data-world="Echo"><span class="art art-echo"><i></i><i></i><i></i></span><span class="world-meta"><span>Echo</span><small>06 / SIGNAL</small></span></button>
           </div>
-          <div class="stage-actions"><button class="stage-button" id="shuffle" data-gamepad="north">Shuffle collection ↗</button><button class="stage-button secondary" id="favorite" data-gamepad="left-shoulder+north">Favorite all ☆</button><button class="stage-button conflict-target" id="duplicate" data-gamepad="north" hidden>Conflicting action</button></div>
-          <div class="stage-footer"><span id="last-action" role="status">Press a controller button to explore.</span><span>↑ ↓ ← → MOVE <b>·</b> SOUTH SELECT</span></div>
-          <dialog id="detail-dialog"><p class="eyebrow">A CLOSER LOOK</p><h3 id="detail-title">Dune</h3><p>This is a native dialog. Navigation and button mappings stay inside its active scope.</p><button class="stage-button" id="close-dialog" data-gamepad-focusable>Back to collection</button></dialog>
+          <p id="empty-collection" class="empty-collection" hidden>No worlds found. Try another name or theme.</p>
+          <div class="stage-actions"><button class="stage-button" id="shuffle" data-gamepad="xbox:y"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h3c4 0 8 12 12 12h3m-4-4 4 4-4 4M3 18h3c1.8 0 3.6-2.4 5.4-5M14 8c1.4-1.3 2.7-2 4-2h3m-4-4 4 4-4 4"/></svg>Shuffle collection</button></div>
+          <div class="stage-footer"><span id="last-action" role="status">Press a controller button to explore.</span><span>LEFT STICK · MOVE <b>·</b> <span data-button-label="south">A</span> · OPEN</span></div>
+          <dialog id="detail-dialog" aria-labelledby="detail-title" aria-describedby="detail-description"><p class="eyebrow">A CLOSER LOOK</p><h3 id="detail-title">Dune</h3><div id="detail-art" aria-hidden="true"></div><p id="detail-description"></p><button class="stage-button" id="close-dialog" data-gamepad="xbox:b">Back to collection</button></dialog>
         </div>
         <div class="input-strip"><span class="status-dot" id="device-dot"></span><span id="device">Waiting for a controller</span><span id="profile">GAMEPAD API</span></div>
       </div>
-      <aside class="inspector" aria-label="Playground settings">
+      <aside class="inspector" id="settings" aria-label="Playground settings">
         <div class="panel-heading"><h3>Make it yours</h3><span>LIVE SETTINGS</span></div>
-        <div class="input-picker"><button id="hardware" class="selected" type="button">Controller</button><button id="simulate" type="button">Simulator</button></div>
+        <div class="input-picker"><button id="hardware" class="selected" type="button" aria-pressed="true">Controller</button><button id="simulate" type="button" aria-pressed="false">Simulator</button></div>
         <p id="input-note" class="note">Connect a gamepad and press any button. The first press shows your controls.</p>
-        <div class="sim-keys" id="sim-keys" hidden><p><kbd>↑↓←→</kbd> Move <kbd>Z</kbd> South</p><p><kbd>X</kbd> West <kbd>C</kbd> North <kbd>Q</kbd> L1</p><small>Hold Q + C for a combination.</small></div>
+        <div id="simulator" hidden>
+          <div class="virtual-pad" id="virtual-pad" role="group" aria-label="Controller simulator">
+            <svg class="pad-shell" viewBox="0 0 320 210" aria-hidden="true">
+              <path d="M73 42h174c16 0 24 15 30 37l20 79c7 29-10 44-28 31l-42-35H93l-42 35c-18 13-35-2-28-31l20-79c6-22 14-37 30-37z" fill="#293732" stroke="#18251f" stroke-width="2"/>
+              <path d="M102 56h116l-15 30h-86z" fill="#35453c"/>
+              <circle cx="82" cy="91" r="28" fill="#17251e" stroke="#4b5c4e" stroke-width="2"/>
+              <circle cx="209" cy="140" r="22" fill="#17251e" stroke="#4b5c4e" stroke-width="2"/><circle cx="209" cy="140" r="15" fill="#35453c" stroke="#60705d"/>
+              <path d="M113 119h14v14h14v14h-14v14h-14v-14H99v-14h14z" fill="#17251e" stroke="#52614f"/>
+              <circle cx="160" cy="66" r="9" fill="#c5f778"/><path d="M157 61h6v10h-6zM155 63h10v6h-10z" fill="#293732"/>
+              <path d="M146 108h6m-3-3v6m19-6h7m-7 3h7m-7 3h7" stroke="#8c9c83" stroke-width="2"/>
+            </svg>
+            <span id="sim-stick" class="sim-stick" aria-hidden="true"></span>
+            <button class="pad-shoulder" data-pad-button="left-shoulder" aria-label="LB — focus search"><span data-button-label="left-shoulder">LB</span></button>
+            <span class="pad-shoulder right-shoulder" aria-hidden="true"><span data-button-label="right-shoulder">RB</span></span>
+            <button class="pad-face face-south" data-pad-button="south" aria-label="A — open world"><span data-button-label="south">A</span></button>
+            <button class="pad-face face-east" data-pad-button="east" aria-label="B — go back"><span data-button-label="east">B</span></button>
+            <button class="pad-face face-west" data-pad-button="west" aria-label="X — help"><span data-button-label="west">X</span></button>
+            <button class="pad-face face-north" data-pad-button="north" aria-label="Y — shuffle"><span data-button-label="north">Y</span></button>
+            <button class="pad-direction direction-up" data-pad-direction="up" aria-label="Move up">↑</button><button class="pad-direction direction-right" data-pad-direction="right" aria-label="Move right">→</button><button class="pad-direction direction-down" data-pad-direction="down" aria-label="Move down">↓</button><button class="pad-direction direction-left" data-pad-direction="left" aria-label="Move left">←</button>
+          </div>
+          <p class="sim-caption">Click a button. Press and hold to move.</p>
+          <dl class="sim-legend"><div><dt><kbd>↑ ↓ ← →</kbd></dt><dd>Move</dd></div><div><dt><kbd>Z</kbd> <span data-button-label="south">A</span></dt><dd>Open</dd></div><div><dt><kbd>V</kbd> <span data-button-label="east">B</span></dt><dd>Back</dd></div><div><dt><kbd>X</kbd> <span data-button-label="west">X</span></dt><dd>Help</dd></div><div><dt><kbd>C</kbd> <span data-button-label="north">Y</span></dt><dd>Shuffle</dd></div><div><dt><kbd>Q</kbd> <span data-button-label="left-shoulder">LB</span></dt><dd>Search</dd></div></dl>
+        </div>
         <div class="settings-group">
-          <label class="toggle-row"><span>Button hints <code>showHints</code></span><input id="show-hints" type="checkbox" checked></label>
+          <label class="toggle-row"><span>Button hints</span><input id="show-hints" type="checkbox" checked></label>
           <label class="field"><span>Button artwork</span><select id="skin"><option value="auto">Match controller</option><option value="xbox">Xbox</option><option value="playstation">PlayStation</option><option value="switch">Switch</option><option value="custom">Custom skin example</option></select></label>
           <label class="field range-field"><span>Icon size <output id="size-value">24 px</output></span><input id="size" type="range" min="16" max="40" value="24"></label>
           <label class="field"><span>Position</span><select id="placement"><option value="top-end">Top / end</option><option value="top-start">Top / start</option><option value="bottom-end">Bottom / end</option><option value="right">Right</option></select></label>
         </div>
-        <div class="settings-group class-fields"><label class="field"><span>Body class <code>bodyClass</code></span><input id="body-class" placeholder="e.g. pad-active" autocomplete="off"></label><label class="field"><span>Element class <code>elementClass</code></span><input id="element-class" placeholder="e.g. pad-target" autocomplete="off"></label></div>
-        <label class="toggle-row conflict-toggle"><span>Introduce a conflict <small>Two elements, one button.</small></span><input id="conflict" type="checkbox"></label>
       </aside>
     </section>
     <section class="under-bench">
-      <div class="code-panel"><div class="panel-heading"><h3>A few attributes. That's it.</h3><span>HTML + JAVASCRIPT</span></div><pre><code>&lt;button data-gamepad="west"&gt;Help&lt;/button&gt;
+      <div class="code-panel"><div class="panel-heading"><h3>A few attributes. That's it.</h3><span>HTML + JAVASCRIPT</span></div><pre><code>&lt;button data-gamepad="xbox:x"&gt;Help&lt;/button&gt;
 &lt;button data-gamepad-focusable&gt;Explore&lt;/button&gt;
 
 const pad = createGamepadify({
-  navigation: { confirm: 'south' },
+  navigation: { confirm: 'xbox:a' },
   showHints: true,
 });
-pad.start();</code></pre></div>
+pad.start();</code></pre><p class="api-note"><code>xbox:a</code>, <code>ps:cross</code> and <code>switch:b</code> all describe the bottom face button — <code>south</code> in the platform-neutral API. Prompts use your controller’s symbols.</p></div>
       <div class="diagnostics-panel"><div class="panel-heading"><h3>Under the hood</h3><span>EVENT LOG</span></div><ol id="log" aria-label="Recent controller events"><li><span>READY</span> Waiting for input.</li></ol></div>
     </section>
     <section class="principles"><div><span>01</span><h3>Your framework stays yours.</h3><p>A dependency-free core. Thin adapters. Public APIs and ordinary DOM events.</p></div><div><span>02</span><h3>Focus has a direction.</h3><p>The stick follows the layout, including scrollable containers and scoped dialogs.</p></div><div><span>03</span><h3>Ambiguity gets noticed.</h3><p>Conflicting actions stop and explain themselves. Chords take precedence over single presses.</p></div></section>
