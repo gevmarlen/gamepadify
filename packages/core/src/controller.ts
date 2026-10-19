@@ -7,6 +7,11 @@ import type { Activation, Binding, BindingInput, DeviceInfo, DeviceProfile, Diag
 
 interface Scope { element: HTMLElement; previous: HTMLElement | null }
 const roots = new WeakMap<Document, Set<Document | HTMLElement>>();
+const defaults: GamepadifyOptions = { bodyClass: '', elementClass: '', chordWindow: 80, warnings: true };
+
+function defined<T extends object>(options: T): Partial<T> {
+  return Object.fromEntries(Object.entries(options).filter(([, value]) => value !== undefined)) as Partial<T>;
+}
 
 export class Controller implements GamepadifyController {
   private options: GamepadifyOptions;
@@ -46,7 +51,7 @@ export class Controller implements GamepadifyController {
   private listeners = new Map<keyof GamepadifyEvents, Set<(value: never) => void>>();
 
   constructor(options: GamepadifyOptions = {}, private features: Features = {}) {
-    this.options = { showHints: features.hints ?? false, bodyClass: '', elementClass: '', chordWindow: 80, warnings: true, ...options };
+    this.options = { ...defaults, showHints: features.hints ?? false, ...defined(options), hints: options.hints && defined(options.hints) };
     this.navigation = features.navigation?.({
       options: () => this.options.navigation,
       document: () => this.document,
@@ -163,12 +168,14 @@ export class Controller implements GamepadifyController {
 
   configure(options: Partial<GamepadifyOptions>): void {
     if (this.destroyed) throw new Error('Gamepadify has been destroyed.');
-    const rootChanged = options.root !== undefined && options.root !== (this.root ?? this.options.root);
+    const defaultRoot = typeof document !== 'undefined' ? document : undefined;
+    const rootChanged = 'root' in options && (options.root ?? defaultRoot) !== (this.options.root ?? defaultRoot);
     const restart = this.running && rootChanged;
     if (restart) this.stop();
     if (rootChanged) { this.scopes = []; this.focused = null; }
-    if (options.source !== undefined && options.source !== this.options.source) { this.disconnect(); this.previousRaw.clear(); }
-    this.options = { ...this.options, ...options, hints: { ...this.options.hints, ...options.hints } };
+    if ('source' in options && options.source !== this.options.source) { this.disconnect(); this.previousRaw.clear(); }
+    const hints = 'hints' in options ? options.hints && defined({ ...this.options.hints, ...options.hints }) : this.options.hints;
+    this.options = { ...defaults, showHints: this.features.hints ?? false, ...defined({ ...this.options, ...options, hints }) };
     if (rootChanged || 'bindings' in options || 'navigation' in options || 'profiles' in options || 'source' in options || 'chordWindow' in options) {
       this.matcher.reset();
       this.armed = false;

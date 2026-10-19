@@ -11,7 +11,7 @@ The default `gamepadify` import includes every feature and keeps the existing AP
 
 Sizes are for the standalone minified scripts compressed with gzip. The same builds, bundled from ESM with only `createGamepadify` imported, measure 9,864 / 6,952 / 8,481 / 8,728 bytes gzip respectively. These figures exclude CSS and PNGs. See [the recorded measurements](bundles.json) and run `npm run test:bundles` to reproduce them.
 
-These measurements describe 0.2.2, whose runtime is unchanged from 0.2.1. The previous 0.2.0 scripts measured 9,400 / 6,779 / 8,200 / 8,322 bytes gzip (full/core/navigation/hints). The current full build adds 750 bytes gzip for frame measurements and lifecycle fixes; see [the measured CPU/memory tradeoff](compatibility.md#performance). Core remains 29% smaller than full.
+These measurements describe the published 0.2.2 builds, whose runtime is unchanged from 0.2.1. Unreleased builds may differ; `npm run test:bundles` measures the current checkout without replacing these historical results. The previous 0.2.0 scripts measured 9,400 / 6,779 / 8,200 / 8,322 bytes gzip (full/core/navigation/hints). The 0.2.2 full build adds 750 bytes gzip for frame measurements and lifecycle fixes; see [the measured CPU/memory tradeoff](compatibility.md#performance). Its core build is 29% smaller than full.
 
 Gzip budgets are now 10,300 / 7,400 / 8,900 / 9,100 bytes respectively, with limited headroom above these measured builds. Bundle inclusion checks and the minimum 25% core saving remain enforced. Runtime core dependencies remain zero.
 

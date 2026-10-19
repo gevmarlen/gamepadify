@@ -23,6 +23,8 @@ createGamepadify(options?: GamepadifyOptions): GamepadifyController
 
 Disposers are idempotent. Calling `start`, `bind`, `configure` or `pushScope` after `destroy` throws. Keep a scope inside the controller's root. Pop scopes when closing dialogs; removed scope nodes are automatically pruned. Changing roots discards old scopes, including while stopped.
 
+In the [unreleased options fix](../CHANGELOG.md#unreleased), an explicit `undefined` passed to `configure()` restores that option's default; omitted keys still remain unchanged. `hints: undefined` clears global hint overrides, while `hints: { size: undefined }` restores CSS sizing and preserves other hint fields. The `showHints` default depends on the selected build. Resetting `root` returns to the browser document; resetting `source` returns to the native Gamepad API.
+
 Multiple instances may own disjoint roots. Overlapping running roots are rejected with `overlapping-root` so the same input cannot activate multiple controllers on the same subtree.
 
 ## Options
@@ -268,7 +270,11 @@ export function App() {
 }
 ```
 
-Use `useGamepad({ focusable: true })` for navigation targets and `useGamepadController()` for scopes or subscriptions. Equivalent object bindings retain their callback ref. Changed callbacks or binding values re-register the element. Equivalent hint/navigation options do not call `configure()` again; presentation updates do not reset controls. Keep source, root and profile references stable when unchanged. The provider merges changed options like `configure()` and starts/stops in an effect, including Strict Mode replay.
+Use `useGamepad({ focusable: true })` for navigation targets and `useGamepadController()` for scopes or subscriptions. Equivalent object bindings retain their callback ref. Changed callbacks or binding values re-register the element. The provider starts/stops in an effect, including Strict Mode replay, and supports SSR/hydration.
+
+The [unreleased options fix](../CHANGELOG.md#unreleased) makes the `options` prop declarative: added and changed values apply, and removed values return to their defaults. Nested `hints`, navigation, binding maps and profiles follow the latest prop; removing `navigation` disables it, removing `bindings` restores data-attribute bindings, and removing `profiles` restores standard device mapping. Removing `hints.size` restores CSS sizing rather than forcing 24 px.
+
+Structurally equivalent options do not call `configure()` again. Object key order does not matter; callbacks are compared by identity and profile regular expressions by pattern and flags, ignoring `lastIndex`. Keep `root` and `source` references stable: DOM roots and input sources are identity-based resources. Changing the effective root restarts the same controller and clears old scopes; changing the source clears device/input state. Explicit registrations survive both changes. Presentation-only updates preserve active input and focus. Update provider settings through the prop; imperative `controller.configure()` changes are not synchronized back into it.
 
 ### Vue
 

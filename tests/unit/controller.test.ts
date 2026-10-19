@@ -162,6 +162,26 @@ describe('controller lifecycle and modes', () => {
     await tap(source, 'south');
     expect(click).toHaveBeenCalledOnce();
   });
+  it('preserves partial hint updates and resets only explicit undefined options', async () => {
+    const { pad, source } = setup('<button data-gamepad="south" data-rect="100,150,80,40">Save</button>', { bodyClass: 'playing', hints: { size: 40, offset: 12 }, family: 'switch' });
+    await wake(source);
+    const hint = () => document.querySelector<HTMLElement>('.gamepadify-hint')!;
+    const initialTop = hint().style.top;
+    pad.configure({ hints: { offset: 8 } });
+    expect(hint().style.width).toBe('40px');
+    expect(hint().style.top).not.toBe(initialTop);
+    pad.configure({ hints: { size: undefined } });
+    expect(hint().style.width).toBe('24px');
+    expect(document.body.classList.contains('playing')).toBe(true);
+    expect(pad.getState().device?.family).toBe('switch');
+    const offsetTop = hint().style.top;
+    pad.configure({ hints: undefined, bodyClass: undefined, family: undefined });
+    expect(hint().style.width).toBe('24px');
+    expect(hint().style.top).not.toBe(offsetTop);
+    expect(document.body.classList.contains('playing')).toBe(false);
+    expect(pad.getState().device?.family).toBe('xbox');
+    expect(pad.getState().mode).toBe('gamepad');
+  });
   it('discards old scopes when changing roots while stopped', async () => {
     const { pad, source } = setup('<main><section><button data-gamepad="south">Old</button></section></main><aside><button data-gamepad="south">New</button></aside>');
     pad.pushScope(document.querySelector('section')!);

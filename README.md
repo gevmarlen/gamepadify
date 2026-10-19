@@ -117,7 +117,9 @@ Prompts use [Kenney Input Prompts](https://kenney.nl/assets/input-prompts) CC0 a
 
 Use HTTPS or localhost. Device recognition depends on the browser's Gamepad API; unknown nonstandard layouts need a profile. Polling cannot create trusted browser activation for fullscreen, file pickers or similar protected APIs. Automatic shadow-root and iframe traversal is not supported.
 
-Tests cover controlled input, real browser DOM behavior, package installation and framework lifecycles. Physical controllers have **not been tested**. See [test evidence, performance measurements and the hardware checklist](docs/compatibility.md).
+**Hardware testing:** The author has manually tested Gamepadify with an Xbox controller in Google Chrome on Windows and confirmed that the basic functionality works. The exact controller model, connection method and software versions were not recorded. Other controllers, browsers and operating systems have not been manually verified. Automated tests cover simulated gamepad input across Chromium, Firefox and WebKit.
+
+Tests also cover real browser DOM behavior, package installation and framework lifecycles. See [test evidence, performance measurements and the hardware checklist](docs/compatibility.md).
 
 ![Playground with controller prompts and spatial focus](docs/playground.png)
 

@@ -155,6 +155,51 @@ try {
     await press('south');
     assert.equal(await page.locator('#count').textContent(), '6', 'confirm must reach framework state');
   }
+  if (framework === 'react') {
+    const settle = () => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const count = Number(await page.locator('#count').textContent());
+    await page.evaluate(() => {
+      window.originalPad = window.pad;
+      window.configurations = 0; window.registrations = 0;
+      const configure = window.pad.configure.bind(window.pad), bind = window.pad.bind.bind(window.pad);
+      window.pad.configure = options => { window.configurations++; configure(options); };
+      window.pad.bind = (...args) => { window.registrations++; return bind(...args); };
+      window.changeOptions({ source: window.sim, navigation: false, showHints: false, bodyClass: 'react-body', elementClass: 'react-element', hints: { size: 40, offset: 12 } });
+    });
+    await page.waitForFunction(() => document.body.classList.contains('react-body') && document.getElementById('action').classList.contains('react-element'));
+    assert.equal(await page.locator('.gamepadify-hint').count(), 0);
+    await page.evaluate(() => window.changeOptions({ source: window.sim }));
+    await page.waitForFunction(() => !document.body.classList.contains('react-body') && !document.getElementById('action').classList.contains('react-element'));
+    await settle();
+    assert.equal(await page.locator('.gamepadify-hint').count(), hasHints ? 1 : 0, 'removed showHints must restore the selected preset default');
+    assert.equal(await page.evaluate(() => window.pad.getState().mode), 'gamepad');
+    if (hasHints) {
+      await page.evaluate(() => window.changeOptions({ source: window.sim, hints: { size: 40, offset: 12 } }));
+      await page.waitForFunction(() => document.querySelector('.gamepadify-hint')?.style.width === '40px');
+      await page.evaluate(() => window.changeOptions({ source: window.sim, hints: { offset: 8 } }));
+      await page.waitForFunction(() => document.querySelector('.gamepadify-hint')?.style.width === '24px');
+    }
+    const configurations = await page.evaluate(() => window.configurations);
+    await page.evaluate(() => window.rerender());
+    await settle();
+    await press('west');
+    assert.equal(await page.evaluate(() => window.configurations), configurations, 'equivalent options must not configure again');
+    assert.equal(Number(await page.locator('#count').textContent()), count + 1);
+    if (hasNavigation) {
+      await page.evaluate(() => window.changeOptions({ source: window.sim, navigation: { confirm: 'south', selector: '#action' } }));
+      await page.waitForFunction(() => window.pad.getState().focusedElement?.id === 'action');
+      await settle();
+      await press('south');
+      assert.equal(Number(await page.locator('#count').textContent()), count + 2);
+      await page.evaluate(() => window.changeOptions({ source: window.sim }));
+      await page.waitForFunction(() => window.pad.getState().focusedElement === null);
+      await settle();
+      await press('south');
+      assert.equal(Number(await page.locator('#count').textContent()), count + 2, 'removed navigation must stop confirming');
+    }
+    assert.equal(await page.evaluate(() => window.registrations), 0, 'option updates must preserve explicit refs');
+    assert.equal(await page.evaluate(() => window.pad === window.originalPad), true, 'option updates must preserve the controller');
+  }
   assert.deepEqual(await page.evaluate(() => window.pad.getState().diagnostics), []);
   await page.evaluate(() => window.unmount());
   assert.equal(await page.locator('.gamepadify-layer').count(), 0);
