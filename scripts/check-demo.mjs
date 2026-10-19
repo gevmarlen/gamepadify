@@ -93,6 +93,10 @@ try {
       assert.equal(await page.locator('#body-class, #element-class, #conflict, #favorite, #duplicate, #search, #clear-search').count(), 0);
       assert.equal(await page.locator('#stage input, #stage textarea').count(), 0);
       await simulate();
+      const stationaryPointer = { bubbles: true, pointerType: 'mouse', clientX: 100, clientY: 100 };
+      await page.locator('#settings').dispatchEvent('pointermove', stationaryPointer);
+      await page.locator('#stage').dispatchEvent('pointermove', stationaryPointer);
+      assert.equal(await mode(), 'GAMEPAD MODE', 'scrolling under a stationary pointer must preserve controller mode');
       await page.waitForFunction(() => {
         const images = [...document.querySelectorAll('.gamepadify-glyph img')];
         return images.length >= 3 && images.every(image => image.complete && image.naturalWidth > 0);

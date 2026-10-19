@@ -45,8 +45,17 @@ function record(kind: string, message: string) {
 }
 
 // Keep native settings usable without reaching the controller's capture listeners.
+let pointerPosition: readonly [number, number] | undefined;
 for (const type of ['pointermove', 'pointerdown', 'keydown']) document.addEventListener(type, event => {
-  if (inspector.contains(event.target as Node)) event.stopImmediatePropagation();
+  let stationary = false;
+  if (type !== 'keydown') {
+    const pointer = event as PointerEvent;
+    if (pointer.pointerType === 'mouse') {
+      stationary = type === 'pointermove' && pointerPosition?.[0] === pointer.clientX && pointerPosition[1] === pointer.clientY;
+      pointerPosition = [pointer.clientX, pointer.clientY];
+    }
+  }
+  if (stationary || inspector.contains(event.target as Node)) event.stopImmediatePropagation();
 }, { capture: true });
 
 function settings() {
