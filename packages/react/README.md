@@ -8,7 +8,7 @@ npm install gamepadify gamepadify-react
 
 Import `gamepadify/styles.css` in your application. Frameworks and the core are peer dependencies.
 
-[Integration guide](https://github.com/gevmarlen/gamepadify#react) · [Examples](https://github.com/gevmarlen/gamepadify/tree/main/examples/react) · [Playground](https://gevmarlen.github.io/gamepadify/)
+[Integration guide](https://github.com/gevmarlen/gamepadify/blob/main/docs/api.md#react) · [Examples](https://github.com/gevmarlen/gamepadify/tree/main/examples/react) · [Playground](https://gevmarlen.github.io/gamepadify/)
 
 MIT.
 

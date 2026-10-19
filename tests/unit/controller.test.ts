@@ -51,6 +51,127 @@ async function tap(source: ReturnType<typeof createGamepadSimulator>, button: Bu
 }
 
 describe('controller lifecycle and modes', () => {
+  it('uses the analog trigger threshold even when the browser pressed flag is false', async () => {
+    const simulator = createGamepadSimulator();
+    let value = 0;
+    const source = { getGamepads: () => simulator.getGamepads().map(pad => pad && { ...pad, buttons: pad.buttons.map((button, index) => index === 6 ? { pressed: false, touched: true, value } : button) }) };
+    setup('<button data-gamepad="left-trigger">Action</button>', { source });
+    const click = vi.fn(); document.querySelector('button')!.addEventListener('click', click);
+    value = 0.6; await frame(); expect(click).not.toHaveBeenCalled();
+    value = 0.4; await frame();
+    value = 0.5; await frame(); await frame(400);
+    expect(click).toHaveBeenCalledOnce();
+    value = 0; await frame(); value = 0.8; await frame();
+    expect(click).toHaveBeenCalledTimes(2);
+  });
+  it('does not transfer a pending chord window to a replacement binding', async () => {
+    const { source } = setup('<button id="single" data-gamepad="south">Single</button><button data-gamepad="south+north">Chord</button>');
+    const click = vi.fn(); document.getElementById('single')!.addEventListener('click', click);
+    await wake(source);
+    source.press('south'); await frame();
+    document.getElementById('single')!.dataset.gamepad = 'west';
+    await frame(100);
+    expect(click).not.toHaveBeenCalled();
+    source.release('south'); await frame(); await tap(source, 'west');
+    expect(click).toHaveBeenCalledOnce();
+  });
+  it('does not activate after a focus callback stops the controller', async () => {
+    const { pad, source } = setup('<button id="a" data-gamepad-focusable>A</button><button id="b" data-gamepad-focusable data-gamepad="west">B</button>', { navigation: { confirm: 'east' } });
+    const click = vi.fn(); document.getElementById('b')!.addEventListener('click', click);
+    await wake(source);
+    pad.on('focuschange', element => { if (element?.id === 'b') pad.stop(); });
+    await tap(source, 'west');
+    expect(click).not.toHaveBeenCalled();
+    expect(pad.getState().running).toBe(false);
+  });
+  it('commits diagnostics and keeps polling when a warning listener throws at startup', async () => {
+    document.body.innerHTML = '<button data-gamepad="south">A</button><button data-gamepad="south">B</button>';
+    const pad = createGamepadify({ source: createGamepadSimulator() });
+    controllers.push(pad);
+    const release = pad.on('warning', () => { throw new Error('warning listener'); });
+    expect(() => pad.start()).toThrow('warning listener');
+    expect(pad.getState().diagnostics).toHaveLength(1);
+    expect(callbacks.size).toBe(1);
+    release();
+    await frame();
+    expect(console.warn).toHaveBeenCalledOnce();
+  });
+  it('finishes destroy even when a listener throws', async () => {
+    const { pad, source } = setup('<button data-gamepad="south">Save</button>');
+    await wake(source);
+    pad.on('modechange', () => { throw new Error('destroy listener'); });
+    expect(() => pad.destroy()).toThrow('destroy listener');
+    expect(() => pad.start()).toThrow('destroyed');
+    expect(pad.getState().running).toBe(false);
+    expect(pad.getState().device).toBeNull();
+    expect(callbacks.size).toBe(0);
+  });
+  it('propagates custom source failures and recovers on the next frame', async () => {
+    const source = createGamepadSimulator();
+    const get = vi.spyOn(source, 'getGamepads');
+    const { pad } = setup('<button data-gamepad="south">Save</button>', { source });
+    get.mockImplementationOnce(() => { throw new Error('source failed'); });
+    await expect(frame()).rejects.toThrow('source failed');
+    expect(callbacks.size).toBe(1);
+    await wake(source);
+    expect(pad.getState().mode).toBe('gamepad');
+    expect(pad.getState().diagnostics).toEqual([]);
+  });
+  it('selects the last active device and consumes held input after switching or reconnecting', async () => {
+    const first = createGamepadSimulator('xbox'), second = createGamepadSimulator('playstation');
+    const source = { getGamepads: () => [...first.getGamepads(), ...second.getGamepads().map(pad => pad && { ...pad, index: 1 })] };
+    const { pad } = setup('<button data-gamepad="south">Save</button>', { source });
+    const click = vi.fn(); document.querySelector('button')!.addEventListener('click', click);
+    await wake(first); await tap(first, 'south');
+    expect(click).toHaveBeenCalledOnce();
+    second.press('south'); await frame(); await frame();
+    expect(pad.getState().device?.index).toBe(1);
+    expect(click).toHaveBeenCalledOnce();
+    second.release('south'); await frame(); await tap(second, 'south');
+    expect(click).toHaveBeenCalledTimes(2);
+    second.connect('switch'); second.press('south'); await frame();
+    expect(pad.getState().device?.family).toBe('switch');
+    expect(click).toHaveBeenCalledTimes(2);
+    second.disconnect(); await frame();
+    expect(pad.getState().mode).toBe('pointer');
+    expect(pad.getState().device).toBeNull();
+    await wake(first); expect(pad.getState().device?.family).toBe('xbox');
+  });
+  it('warns for a missing navigation confirmation instead of crashing JavaScript callers', () => {
+    const { pad } = setup('<button data-gamepad-focusable>Action</button>', { navigation: {} } as GamepadifyOptions);
+    expect(pad.getState().diagnostics[0]?.code).toBe('invalid-binding');
+  });
+  it('finishes teardown when a mode listener throws', async () => {
+    const { pad, source } = setup('<button data-gamepad="south">Save</button>');
+    await wake(source);
+    const unsubscribe = pad.on('modechange', () => { throw new Error('listener failed'); });
+    expect(() => pad.stop()).toThrow('listener failed');
+    unsubscribe();
+    expect(callbacks.size).toBe(0);
+    expect(document.querySelector('.gamepadify-layer')).toBeNull();
+    const replacement = createGamepadify({ source });
+    controllers.push(replacement);
+    replacement.start();
+    expect(replacement.getState().running).toBe(true);
+  });
+  it('keeps input armed when only presentation settings change', async () => {
+    const { pad, source } = setup('<button data-gamepad="south">Save</button>');
+    const click = vi.fn(); document.querySelector('button')!.addEventListener('click', click);
+    await wake(source);
+    pad.configure({ showHints: false, bodyClass: 'playing' });
+    await tap(source, 'south');
+    expect(click).toHaveBeenCalledOnce();
+  });
+  it('discards old scopes when changing roots while stopped', async () => {
+    const { pad, source } = setup('<main><section><button data-gamepad="south">Old</button></section></main><aside><button data-gamepad="south">New</button></aside>');
+    pad.pushScope(document.querySelector('section')!);
+    pad.stop();
+    pad.configure({ root: document.querySelector('aside')! });
+    pad.start();
+    const click = vi.fn(); document.querySelector('aside button')!.addEventListener('click', click);
+    await wake(source); await tap(source, 'south');
+    expect(click).toHaveBeenCalledOnce();
+  });
   it('consumes the first press and activates only after release', async () => {
     const { pad, source } = setup('<button data-gamepad="south">Save</button>');
     const click = vi.fn(); document.querySelector('button')!.addEventListener('click', click);

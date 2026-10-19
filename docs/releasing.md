@@ -2,6 +2,8 @@
 
 All five packages use the same version. Update their manifests, adapter peer ranges when necessary, changelog and fixed CDN examples together.
 
+Changes under `Unreleased` are not part of the existing `v0.2.0` release. Choose a new version and tag before publishing them; do not replace existing release archives with development builds carrying the same version.
+
 ## Validation
 
 ```sh
@@ -26,7 +28,7 @@ Archives are created in `.artifacts/packages`. Verify the public README, asset l
 
 Consumer commands check all four presets. Copy the current `.artifacts/bundles.json` into `docs/bundles.json` and aggregate the `target-preset.json` compatibility reports. The browser archive must include all four scripts, their maps, the three stylesheets, optional simulator, artwork and licenses.
 
-## First npm release
+## Local publication
 
 An npm owner must authenticate locally with `npm login` and complete npm's browser/2FA flow. Do not commit tokens or send them in issues/chat.
 
@@ -59,7 +61,7 @@ Reference: [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/).
 
 ## GitHub and CDN
 
-Create an annotated `vX.Y.Z` tag and a GitHub Release from the checked commit. Attach the five npm archives, browser bundle and checksums. Publishing a release triggers the npm workflow once enabled. It can also be run manually on a version tag.
+Create an annotated `vX.Y.Z` tag and a GitHub Release from the checked commit. Attach the five npm archives, browser bundle and checksums. Publishing a release triggers the npm workflow once enabled. Manual dispatch must select a version tag; branch dispatches cannot publish. The publish script checks that the tag matches the packed version.
 
 After publication, verify all five registry versions and fetch:
 

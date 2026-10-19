@@ -22,6 +22,8 @@ const hasHints = preset === 'full' || preset === 'hints';
 const hasNavigation = preset === 'full' || preset === 'navigation';
 const framework = target.replace(/\d+$/, '');
 const version = target.slice(framework.length);
+const zoned = process.env.ANGULAR_ZONE === 'true';
+if (zoned && target !== 'angular20') throw new Error('The additional Zone.js fixture uses Angular 20.');
 const root = process.cwd();
 const dir = path.resolve(`.artifacts/consumers/${target}`);
 const manifest = JSON.parse(await readFile('.artifacts/packages/manifest.json', 'utf8'));
@@ -32,11 +34,14 @@ if (framework === 'jquery') Object.assign(dependencies, { jquery: version === '3
 if (framework === 'angular') {
   for (const name of ['core', 'common', 'compiler', 'compiler-cli', 'platform-browser', 'platform-server', 'cli', 'build']) dependencies[`@angular/${name}`] = version;
   Object.assign(dependencies, { typescript: version === '22' ? '~6.0.0' : '~5.9.3', rxjs: '^7.8.0', tslib: '^2.8.0' });
+  if (zoned) dependencies['zone.js'] = '~0.15.1';
 }
 await mkdir(dir, { recursive: true });
 await writeFile(path.join(dir, 'package.json'), JSON.stringify({ name: `consumer-${target}`, private: true, type: 'module', dependencies }, null, 2));
 console.log(`Installing ${target}/${preset} from packed artifacts…`);
 npm(['install', '--no-audit', '--no-fund', manifest.core.path, manifest[framework].path], dir, 'inherit');
+const installed = JSON.parse(await readFile(path.join(dir, 'package-lock.json'), 'utf8'));
+for (const item of [manifest.core, manifest[framework]]) assert.equal(installed.packages[`node_modules/${item.name}`].integrity, item.integrity, `${item.name}: consumer must install the current archive`);
 for (const file of ['index.js', 'controller.js']) assert.equal(await readFile(path.join(dir, 'node_modules/gamepadify/dist', file), 'utf8'), await readFile(`packages/core/dist/${file}`, 'utf8'), 'consumer must install the current packed build');
 const extension = framework === 'react' ? 'tsx' : 'ts';
 let appSource = await readFile(`tests/consumers/${framework}.${extension}`, 'utf8');
@@ -63,7 +68,8 @@ await writeFile(path.join(dir, 'types.ts'), `import type {BindingInput, Gamepadi
 await writeFile(path.join(dir, 'tsconfig.json'), JSON.stringify(config));
 let served = path.join(dir, 'dist');
 if (framework === 'angular') {
-  await writeFile(path.join(dir, 'main.ts'), `import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {provideZonelessChangeDetection} from '@angular/core'; import {provideGamepadify} from 'gamepadify-angular${suffix}'; import {createGamepadSimulator} from 'gamepadify/testing'; import {App} from './app'; const sim=createGamepadSimulator(); bootstrapApplication(App,{providers:[provideZonelessChangeDetection(),provideClientHydration(),provideGamepadify({source:sim,bodyClass:'consumer-active'})]}).then(app=>Object.assign(window,{sim,unmount:()=>app.destroy()}));`);
+  const changeDetection = zoned ? 'provideZoneChangeDetection' : 'provideZonelessChangeDetection';
+  await writeFile(path.join(dir, 'main.ts'), `${zoned ? "import 'zone.js';" : ''} import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {NgZone,${changeDetection}} from '@angular/core'; import {provideGamepadify} from 'gamepadify-angular${suffix}'; import {createGamepadSimulator} from 'gamepadify/testing'; import {App} from './app'; const sim=createGamepadSimulator(); const get=sim.getGamepads; sim.getGamepads=()=>{if(NgZone.isInAngularZone())throw new Error('Polling entered Angular zone');return get();}; bootstrapApplication(App,{providers:[${changeDetection}(),provideClientHydration(),provideGamepadify({source:sim,bodyClass:'consumer-active'})]}).then(app=>Object.assign(window,{sim,unmount:()=>app.destroy()}));`);
   config.compilerOptions.noEmit = false;
   config.angularCompilerOptions = { strictTemplates: true };
   await writeFile(path.join(dir, 'tsconfig.json'), JSON.stringify(config));
@@ -74,11 +80,14 @@ if (framework === 'angular') {
   await cp('packages/core/dist/gamepadify.css', path.join(served, 'gamepadify.css'));
   await cp('packages/core/dist/assets', path.join(served, 'assets'), { recursive: true });
   await build({entryPoints:[path.join(dir,'app.ts')],outfile:path.join(dir,'app.server.mjs'),bundle:true,platform:'node',format:'esm',packages:'external'});
-  const ssr = `import '@angular/compiler'; import {readFile,writeFile} from 'node:fs/promises'; import {provideZonelessChangeDetection} from '@angular/core'; import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {renderApplication,provideServerRendering} from '@angular/platform-server'; import {provideGamepadify} from 'gamepadify-angular${suffix}'; import {App} from './app.server.mjs'; const file='browser-dist/browser/index.html'; const html=await renderApplication(context=>bootstrapApplication(App,{providers:[provideZonelessChangeDetection(),provideServerRendering(),provideClientHydration(),provideGamepadify()]},context),{document:await readFile(file,'utf8'),url:'http://localhost/',allowedHosts:['localhost']}); if(!html.includes('id="action"'))throw new Error('SSR failed'); await writeFile(file,html); console.log('SSR passed');`;
+  const ssr = `${zoned ? "import 'zone.js/node';" : ''} import '@angular/compiler'; import {readFile,writeFile} from 'node:fs/promises'; import {${changeDetection}} from '@angular/core'; import {bootstrapApplication,provideClientHydration} from '@angular/platform-browser'; import {renderApplication,provideServerRendering} from '@angular/platform-server'; import {provideGamepadify} from 'gamepadify-angular${suffix}'; import {App} from './app.server.mjs'; const file='browser-dist/browser/index.html'; const html=await renderApplication(context=>bootstrapApplication(App,{providers:[${changeDetection}(),provideServerRendering(),provideClientHydration(),provideGamepadify()]},context),{document:await readFile(file,'utf8'),url:'http://localhost/',allowedHosts:['localhost']}); if(!html.includes('id="action"'))throw new Error('SSR failed'); await writeFile(file,html); console.log('SSR passed');`;
   await writeFile(path.join(dir, 'ssr.mjs'), ssr);
   execFileSync(process.execPath, ['ssr.mjs'], { cwd: dir, stdio: 'inherit' });
 } else {
   execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '-p', 'tsconfig.json'], { cwd: dir, stdio: 'inherit' });
+  const value = { react: 'GamepadProvider', vue: 'createGamepadifyPlugin', jquery: 'installGamepadify' }[framework];
+  await writeFile(path.join(dir, 'types.cts'), `import {createGamepadify} from 'gamepadify${suffix}'; import {${value}} from 'gamepadify-${framework}${suffix}'; createGamepadify(); void ${value};`);
+  execFileSync(process.execPath, ['node_modules/typescript/bin/tsc', '--noEmit', '--strict', '--skipLibCheck', '--target', 'ES2022', '--module', 'Node16', '--moduleResolution', 'Node16', 'types.cts'], { cwd: dir, stdio: 'inherit' });
   if (framework === 'vue') {
     const template = `<script setup lang="ts">import {useGamepadify} from 'gamepadify-vue'; useGamepadify();</script><template><button v-gamepad="'west'">Action</button><button v-gamepad-focusable>Focus</button></template>`;
     await writeFile(path.join(dir, 'directive.vue'), template);
@@ -128,12 +137,23 @@ try {
   await page.waitForSelector('#action'); await press('west');
   assert.equal(await page.locator('#count').textContent(), '2');
   assert.equal(await page.locator('.gamepadify-hint').count(), hasHints ? 1 : 0);
+  await page.evaluate(() => window.rerender());
+  await press('west');
+  assert.equal(await page.locator('#count').textContent(), '3', 'rerender must preserve input and register once');
+  await page.evaluate(() => window.changeBinding('north'));
+  await press('west');
+  assert.equal(await page.locator('#count').textContent(), '3', 'the previous binding must be removed');
+  await press('north');
+  assert.equal(await page.locator('#count').textContent(), '4', 'the replacement binding must activate');
+  await page.evaluate(() => window.changeBinding('west'));
+  await press('west');
+  assert.equal(await page.locator('#count').textContent(), '5');
   if (hasNavigation) {
     await page.evaluate(() => window.pad.configure({ navigation: { confirm: 'south', selector: '#action' } }));
     await page.waitForFunction(() => document.activeElement?.id === 'action');
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     await press('south');
-    assert.equal(await page.locator('#count').textContent(), '3', 'confirm must reach framework state');
+    assert.equal(await page.locator('#count').textContent(), '6', 'confirm must reach framework state');
   }
   assert.deepEqual(await page.evaluate(() => window.pad.getState().diagnostics), []);
   await page.evaluate(() => window.unmount());
@@ -142,6 +162,6 @@ try {
   assert.deepEqual(errors, []);
   const resolved = JSON.parse(npm(['ls', '--depth=0', '--json'], dir));
   await mkdir(path.join(root, '.artifacts/compatibility'), { recursive: true });
-  await writeFile(path.join(root, `.artifacts/compatibility/${target}-${preset}.json`), JSON.stringify({ target, preset, passed: true, node: process.version, dependencies: Object.fromEntries(Object.entries(resolved.dependencies).map(([key, item]) => [key, item.version])) }, null, 2));
+  await writeFile(path.join(root, `.artifacts/compatibility/${target}-${preset}${zoned ? '-zone' : ''}.json`), JSON.stringify({ target, preset, ...(framework === 'angular' ? { changeDetection: zoned ? 'zone.js' : 'zoneless' } : {}), passed: true, verifiedAt: new Date().toISOString(), node: process.version, archives: Object.fromEntries([manifest.core, manifest[framework]].map(item => [item.name, item.integrity])), dependencies: Object.fromEntries(Object.entries(resolved.dependencies).map(([key, item]) => [key, item.version])) }, null, 2));
   console.log(`${target}/${preset}: package installation, types, ${framework === 'jquery' ? '' : 'SSR, '}hydration/lifecycle, activation and cleanup passed.`);
 } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }

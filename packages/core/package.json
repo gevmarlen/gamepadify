@@ -8,32 +8,57 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./testing": {
-      "types": "./dist/types/testing.d.ts",
-      "import": "./dist/testing.js",
-      "require": "./dist/testing.cjs"
+      "import": {
+        "types": "./dist/types/testing.d.ts",
+        "default": "./dist/testing.js"
+      },
+      "require": {
+        "types": "./dist/cjs/testing.d.ts",
+        "default": "./dist/testing.cjs"
+      }
     },
     "./styles.css": "./dist/gamepadify.css",
     "./dist/*": "./dist/*",
     "./package.json": "./package.json",
     "./core": {
-      "types": "./dist/types/core.d.ts",
-      "import": "./dist/core.js",
-      "require": "./dist/core.cjs"
+      "import": {
+        "types": "./dist/types/core.d.ts",
+        "default": "./dist/core.js"
+      },
+      "require": {
+        "types": "./dist/cjs/core.d.ts",
+        "default": "./dist/core.cjs"
+      }
     },
     "./navigation": {
-      "types": "./dist/types/navigation.d.ts",
-      "import": "./dist/navigation.js",
-      "require": "./dist/navigation.cjs"
+      "import": {
+        "types": "./dist/types/navigation.d.ts",
+        "default": "./dist/navigation.js"
+      },
+      "require": {
+        "types": "./dist/cjs/navigation.d.ts",
+        "default": "./dist/navigation.cjs"
+      }
     },
     "./hints": {
-      "types": "./dist/types/hints.d.ts",
-      "import": "./dist/hints.js",
-      "require": "./dist/hints.cjs"
+      "import": {
+        "types": "./dist/types/hints.d.ts",
+        "default": "./dist/hints.js"
+      },
+      "require": {
+        "types": "./dist/cjs/hints.d.ts",
+        "default": "./dist/hints.cjs"
+      }
     },
     "./core.css": "./dist/gamepadify-core.css",
     "./navigation.css": "./dist/gamepadify-navigation.css"

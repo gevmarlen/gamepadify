@@ -1,38 +1,125 @@
 {
   "version": "0.2.0",
-  "verifiedAt": "2026-10-19T14:34:53.568Z",
+  "status": "unreleased changes after v0.2.0",
+  "verifiedAt": "2026-10-19T16:19:21.710Z",
   "platform": "win32",
   "node": "v24.22.0",
-  "unitTests": 37,
-  "browserTests": 75,
+  "unitTests": 53,
+  "browserTests": 84,
   "browsers": {
     "chromium": "156.0.8078.4",
     "firefox": "157.0",
     "webkit": "27.2"
   },
   "hardwareVerified": false,
+  "baseline": {
+    "commit": "5f0daaa810d72fa2eaa33788f4147f358e7d690f",
+    "unitTests": 37,
+    "browserTests": 75,
+    "sizes": {
+      "minified": 27018,
+      "gzip": 9400,
+      "tarballs": {
+        "core": 176606,
+        "react": 4634,
+        "vue": 5232,
+        "jquery": 4488,
+        "angular": 4767
+      }
+    },
+    "bundles": {
+      "full": {
+        "consumer": {
+          "bytes": 26393,
+          "gzip": 9113,
+          "brotli": 8193
+        },
+        "script": {
+          "bytes": 27018,
+          "gzip": 9400,
+          "brotli": 8466
+        },
+        "css": {
+          "bytes": 7942,
+          "gzip": 1107,
+          "brotli": 893
+        }
+      },
+      "core": {
+        "consumer": {
+          "bytes": 18909,
+          "gzip": 6490,
+          "brotli": 5816
+        },
+        "script": {
+          "bytes": 19522,
+          "gzip": 6779,
+          "brotli": 6083
+        },
+        "css": {
+          "bytes": 66,
+          "gzip": 73,
+          "brotli": 55
+        }
+      },
+      "navigation": {
+        "consumer": {
+          "bytes": 23068,
+          "gzip": 7912,
+          "brotli": 7071
+        },
+        "script": {
+          "bytes": 23687,
+          "gzip": 8200,
+          "brotli": 7331
+        },
+        "css": {
+          "bytes": 699,
+          "gzip": 322,
+          "brotli": 264
+        }
+      },
+      "hints": {
+        "consumer": {
+          "bytes": 23177,
+          "gzip": 8033,
+          "brotli": 7225
+        },
+        "script": {
+          "bytes": 23809,
+          "gzip": 8322,
+          "brotli": 7492
+        },
+        "css": {
+          "bytes": 7942,
+          "gzip": 1107,
+          "brotli": 893
+        }
+      }
+    }
+  },
   "sizes": {
-    "minified": 27018,
-    "gzip": 9400,
+    "minified": 29264,
+    "gzip": 10150,
     "tarballs": {
-      "core": 176606,
-      "react": 4634,
-      "vue": 5232,
-      "jquery": 4488,
+      "core": 188296,
+      "react": 5569,
+      "vue": 5669,
+      "jquery": 4670,
       "angular": 4767
     }
   },
   "bundles": {
     "full": {
       "consumer": {
-        "bytes": 26393,
-        "gzip": 9113,
-        "brotli": 8193
+        "bytes": 28638,
+        "gzip": 9864,
+        "brotli": 8873
       },
       "script": {
-        "bytes": 27018,
-        "gzip": 9400,
-        "brotli": 8466
+        "bytes": 29264,
+        "gzip": 10150,
+        "brotli": 9156
       },
       "css": {
         "bytes": 7942,
@@ -42,14 +129,14 @@
     },
     "core": {
       "consumer": {
-        "bytes": 18909,
-        "gzip": 6490,
-        "brotli": 5816
+        "bytes": 20505,
+        "gzip": 6952,
+        "brotli": 6207
       },
       "script": {
-        "bytes": 19522,
-        "gzip": 6779,
-        "brotli": 6083
+        "bytes": 21118,
+        "gzip": 7242,
+        "brotli": 6487
       },
       "css": {
         "bytes": 66,
@@ -59,14 +146,14 @@
     },
     "navigation": {
       "consumer": {
-        "bytes": 23068,
-        "gzip": 7912,
-        "brotli": 7071
+        "bytes": 25035,
+        "gzip": 8481,
+        "brotli": 7575
       },
       "script": {
-        "bytes": 23687,
-        "gzip": 8200,
-        "brotli": 7331
+        "bytes": 25654,
+        "gzip": 8770,
+        "brotli": 7852
       },
       "css": {
         "bytes": 699,
@@ -76,14 +163,14 @@
     },
     "hints": {
       "consumer": {
-        "bytes": 23177,
-        "gzip": 8033,
-        "brotli": 7225
+        "bytes": 25151,
+        "gzip": 8728,
+        "brotli": 7861
       },
       "script": {
-        "bytes": 23809,
-        "gzip": 8322,
-        "brotli": 7492
+        "bytes": 25783,
+        "gzip": 9011,
+        "brotli": 8114
       },
       "css": {
         "bytes": 7942,
@@ -95,9 +182,15 @@
   "consumers": [
     {
       "target": "angular20",
-      "preset": "full",
+      "preset": "core",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:16:51.555Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "20.3.40",
         "@angular/cli": "20.3.40",
@@ -116,9 +209,70 @@
     },
     {
       "target": "angular20",
-      "preset": "core",
+      "preset": "full",
+      "changeDetection": "zone.js",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:42.089Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
+      "dependencies": {
+        "@angular/build": "20.3.40",
+        "@angular/cli": "20.3.40",
+        "@angular/common": "20.3.34",
+        "@angular/compiler-cli": "20.3.34",
+        "@angular/compiler": "20.3.34",
+        "@angular/core": "20.3.34",
+        "@angular/platform-browser": "20.3.34",
+        "@angular/platform-server": "20.3.34",
+        "gamepadify-angular": "0.2.0",
+        "gamepadify": "0.2.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "5.9.3",
+        "zone.js": "0.15.1"
+      }
+    },
+    {
+      "target": "angular20",
+      "preset": "full",
+      "changeDetection": "zoneless",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:16:47.215Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
+      "dependencies": {
+        "@angular/build": "20.3.40",
+        "@angular/cli": "20.3.40",
+        "@angular/common": "20.3.34",
+        "@angular/compiler-cli": "20.3.34",
+        "@angular/compiler": "20.3.34",
+        "@angular/core": "20.3.34",
+        "@angular/platform-browser": "20.3.34",
+        "@angular/platform-server": "20.3.34",
+        "gamepadify-angular": "0.2.0",
+        "gamepadify": "0.2.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "angular20",
+      "preset": "hints",
+      "changeDetection": "zoneless",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:17:00.311Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "20.3.40",
         "@angular/cli": "20.3.40",
@@ -138,8 +292,14 @@
     {
       "target": "angular20",
       "preset": "navigation",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:16:55.903Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "20.3.40",
         "@angular/cli": "20.3.40",
@@ -157,31 +317,16 @@
       }
     },
     {
-      "target": "angular20",
-      "preset": "hints",
-      "passed": true,
-      "node": "v24.22.0",
-      "dependencies": {
-        "@angular/build": "20.3.40",
-        "@angular/cli": "20.3.40",
-        "@angular/common": "20.3.34",
-        "@angular/compiler-cli": "20.3.34",
-        "@angular/compiler": "20.3.34",
-        "@angular/core": "20.3.34",
-        "@angular/platform-browser": "20.3.34",
-        "@angular/platform-server": "20.3.34",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
-        "rxjs": "7.8.2",
-        "tslib": "2.8.1",
-        "typescript": "5.9.3"
-      }
-    },
-    {
       "target": "angular21",
-      "preset": "full",
+      "preset": "core",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:10.151Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "21.2.27",
         "@angular/cli": "21.2.27",
@@ -200,9 +345,42 @@
     },
     {
       "target": "angular21",
-      "preset": "core",
+      "preset": "full",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:05.581Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
+      "dependencies": {
+        "@angular/build": "21.2.27",
+        "@angular/cli": "21.2.27",
+        "@angular/common": "21.2.25",
+        "@angular/compiler-cli": "21.2.25",
+        "@angular/compiler": "21.2.25",
+        "@angular/core": "21.2.25",
+        "@angular/platform-browser": "21.2.25",
+        "@angular/platform-server": "21.2.25",
+        "gamepadify-angular": "0.2.0",
+        "gamepadify": "0.2.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "angular21",
+      "preset": "hints",
+      "changeDetection": "zoneless",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:17:19.515Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "21.2.27",
         "@angular/cli": "21.2.27",
@@ -222,29 +400,14 @@
     {
       "target": "angular21",
       "preset": "navigation",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:14.877Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@angular/build": "21.2.27",
-        "@angular/cli": "21.2.27",
-        "@angular/common": "21.2.25",
-        "@angular/compiler-cli": "21.2.25",
-        "@angular/compiler": "21.2.25",
-        "@angular/core": "21.2.25",
-        "@angular/platform-browser": "21.2.25",
-        "@angular/platform-server": "21.2.25",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
-        "rxjs": "7.8.2",
-        "tslib": "2.8.1",
-        "typescript": "5.9.3"
-      }
-    },
-    {
-      "target": "angular21",
-      "preset": "hints",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "21.2.27",
         "@angular/cli": "21.2.27",
@@ -263,9 +426,15 @@
     },
     {
       "target": "angular22",
-      "preset": "full",
+      "preset": "core",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:28.673Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "22.2.3",
         "@angular/cli": "22.2.3",
@@ -284,9 +453,42 @@
     },
     {
       "target": "angular22",
-      "preset": "core",
+      "preset": "full",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:24.346Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
+      "dependencies": {
+        "@angular/build": "22.2.3",
+        "@angular/cli": "22.2.3",
+        "@angular/common": "22.2.3",
+        "@angular/compiler-cli": "22.2.3",
+        "@angular/compiler": "22.2.3",
+        "@angular/core": "22.2.3",
+        "@angular/platform-browser": "22.2.3",
+        "@angular/platform-server": "22.2.3",
+        "gamepadify-angular": "0.2.0",
+        "gamepadify": "0.2.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "6.0.3"
+      }
+    },
+    {
+      "target": "angular22",
+      "preset": "hints",
+      "changeDetection": "zoneless",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:17:37.389Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "22.2.3",
         "@angular/cli": "22.2.3",
@@ -306,29 +508,14 @@
     {
       "target": "angular22",
       "preset": "navigation",
+      "changeDetection": "zoneless",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:33.016Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@angular/build": "22.2.3",
-        "@angular/cli": "22.2.3",
-        "@angular/common": "22.2.3",
-        "@angular/compiler-cli": "22.2.3",
-        "@angular/compiler": "22.2.3",
-        "@angular/core": "22.2.3",
-        "@angular/platform-browser": "22.2.3",
-        "@angular/platform-server": "22.2.3",
-        "gamepadify-angular": "0.2.0",
-        "gamepadify": "0.2.0",
-        "rxjs": "7.8.2",
-        "tslib": "2.8.1",
-        "typescript": "6.0.3"
-      }
-    },
-    {
-      "target": "angular22",
-      "preset": "hints",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-angular": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
       "dependencies": {
         "@angular/build": "22.2.3",
         "@angular/cli": "22.2.3",
@@ -347,9 +534,14 @@
     },
     {
       "target": "jquery3",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:21.448Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
       "dependencies": {
         "@types/jquery": "3.5.34",
         "gamepadify-jquery": "0.2.0",
@@ -360,9 +552,32 @@
     },
     {
       "target": "jquery3",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:18.298Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
+      "dependencies": {
+        "@types/jquery": "3.5.34",
+        "gamepadify-jquery": "0.2.0",
+        "gamepadify": "0.2.0",
+        "jquery": "3.7.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "jquery3",
+      "preset": "hints",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:18:27.837Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
       "dependencies": {
         "@types/jquery": "3.5.34",
         "gamepadify-jquery": "0.2.0",
@@ -375,20 +590,12 @@
       "target": "jquery3",
       "preset": "navigation",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:24.708Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@types/jquery": "3.5.34",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
-        "jquery": "3.7.1",
-        "typescript": "5.9.3"
-      }
-    },
-    {
-      "target": "jquery3",
-      "preset": "hints",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
       "dependencies": {
         "@types/jquery": "3.5.34",
         "gamepadify-jquery": "0.2.0",
@@ -399,9 +606,14 @@
     },
     {
       "target": "jquery4",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:34.645Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
       "dependencies": {
         "@types/jquery": "4.0.1",
         "gamepadify-jquery": "0.2.0",
@@ -412,22 +624,14 @@
     },
     {
       "target": "jquery4",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:31.501Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@types/jquery": "4.0.1",
-        "gamepadify-jquery": "0.2.0",
-        "gamepadify": "0.2.0",
-        "jquery": "4.0.0",
-        "typescript": "5.9.3"
-      }
-    },
-    {
-      "target": "jquery4",
-      "preset": "navigation",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
       "dependencies": {
         "@types/jquery": "4.0.1",
         "gamepadify-jquery": "0.2.0",
@@ -440,7 +644,30 @@
       "target": "jquery4",
       "preset": "hints",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:41.048Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
+      "dependencies": {
+        "@types/jquery": "4.0.1",
+        "gamepadify-jquery": "0.2.0",
+        "gamepadify": "0.2.0",
+        "jquery": "4.0.0",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "jquery4",
+      "preset": "navigation",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:18:37.919Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-jquery": "sha512-ggh05WMedP+ahaq/aPV/bCi50vKCc1slJx4U/f/g5rLGbgKOkJqOcgU99oa+0g/CouUOnjh5GRWDKyXbXkwliQ=="
+      },
       "dependencies": {
         "@types/jquery": "4.0.1",
         "gamepadify-jquery": "0.2.0",
@@ -451,9 +678,14 @@
     },
     {
       "target": "react18",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:16:49.551Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
@@ -466,24 +698,14 @@
     },
     {
       "target": "react18",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:16:46.209Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@types/react-dom": "18.3.7",
-        "@types/react": "18.3.31",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
-        "react-dom": "18.3.1",
-        "react": "18.3.1",
-        "typescript": "5.9.3"
-      }
-    },
-    {
-      "target": "react18",
-      "preset": "navigation",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
@@ -498,7 +720,32 @@
       "target": "react18",
       "preset": "hints",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:16:56.394Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
+      "dependencies": {
+        "@types/react-dom": "18.3.7",
+        "@types/react": "18.3.31",
+        "gamepadify-react": "0.2.0",
+        "gamepadify": "0.2.0",
+        "react-dom": "18.3.1",
+        "react": "18.3.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "react18",
+      "preset": "navigation",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:16:53.040Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
       "dependencies": {
         "@types/react-dom": "18.3.7",
         "@types/react": "18.3.31",
@@ -511,9 +758,14 @@
     },
     {
       "target": "react19",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:03.828Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
@@ -526,24 +778,14 @@
     },
     {
       "target": "react19",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:00.368Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@types/react-dom": "19.3.0",
-        "@types/react": "19.3.0",
-        "gamepadify-react": "0.2.0",
-        "gamepadify": "0.2.0",
-        "react-dom": "19.3.1",
-        "react": "19.3.1",
-        "typescript": "5.9.3"
-      }
-    },
-    {
-      "target": "react19",
-      "preset": "navigation",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
@@ -558,7 +800,32 @@
       "target": "react19",
       "preset": "hints",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:10.771Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
+      "dependencies": {
+        "@types/react-dom": "19.3.0",
+        "@types/react": "19.3.0",
+        "gamepadify-react": "0.2.0",
+        "gamepadify": "0.2.0",
+        "react-dom": "19.3.1",
+        "react": "19.3.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "react19",
+      "preset": "navigation",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:17:07.367Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-react": "sha512-Hte76vqsxuikkDrPOEbgpCsGNppJ8bUUCLe0kWA55l1kdBoKQ4j0FxmknQh1Jnt+rd25BWqCH798yihB5Cvx7A=="
+      },
       "dependencies": {
         "@types/react-dom": "19.3.0",
         "@types/react": "19.3.0",
@@ -571,9 +838,14 @@
     },
     {
       "target": "vue33",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:21.857Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
         "gamepadify-vue": "0.2.0",
@@ -585,23 +857,14 @@
     },
     {
       "target": "vue33",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:16.658Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@vue/server-renderer": "3.3.13",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
-        "typescript": "5.9.3",
-        "vue-tsc": "3.3.13",
-        "vue": "3.3.13"
-      }
-    },
-    {
-      "target": "vue33",
-      "preset": "navigation",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
         "gamepadify-vue": "0.2.0",
@@ -615,7 +878,31 @@
       "target": "vue33",
       "preset": "hints",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:32.289Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
+      "dependencies": {
+        "@vue/server-renderer": "3.3.13",
+        "gamepadify-vue": "0.2.0",
+        "gamepadify": "0.2.0",
+        "typescript": "5.9.3",
+        "vue-tsc": "3.3.13",
+        "vue": "3.3.13"
+      }
+    },
+    {
+      "target": "vue33",
+      "preset": "navigation",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:17:27.135Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.3.13",
         "gamepadify-vue": "0.2.0",
@@ -627,9 +914,14 @@
     },
     {
       "target": "vue34",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:43.251Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
         "gamepadify-vue": "0.2.0",
@@ -641,23 +933,14 @@
     },
     {
       "target": "vue34",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:38.008Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@vue/server-renderer": "3.4.38",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
-        "typescript": "5.9.3",
-        "vue-tsc": "3.3.13",
-        "vue": "3.4.38"
-      }
-    },
-    {
-      "target": "vue34",
-      "preset": "navigation",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
         "gamepadify-vue": "0.2.0",
@@ -671,7 +954,31 @@
       "target": "vue34",
       "preset": "hints",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:53.472Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
+      "dependencies": {
+        "@vue/server-renderer": "3.4.38",
+        "gamepadify-vue": "0.2.0",
+        "gamepadify": "0.2.0",
+        "typescript": "5.9.3",
+        "vue-tsc": "3.3.13",
+        "vue": "3.4.38"
+      }
+    },
+    {
+      "target": "vue34",
+      "preset": "navigation",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:17:48.442Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.4.38",
         "gamepadify-vue": "0.2.0",
@@ -683,9 +990,14 @@
     },
     {
       "target": "vue35",
-      "preset": "full",
+      "preset": "core",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:04.162Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
         "gamepadify-vue": "0.2.0",
@@ -697,23 +1009,14 @@
     },
     {
       "target": "vue35",
-      "preset": "core",
+      "preset": "full",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:17:59.131Z",
       "node": "v24.22.0",
-      "dependencies": {
-        "@vue/server-renderer": "3.5.44",
-        "gamepadify-vue": "0.2.0",
-        "gamepadify": "0.2.0",
-        "typescript": "5.9.3",
-        "vue-tsc": "3.3.13",
-        "vue": "3.5.44"
-      }
-    },
-    {
-      "target": "vue35",
-      "preset": "navigation",
-      "passed": true,
-      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
         "gamepadify-vue": "0.2.0",
@@ -727,7 +1030,31 @@
       "target": "vue35",
       "preset": "hints",
       "passed": true,
+      "verifiedAt": "2026-10-19T16:18:14.494Z",
       "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
+      "dependencies": {
+        "@vue/server-renderer": "3.5.44",
+        "gamepadify-vue": "0.2.0",
+        "gamepadify": "0.2.0",
+        "typescript": "5.9.3",
+        "vue-tsc": "3.3.13",
+        "vue": "3.5.44"
+      }
+    },
+    {
+      "target": "vue35",
+      "preset": "navigation",
+      "passed": true,
+      "verifiedAt": "2026-10-19T16:18:09.364Z",
+      "node": "v24.22.0",
+      "archives": {
+        "gamepadify": "sha512-w8EZVH+JkpHmvGXMo8Kk4UTRWGT3j9yRqUHhqbDLWRyKbE25tXOQ5X2FmBYIXYyHlN6j4EQD/Es6Tn0Fd8XU3Q==",
+        "gamepadify-vue": "sha512-NY66Cqd3U0XrqPSAL6h2IcihpV0wP0WSUXgzxenpB9ieaipP945XKCLkGlAx3YujZAmkK4eJQXUByjK2JEEh8g=="
+      },
       "dependencies": {
         "@vue/server-renderer": "3.5.44",
         "gamepadify-vue": "0.2.0",
@@ -737,5 +1064,896 @@
         "vue": "3.5.44"
       }
     }
-  ]
+  ],
+  "performance": {
+    "baselineCommit": "5f0daaa810d72fa2eaa33788f4147f358e7d690f",
+    "baselineScriptSha256": "07c908e85cb5dcc19030d0ef56081077cf5a1035747837a3065c19514f11552b",
+    "currentScriptSha256": "dd418b57b429a039cbb1c281cd6ca7d9f916e599bf853ab35910ead7a70f6c93",
+    "beforeDate": "2026-10-19T15:46:13.802Z",
+    "afterDate": "2026-10-19T16:13:00.523Z",
+    "browser": "156.0.8078.4",
+    "node": "v24.22.0",
+    "platform": "win32 10.0.26300 x64",
+    "cpu": "13th Gen Intel(R) Core(TM) i9-13900K",
+    "framesPerRun": 60,
+    "runs": 3,
+    "warmupFrames": 30,
+    "method": "Median of three run means for instrumented requestAnimationFrame CPU. CDP page-wide layout/style deltas and sampled allocations (16 KiB interval, including collected objects). Controlled input; eight activations per run; insertion of 10% additional focusable elements. Timings include profiling overhead and exclude GPU/presentation time.",
+    "comparisons": [
+      {
+        "scenario": "navigation",
+        "count": 10,
+        "before": {
+          "cpuMs": 1.627,
+          "runCpuMs": [
+            1.045,
+            1.627,
+            1.938
+          ],
+          "frameP95Ms": 2.7,
+          "callsPerFrame": {
+            "getComputedStyle": 394,
+            "getBoundingClientRect": 178,
+            "getClientRects": 74,
+            "elementFromPoint": 24,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 63981,
+          "latencyMedianMs": 15.9,
+          "latencyP95Ms": 17.7,
+          "latenciesMs": [
+            8.6,
+            16.9,
+            16.4,
+            15.5,
+            16.5,
+            17.9,
+            16.2,
+            16.9,
+            5.1,
+            15.9,
+            16.5,
+            15.4,
+            17.1,
+            17.7,
+            15.4,
+            17.1,
+            5.6,
+            14.7,
+            15.8,
+            16.2,
+            16.8,
+            15.8,
+            14.8,
+            15
+          ],
+          "insertionMs": 16.8,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 0.287,
+          "runCpuMs": [
+            0.288,
+            0.287,
+            0.238
+          ],
+          "frameP95Ms": 0.4,
+          "callsPerFrame": {
+            "getComputedStyle": 5,
+            "getBoundingClientRect": 2,
+            "getClientRects": 0,
+            "elementFromPoint": 1,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 10980,
+          "latencyMedianMs": 16.4,
+          "latencyP95Ms": 18.2,
+          "latenciesMs": [
+            0.6,
+            16.4,
+            17.2,
+            16.5,
+            15.9,
+            18.2,
+            16.4,
+            18.4,
+            0.2,
+            16.6,
+            16.3,
+            17.1,
+            16.2,
+            15.9,
+            16.7,
+            17.2,
+            1.3,
+            17,
+            15.9,
+            16.5,
+            16,
+            16,
+            17.5,
+            17.7
+          ],
+          "insertionMs": 17.4,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "navigation",
+        "count": 100,
+        "before": {
+          "cpuMs": 4.732,
+          "runCpuMs": [
+            4.825,
+            4.707,
+            4.732
+          ],
+          "frameP95Ms": 6.6,
+          "callsPerFrame": {
+            "getComputedStyle": 3634,
+            "getBoundingClientRect": 1528,
+            "getClientRects": 704,
+            "elementFromPoint": 204,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 360648,
+          "latencyMedianMs": 14.8,
+          "latencyP95Ms": 17.1,
+          "latenciesMs": [
+            7.5,
+            15.9,
+            14.4,
+            14.7,
+            16.2,
+            15.8,
+            16.7,
+            14.3,
+            7.7,
+            14.4,
+            14.3,
+            13.6,
+            17.4,
+            14.1,
+            16,
+            14.9,
+            5.7,
+            15.8,
+            15.6,
+            14.8,
+            17.1,
+            12.9,
+            15.2,
+            15
+          ],
+          "insertionMs": 17.4,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 0.202,
+          "runCpuMs": [
+            0.26,
+            0.197,
+            0.202
+          ],
+          "frameP95Ms": 0.4,
+          "callsPerFrame": {
+            "getComputedStyle": 5,
+            "getBoundingClientRect": 2,
+            "getClientRects": 0,
+            "elementFromPoint": 1,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 11547,
+          "latencyMedianMs": 16.3,
+          "latencyP95Ms": 17.4,
+          "latenciesMs": [
+            7.7,
+            16.3,
+            16.3,
+            15.4,
+            17,
+            16.2,
+            16.7,
+            16.1,
+            6.8,
+            16.3,
+            15,
+            16.8,
+            16.6,
+            17.6,
+            16.4,
+            16.5,
+            6.3,
+            17,
+            16.3,
+            16.1,
+            17.4,
+            16.7,
+            16.1,
+            17.2
+          ],
+          "insertionMs": 17.2,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "navigation",
+        "count": 500,
+        "before": {
+          "cpuMs": 21.338,
+          "runCpuMs": [
+            21.338,
+            21.418,
+            21.082
+          ],
+          "frameP95Ms": 23.8,
+          "callsPerFrame": {
+            "getComputedStyle": 18034,
+            "getBoundingClientRect": 7528,
+            "getClientRects": 3504,
+            "elementFromPoint": 1004,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 1547423,
+          "latencyMedianMs": 11.2,
+          "latencyP95Ms": 12.5,
+          "latenciesMs": [
+            11.2,
+            11,
+            11.2,
+            11,
+            11.2,
+            11.5,
+            12.5,
+            11.2,
+            11.3,
+            11.1,
+            10.8,
+            11.1,
+            11.3,
+            11.8,
+            13.4,
+            11.7,
+            11.2,
+            10.9,
+            11.4,
+            10.7,
+            10.7,
+            11.3,
+            11.5,
+            11.2
+          ],
+          "insertionMs": 25.6,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 0.225,
+          "runCpuMs": [
+            0.197,
+            0.365,
+            0.225
+          ],
+          "frameP95Ms": 0.5,
+          "callsPerFrame": {
+            "getComputedStyle": 5,
+            "getBoundingClientRect": 2,
+            "getClientRects": 0,
+            "elementFromPoint": 1,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 9854,
+          "latencyMedianMs": 16.6,
+          "latencyP95Ms": 17.9,
+          "latenciesMs": [
+            13.7,
+            17.3,
+            16.3,
+            17.7,
+            15.7,
+            16.7,
+            16.6,
+            16.8,
+            12.1,
+            16.9,
+            15.9,
+            16.9,
+            17.2,
+            15.4,
+            17.9,
+            17.6,
+            6.2,
+            16.2,
+            15.8,
+            17,
+            18,
+            15.6,
+            17.7,
+            15.7
+          ],
+          "insertionMs": 19,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "navigation",
+        "count": 1000,
+        "before": {
+          "cpuMs": 45.928,
+          "runCpuMs": [
+            45.928,
+            45.913,
+            46.365
+          ],
+          "frameP95Ms": 49.1,
+          "callsPerFrame": {
+            "getComputedStyle": 36034,
+            "getBoundingClientRect": 15028,
+            "getClientRects": 7004,
+            "elementFromPoint": 2004,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 3119968,
+          "latencyMedianMs": 24,
+          "latencyP95Ms": 26.3,
+          "latenciesMs": [
+            24.8,
+            23.7,
+            23.8,
+            24.3,
+            26.3,
+            23.5,
+            26,
+            23.8,
+            24.1,
+            23.3,
+            24.4,
+            24,
+            25,
+            23.6,
+            23.7,
+            23.8,
+            24.2,
+            23.8,
+            24.4,
+            27.2,
+            24,
+            25.4,
+            23.7,
+            23.5
+          ],
+          "insertionMs": 55.6,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 0.363,
+          "runCpuMs": [
+            0.32,
+            0.363,
+            0.377
+          ],
+          "frameP95Ms": 0.5,
+          "callsPerFrame": {
+            "getComputedStyle": 5,
+            "getBoundingClientRect": 2,
+            "getClientRects": 0,
+            "elementFromPoint": 1,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 10396,
+          "latencyMedianMs": 16.5,
+          "latencyP95Ms": 18.5,
+          "latenciesMs": [
+            15.9,
+            16.1,
+            16.6,
+            16.5,
+            15.3,
+            18.8,
+            18.5,
+            16.4,
+            4.7,
+            16.5,
+            16.4,
+            17,
+            16.9,
+            17.8,
+            16.2,
+            16,
+            13.7,
+            16.4,
+            15.8,
+            16.9,
+            17.4,
+            16.5,
+            17.3,
+            16.5
+          ],
+          "insertionMs": 20.3,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "hints",
+        "count": 10,
+        "before": {
+          "cpuMs": 1.763,
+          "runCpuMs": [
+            1.763,
+            1.68,
+            1.795
+          ],
+          "frameP95Ms": 2.6,
+          "callsPerFrame": {
+            "getComputedStyle": 242,
+            "getBoundingClientRect": 160,
+            "getClientRects": 40,
+            "elementFromPoint": 20,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 2,
+          "sampledAllocationBytesPerFrame": 87513,
+          "latencyMedianMs": 15.7,
+          "latencyP95Ms": 17.5,
+          "latenciesMs": [
+            8.5,
+            17.6,
+            15.5,
+            15.8,
+            16.7,
+            14.1,
+            14.8,
+            17.2,
+            5.5,
+            15.6,
+            16.2,
+            15,
+            17.4,
+            17.4,
+            15.8,
+            15.2,
+            4.2,
+            16.2,
+            15.7,
+            14.5,
+            15.5,
+            16.1,
+            17.5,
+            16.3
+          ],
+          "insertionMs": 17.2,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 0.677,
+          "runCpuMs": [
+            0.692,
+            0.667,
+            0.677
+          ],
+          "frameP95Ms": 1,
+          "callsPerFrame": {
+            "getComputedStyle": 14,
+            "getBoundingClientRect": 11,
+            "getClientRects": 0,
+            "elementFromPoint": 10,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 0,
+          "sampledAllocationBytesPerFrame": 23821,
+          "latencyMedianMs": 16.4,
+          "latencyP95Ms": 17.9,
+          "latenciesMs": [
+            2,
+            17.9,
+            17.6,
+            17.7,
+            16.5,
+            16.8,
+            16.2,
+            17.9,
+            2.9,
+            16.1,
+            17.1,
+            15.4,
+            16,
+            15.4,
+            17.9,
+            16.9,
+            13.3,
+            17.7,
+            18.5,
+            15.3,
+            15.1,
+            16.8,
+            16.4,
+            16.2
+          ],
+          "insertionMs": 17.4,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "hints",
+        "count": 100,
+        "before": {
+          "cpuMs": 7.27,
+          "runCpuMs": [
+            7.263,
+            7.308,
+            7.27
+          ],
+          "frameP95Ms": 8.3,
+          "callsPerFrame": {
+            "getComputedStyle": 2402,
+            "getBoundingClientRect": 1600,
+            "getClientRects": 400,
+            "elementFromPoint": 200,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 2,
+          "sampledAllocationBytesPerFrame": 596856,
+          "latencyMedianMs": 12.8,
+          "latencyP95Ms": 14,
+          "latenciesMs": [
+            5.6,
+            12.7,
+            12.8,
+            13.8,
+            11.9,
+            13.9,
+            14.2,
+            13,
+            6.8,
+            12.8,
+            11.6,
+            11.9,
+            12.7,
+            12.9,
+            12.7,
+            13,
+            6.1,
+            12.5,
+            14,
+            13.6,
+            13,
+            12.9,
+            11,
+            12.9
+          ],
+          "insertionMs": 17,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 2.742,
+          "runCpuMs": [
+            2.742,
+            2.785,
+            2.387
+          ],
+          "frameP95Ms": 4,
+          "callsPerFrame": {
+            "getComputedStyle": 104,
+            "getBoundingClientRect": 101,
+            "getClientRects": 0,
+            "elementFromPoint": 100,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 2,
+          "styleRecalculationsPerFrame": 2,
+          "sampledAllocationBytesPerFrame": 159193,
+          "latencyMedianMs": 17.2,
+          "latencyP95Ms": 19.1,
+          "latenciesMs": [
+            8.9,
+            17.5,
+            17.4,
+            15.5,
+            16.7,
+            17.6,
+            15.5,
+            17.3,
+            15.9,
+            15.5,
+            19,
+            13.9,
+            19.5,
+            17.6,
+            16.2,
+            19.1,
+            8.1,
+            17.5,
+            16.2,
+            17.7,
+            16.8,
+            17.7,
+            17.2,
+            18.6
+          ],
+          "insertionMs": 18.2,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "hints",
+        "count": 500,
+        "before": {
+          "cpuMs": 126.875,
+          "runCpuMs": [
+            125.205,
+            126.875,
+            156.727
+          ],
+          "frameP95Ms": 259.1,
+          "callsPerFrame": {
+            "getComputedStyle": 12002,
+            "getBoundingClientRect": 8000,
+            "getClientRects": 2000,
+            "elementFromPoint": 1000,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 2.033,
+          "sampledAllocationBytesPerFrame": 2510193,
+          "latencyMedianMs": 63.2,
+          "latencyP95Ms": 66.2,
+          "latenciesMs": [
+            63.1,
+            60.8,
+            63.2,
+            62.6,
+            60.1,
+            60.4,
+            60.9,
+            59.9,
+            63.3,
+            65.8,
+            64.1,
+            64.5,
+            63.2,
+            66.2,
+            64.6,
+            63.1,
+            65.2,
+            62.5,
+            64.9,
+            70.1,
+            65.4,
+            65,
+            63.1,
+            66.1
+          ],
+          "insertionMs": 145.2,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 4.703,
+          "runCpuMs": [
+            4.703,
+            4.857,
+            4.703
+          ],
+          "frameP95Ms": 5.4,
+          "callsPerFrame": {
+            "getComputedStyle": 504,
+            "getBoundingClientRect": 501,
+            "getClientRects": 0,
+            "elementFromPoint": 500,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 2.017,
+          "styleRecalculationsPerFrame": 2.017,
+          "sampledAllocationBytesPerFrame": 697937,
+          "latencyMedianMs": 17.8,
+          "latencyP95Ms": 19.9,
+          "latenciesMs": [
+            11.5,
+            16.9,
+            18.6,
+            17.7,
+            17.8,
+            17.7,
+            19.4,
+            18.2,
+            9.7,
+            16.7,
+            18.4,
+            18.2,
+            21,
+            17.6,
+            17.7,
+            17,
+            14.4,
+            18.9,
+            19.9,
+            19.3,
+            17.9,
+            18.3,
+            18.2,
+            17.1
+          ],
+          "insertionMs": 19.2,
+          "insertionPassed": true
+        }
+      },
+      {
+        "scenario": "hints",
+        "count": 1000,
+        "before": {
+          "cpuMs": 534.253,
+          "runCpuMs": [
+            534.253,
+            530.357,
+            705.458
+          ],
+          "frameP95Ms": 1016.6,
+          "callsPerFrame": {
+            "getComputedStyle": 24002,
+            "getBoundingClientRect": 16000,
+            "getClientRects": 4000,
+            "elementFromPoint": 2000,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 0,
+          "styleRecalculationsPerFrame": 2.033,
+          "sampledAllocationBytesPerFrame": 4969188,
+          "latencyMedianMs": 265,
+          "latencyP95Ms": 270.5,
+          "latenciesMs": [
+            268.9,
+            263.6,
+            264.8,
+            269.4,
+            263.2,
+            263.9,
+            270.5,
+            260.9,
+            267.4,
+            267.7,
+            262.1,
+            267.9,
+            262.2,
+            262.5,
+            266.2,
+            266.7,
+            261.4,
+            266.6,
+            270.5,
+            266.7,
+            271.7,
+            264.3,
+            262.7,
+            265
+          ],
+          "insertionMs": 601.9,
+          "insertionPassed": true
+        },
+        "after": {
+          "cpuMs": 10.74,
+          "runCpuMs": [
+            10.74,
+            10.902,
+            10.705
+          ],
+          "frameP95Ms": 11.5,
+          "callsPerFrame": {
+            "getComputedStyle": 1004,
+            "getBoundingClientRect": 1001,
+            "getClientRects": 0,
+            "elementFromPoint": 1000,
+            "querySelectorAll": 0
+          },
+          "layoutsPerFrame": 2.017,
+          "styleRecalculationsPerFrame": 2.017,
+          "sampledAllocationBytesPerFrame": 1243840,
+          "latencyMedianMs": 19.7,
+          "latencyP95Ms": 20.5,
+          "latenciesMs": [
+            14.3,
+            19.9,
+            20.5,
+            19.2,
+            19.1,
+            19.7,
+            19.4,
+            20.1,
+            14.8,
+            19.8,
+            20.2,
+            20,
+            20.1,
+            20.2,
+            19.5,
+            19.7,
+            15.6,
+            23.3,
+            20.3,
+            19.3,
+            20.2,
+            19.7,
+            19.6,
+            19.4
+          ],
+          "insertionMs": 23.6,
+          "insertionPassed": true
+        }
+      }
+    ]
+  },
+  "publishedRelease": {
+    "verifiedAt": "2026-10-19T16:17:28.054Z",
+    "version": "0.2.0",
+    "packages": [
+      {
+        "name": "gamepadify",
+        "version": "0.2.0",
+        "url": "https://registry.npmjs.org/gamepadify/0.2.0",
+        "integrity": "sha512-U7Zbl/pvIvLkL3eTof6SoRRrvaqkOqpOs8Z8YhRwZSd65ro+YCzNKpWONWScCHK5QjjbCBHWS0kvOiTiL4CTRw=="
+      },
+      {
+        "name": "gamepadify-angular",
+        "version": "0.2.0",
+        "url": "https://registry.npmjs.org/gamepadify-angular/0.2.0",
+        "integrity": "sha512-/o14k5xt6uF5q5V/0IbISZCAGzHHYahcj8eXVK/uS/UVHX28MMCUoEWDCt/tgqBL/K7T8gC7ALuWsz/cpTyzkw=="
+      },
+      {
+        "name": "gamepadify-react",
+        "version": "0.2.0",
+        "url": "https://registry.npmjs.org/gamepadify-react/0.2.0",
+        "integrity": "sha512-hAXTAl7anLW6w1zuMWrgkVb41vdEPDZRm3Iruw5Xfagx/NzzeZU60rtnXVPm3E7y+EIyYQHMCj3zNKPYSeH7ew=="
+      },
+      {
+        "name": "gamepadify-vue",
+        "version": "0.2.0",
+        "url": "https://registry.npmjs.org/gamepadify-vue/0.2.0",
+        "integrity": "sha512-Udh+YRXzRQjgumKNIFjo8JgVxhR3YUoaijnR1PXu1aZnrUDn3U24BmBmiaX888uoh4zpZExPWkNhmiFJ4dXKTg=="
+      },
+      {
+        "name": "gamepadify-jquery",
+        "version": "0.2.0",
+        "url": "https://registry.npmjs.org/gamepadify-jquery/0.2.0",
+        "integrity": "sha512-opoHWqJos9lMG2WriaC/V2LwnbfD8x+Z/ryyUgGS77JaYNDf5mpU7tcdyQJJ9UrmSJpL3ftcWkB91FAh+cSECQ=="
+      }
+    ],
+    "cdn": [
+      {
+        "url": "https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/gamepadify.min.js",
+        "bytes": 27018,
+        "sha256": "07c908e85cb5dcc19030d0ef56081077cf5a1035747837a3065c19514f11552b",
+        "matchesBaseline": true
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/gamepadify.css",
+        "bytes": 7942,
+        "sha256": "67a34b96bb6380bb0dcc92d49b03e391d89224cbc3ed4409c210b61a243ce151",
+        "matchesBaseline": true
+      },
+      {
+        "url": "https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/assets/xbox-south.png",
+        "bytes": 491,
+        "sha256": "e4158c16e2aca817503819bba998dc4d749327b8168ddd9dd19090860563badf",
+        "matchesBaseline": true
+      }
+    ],
+    "chromiumScriptActivationAndPng": true,
+    "newReleasePublished": false
+  }
 }

@@ -1,15 +1,18 @@
 import { createElement, StrictMode, useEffect, useState } from 'react';
 import { GamepadProvider, useGamepad, useGamepadController } from 'gamepadify-react';
-import type { GamepadifyOptions } from 'gamepadify';
+import type { Button, GamepadifyOptions } from 'gamepadify';
 
 function Surface() {
   const [count, setCount] = useState(0);
   const [show, setShow] = useState(true);
-  const ref = useGamepad<HTMLButtonElement>('west');
+  const [button, changeBinding] = useState<Button>('west');
+  const ref = useGamepad<HTMLButtonElement>({ button });
   const pad = useGamepadController();
-  useEffect(() => { Object.assign(window, { pad, toggle: () => setShow(value => !value) }); }, [pad]);
+  useEffect(() => { Object.assign(window, { pad, changeBinding, toggle: () => setShow(value => !value) }); }, [pad]);
   return createElement('div', null, createElement('output', { id: 'count' }, count), show && createElement('button', { id: 'action', ref, onClick: () => setCount(value => value + 1) }, 'Action'));
 }
 export function App({ options }: { options?: GamepadifyOptions }) {
-  return createElement(StrictMode, null, createElement(GamepadProvider, { options }, createElement(Surface)));
+  const [, refresh] = useState(0);
+  useEffect(() => { Object.assign(window, { rerender: () => refresh(value => value + 1) }); }, []);
+  return createElement(StrictMode, null, createElement(GamepadProvider, { options: { ...options, hints: { offset: 6 } } }, createElement(Surface)));
 }

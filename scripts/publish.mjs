@@ -4,6 +4,7 @@ import { npm } from './npm.mjs';
 
 const manifest = JSON.parse(await readFile('.artifacts/packages/manifest.json', 'utf8'));
 const version = manifest.core.version;
+if (process.env.GITHUB_ACTIONS === 'true') assert.equal(process.env.GITHUB_REF_TYPE, 'tag', 'CI publication requires a version tag');
 for (const item of Object.values(manifest)) assert.equal(item.version, version);
 if (process.env.GITHUB_REF_TYPE === 'tag') assert.equal(process.env.GITHUB_REF_NAME, `v${version}`);
 

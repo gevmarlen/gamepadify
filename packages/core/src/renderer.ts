@@ -1,33 +1,44 @@
 import { buttonLabel } from './buttons.js';
-import { onScreen } from './dom.js';
 import { FocusRenderer } from './focus-renderer.js';
 import type { RenderState } from './features.js';
-import type { HintOptions, PhysicalButton } from './types.js';
+import type { Glyph, HintOptions, PhysicalButton } from './types.js';
 
 export interface HintTarget { element: HTMLElement; buttons: readonly PhysicalButton[]; options?: HintOptions }
 
 export class Renderer extends FocusRenderer {
   private hints = new Map<HTMLElement, { node: HTMLDivElement; key: string }>();
 
+  override measure<T>(read: () => T): T {
+    if (this.hints.size < 100 || !this.host.isConnected) return read();
+    // Hit-testing still traverses pointer-transparent descendants in Chromium.
+    const property = 'contentVisibility' in this.host.style ? 'contentVisibility' : 'visibility';
+    const previous = this.host.style[property];
+    this.host.style[property] = 'hidden';
+    try { return read(); } finally { this.host.style[property] = previous; }
+  }
+
   override render(state: RenderState): void {
     super.render(state);
-    const { visible, focused, confirm, entries, family } = state;
+    const { visible, focused, confirm, entries, family, measurements } = state;
     const defaults = state.options.hints ?? {};
     const showHints = state.options.showHints !== false;
-    const targets: HintTarget[] = visible.filter(entry => entry.buttons.length).map(entry => ({ element: entry.element, buttons: entry.buttons, options: entry.binding.hint }));
-    if (focused && confirm && onScreen(focused)) {
+    const targets: HintTarget[] = showHints ? visible.filter(entry => entry.element.isConnected).map(entry => ({ element: entry.element, buttons: entry.buttons, options: entry.binding.hint })) : [];
+    if (showHints && focused && confirm && measurements.onScreen(focused)) {
       const index = targets.findIndex(hint => hint.element === focused);
       const hint = { element: focused, buttons: [confirm], options: entries.find(entry => entry.element === focused)?.binding.hint };
       if (index < 0) targets.push(hint); else targets[index] = hint;
     }
     const wanted = new Set<HTMLElement>();
-    const cssSize = Number.parseFloat(this.document.defaultView!.getComputedStyle(this.host).getPropertyValue('--gamepadify-size')) || 24;
+    const cssSize = targets.length ? Number.parseFloat(measurements.style(this.host).getPropertyValue('--gamepadify-size')) || 24 : 24;
+    const base = { size: cssSize, placement: 'top-end' as const, offset: 6, offsetX: 0, offsetY: 0, ...defaults };
+    const images: { glyph: HTMLElement; fallback: HTMLElement; source?: Glyph; size: number }[] = [];
     if (showHints) for (const target of targets) {
       wanted.add(target.element);
-      const options = { size: cssSize, placement: 'top-end' as const, offset: 6, offsetX: 0, offsetY: 0, ...defaults, ...target.options };
+      const options = target.options ? { ...base, ...target.options } : base;
       const skin = options.skin ?? 'auto';
       const selectedFamily = typeof skin === 'string' && skin !== 'auto' ? skin : family;
-      const key = JSON.stringify([target.buttons, selectedFamily, skin, options.size]);
+      const skinKey = typeof skin === 'object' ? JSON.stringify(target.buttons.map(button => skin.glyphs[button])) : '';
+      const key = `${target.buttons.join('+')}:${selectedFamily}:${skinKey}:${options.size}`;
       let hint = this.hints.get(target.element);
       if (!hint) {
         const node = this.document.createElement('div');
@@ -37,58 +48,32 @@ export class Renderer extends FocusRenderer {
         this.hints.set(target.element, hint);
       }
       if (hint.key !== key) {
-        hint.node.replaceChildren();
-        hint.node.style.setProperty('--gamepadify-size', `${options.size}px`);
+        const node = hint.node;
+        node.replaceChildren();
+        node.style.setProperty('--gamepadify-size', `${options.size}px`);
         target.buttons.forEach((button, index) => {
           if (index) {
             const separator = this.document.createElement('span');
             separator.className = 'gamepadify-plus';
             separator.textContent = '+';
-            hint!.node.append(separator);
+            node.append(separator);
           }
           const glyph = this.document.createElement('span');
           glyph.className = 'gamepadify-glyph';
           glyph.dataset.button = button;
           glyph.dataset.family = selectedFamily;
-          hint!.node.append(glyph);
+          node.append(glyph);
           const custom = typeof skin === 'object' ? skin.glyphs[button] : undefined;
           const label = typeof custom === 'object' ? custom.label : undefined;
           const fallback = this.document.createElement('span');
           fallback.textContent = label ?? buttonLabel(button, selectedFamily);
           glyph.append(fallback);
-          if (custom) {
-            const source = typeof custom === 'string' ? { url: custom } : custom;
-            glyph.dataset.family = 'custom';
-            const img = this.document.createElement('img');
-            img.alt = '';
-            img.src = source.url;
-            img.addEventListener('load', () => {
-              if (source.atlas) {
-                const a = source.atlas;
-                glyph.style.backgroundImage = `url(${JSON.stringify(source.url)})`;
-                glyph.style.backgroundSize = `${a.sheetWidth / a.width * options.size}px ${a.sheetHeight / a.height * options.size}px`;
-                glyph.style.backgroundPosition = `${-a.x / a.width * options.size}px ${-a.y / a.height * options.size}px`;
-                img.hidden = true;
-              }
-              fallback.hidden = true;
-            });
-            img.addEventListener('error', () => { img.hidden = true; fallback.hidden = false; });
-            glyph.append(img);
-          } else if (selectedFamily !== 'generic') {
-            const url = this.document.defaultView!.getComputedStyle(glyph).backgroundImage;
-            if (url && url !== 'none') {
-              const img = this.document.createElement('img');
-              img.alt = '';
-              img.src = url.replace(/^url\(["']?|["']?\)$/g, '');
-              img.addEventListener('load', () => { fallback.hidden = true; });
-              img.addEventListener('error', () => { img.hidden = true; fallback.hidden = false; });
-              glyph.append(img);
-            }
-          }
+          if (custom) glyph.dataset.family = 'custom';
+          if (custom || selectedFamily !== 'generic') images.push({ glyph, fallback, source: typeof custom === 'string' ? { url: custom } : custom, size: options.size });
         });
         hint.key = key;
       }
-      const rect = target.element.getBoundingClientRect();
+      const rect = measurements.rect(target.element);
       const width = target.buttons.length * options.size + Math.max(0, target.buttons.length - 1) * 14;
       const height = options.size;
       const placement = options.placement;
@@ -100,6 +85,29 @@ export class Renderer extends FocusRenderer {
       this.place(hint.node, Math.max(2, Math.min(x, view.innerWidth - width - 2)), Math.max(2, Math.min(y, view.innerHeight - height - 2)), width, height);
     }
     for (const [element, hint] of this.hints) if (!wanted.has(element)) { hint.node.remove(); this.hints.delete(element); }
+    const sources = images.map(({ glyph, source }) => {
+      const url = source ? '' : measurements.style(glyph).backgroundImage;
+      return source ?? (url && url !== 'none' ? { url: url.replace(/^url\(["']?|["']?\)$/g, '') } : undefined);
+    });
+    images.forEach(({ glyph, fallback, size }, index) => {
+      const source = sources[index];
+      if (!source) return;
+      const img = this.document.createElement('img');
+      img.alt = '';
+      img.addEventListener('load', () => {
+        if (source.atlas) {
+          const a = source.atlas;
+          glyph.style.backgroundImage = `url(${JSON.stringify(source.url)})`;
+          glyph.style.backgroundSize = `${a.sheetWidth / a.width * size}px ${a.sheetHeight / a.height * size}px`;
+          glyph.style.backgroundPosition = `${-a.x / a.width * size}px ${-a.y / a.height * size}px`;
+          img.hidden = true;
+        }
+        fallback.hidden = true;
+      });
+      img.addEventListener('error', () => { img.hidden = true; fallback.hidden = false; });
+      img.src = source.url;
+      glyph.append(img);
+    });
   }
 
   override destroy(): void { super.destroy(); this.hints.clear(); }

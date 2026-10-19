@@ -19,6 +19,7 @@ for (const name of packages) {
   for (const entry of ['index', 'core', 'navigation', 'hints', ...(name === 'core' ? ['testing'] : [])]) await writeFile(`${dir}/dist/${entry}.cjs`, `module.exports = require('./cjs/${entry}.js');\n`);
   const configPath = `${dir}/tsconfig.build.json`;
   run('node_modules/typescript/bin/tsc', ['-p', configPath]);
+  await cp(`${dir}/dist/types`, `${dir}/dist/cjs`, { recursive: true });
   await cp('LICENSE', `${dir}/LICENSE`);
 }
 for (const entry of ['index', 'core', 'navigation', 'hints']) await build({ entryPoints: [`packages/core/src/${entry}.ts`], outfile: `packages/core/dist/gamepadify${entry === 'index' ? '' : '-' + entry}.min.js`, format: 'iife', globalName: 'Gamepadify', bundle: true, minify: true, target: 'es2022', sourcemap: true });

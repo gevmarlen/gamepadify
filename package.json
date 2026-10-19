@@ -12,6 +12,7 @@
     "test:browser": "playwright test",
     "test:packages": "node scripts/check-packages.mjs",
     "test:bundles": "node scripts/check-bundles.mjs",
+    "benchmark": "node scripts/benchmark.mjs",
     "test:consumer": "node scripts/check-consumer.mjs",
     "check": "npm run build && npm run typecheck && npm test && npm run test:packages && npm run test:bundles",
     "dev": "vite demo --host 127.0.0.1",
@@ -42,7 +43,6 @@
     "typescript": "~5.9.3",
     "vite": "^8.3.4",
     "vitest": "^5.0.5",
-    "vue": "~3.5.44",
-    "zone.js": "~0.15.1"
+    "vue": "~3.5.44"
   }
 }
