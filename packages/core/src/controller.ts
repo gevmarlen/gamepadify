@@ -160,7 +160,7 @@ export class Controller implements GamepadifyController {
   configure(options: Partial<GamepadifyOptions>): void {
     if (this.destroyed) throw new Error('Gamepadify has been destroyed.');
     const restart = this.running && options.root !== undefined && options.root !== this.root;
-    if (restart) this.stop();
+    if (restart) { this.stop(); this.scopes = []; this.focused = null; }
     if (options.source !== undefined && options.source !== this.options.source) { this.disconnect(); this.previousRaw.clear(); }
     this.options = { ...this.options, ...options, hints: { ...this.options.hints, ...options.hints } };
     this.matcher.reset();
@@ -190,7 +190,8 @@ export class Controller implements GamepadifyController {
   }
 
   pushScope(element: HTMLElement): () => void {
-    if (this.root && !inRoot(this.root, element)) throw new Error('The scope must belong to the controller root.');
+    const root = this.root ?? this.options.root;
+    if (root && !inRoot(root, element)) throw new Error('The scope must belong to the controller root.');
     const scope = { element, previous: this.focused };
     this.scopes.push(scope);
     this.scopeChanged();

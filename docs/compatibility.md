@@ -21,7 +21,7 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 
 ## Core and browser checks
 
-- 36 unit tests: normalization, aliases, profiles, chord timing and overlap, classes, conflicts, scopes, focus, lifecycle and recovery.
+- 37 unit tests: normalization, aliases, profiles, chord timing and overlap, classes, conflicts, scopes, focus, lifecycle and recovery.
 - 39 browser tests: 13 scenarios in each of Chromium 156.0.8078.4, Firefox 157.0 and WebKit 27.2.
 - PNG loading for Xbox/PlayStation/Switch, failed-image fallback, atlas rendering, CSS size, per-element placement, dialogs and nested scrolling.
 - ESM and CommonJS imports without browser globals; independent browser IIFE execution.
@@ -33,9 +33,9 @@ Each consumer installs the actual core and adapter npm archives in a separate di
 
 | Artifact | Bytes |
 | --- | ---: |
-| Core IIFE, minified | 25502 |
-| Core IIFE, gzip | 8982 |
-| gamepadify npm archive | 122961 |
+| Core IIFE, minified | 25556 |
+| Core IIFE, gzip | 8992 |
+| gamepadify npm archive | 123100 |
 | gamepadify-react npm archive | 3189 |
 | gamepadify-vue npm archive | 3876 |
 | gamepadify-jquery npm archive | 3263 |

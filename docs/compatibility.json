@@ -1,9 +1,9 @@
 {
   "version": "0.1.0",
-  "verifiedAt": "2026-10-19T13:56:34.620Z",
+  "verifiedAt": "2026-10-19T14:02:20.206Z",
   "platform": "win32",
   "node": "v24.22.0",
-  "unitTests": 36,
+  "unitTests": 37,
   "browserTests": 39,
   "browsers": {
     "chromium": "156.0.8078.4",
@@ -12,10 +12,10 @@
   },
   "hardwareVerified": false,
   "sizes": {
-    "minified": 25502,
-    "gzip": 8982,
+    "minified": 25556,
+    "gzip": 8992,
     "tarballs": {
-      "core": 122961,
+      "core": 123100,
       "react": 3189,
       "vue": 3876,
       "jquery": 3263,

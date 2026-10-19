@@ -188,6 +188,15 @@ describe('navigation and scopes', () => {
     const pop = pad.pushScope(document.getElementById('modal')!); await frame(); expect(document.activeElement?.id).toBe('b');
     pop(); await frame(); expect(pad.getState().focusedElement?.id).toBe('a'); expect(document.activeElement?.id).toBe('a');
   });
+  it('discards scopes from the previous root when reconfigured', async () => {
+    const { pad, source } = setup('<section id="one"><section id="scope"><button id="a" data-gamepad-focusable>A</button></section></section><section id="two"><button id="b" data-gamepad-focusable>B</button></section>', { navigation: { confirm: 'south' } });
+    pad.configure({ root: document.getElementById('one')! });
+    pad.pushScope(document.getElementById('scope')!);
+    await wake(source); expect(document.activeElement?.id).toBe('a');
+    pad.configure({ root: document.getElementById('two')! });
+    await wake(source); expect(document.activeElement?.id).toBe('b');
+    expect(() => pad.pushScope(document.getElementById('one')!)).toThrow('scope must belong');
+  });
   it('restores a temporary tabindex on stop', async () => {
     const { pad, source } = setup('<div data-gamepad-focusable>Item</div>', { navigation: { confirm: 'east' } });
     await wake(source); expect(document.querySelector('[data-gamepad-focusable]')!.getAttribute('tabindex')).toBe('-1');
