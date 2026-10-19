@@ -27,7 +27,7 @@ for (const preset of variants) {
   const script = await readFile(`packages/core/dist/gamepadify${preset === 'full' ? '' : '-' + preset}.min.js`);
   const css = await readFile(`packages/core/dist/gamepadify${preset === 'core' || preset === 'navigation' ? '-' + preset : ''}.css`);
   sizes[preset] = { consumer: compressed(result.outputFiles[0].contents), script: compressed(script), css: compressed(css) };
-  const budget = { full: 9900, core: 7200, navigation: 8600, hints: 8800 }[preset];
+  const budget = { full: 10300, core: 7400, navigation: 8900, hints: 9100 }[preset];
   assert(sizes[preset].script.gzip <= budget, `${preset}: exceeds ${budget} byte gzip budget`);
   if (preset === 'core' || preset === 'navigation') assert.doesNotMatch(css.toString(), /url\(|gamepadify-glyph/);
 

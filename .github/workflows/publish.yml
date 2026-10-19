@@ -7,10 +7,10 @@ permissions:
   contents: read
 jobs:
   verify:
-    if: vars.NPM_PUBLISHING_ENABLED == 'true'
+    if: vars.NPM_PUBLISHING_ENABLED == 'true' && startsWith(github.ref, 'refs/tags/v')
     uses: ./.github/workflows/ci.yml
   publish:
-    if: vars.NPM_PUBLISHING_ENABLED == 'true'
+    if: vars.NPM_PUBLISHING_ENABLED == 'true' && startsWith(github.ref, 'refs/tags/v')
     needs: verify
     runs-on: ubuntu-latest
     permissions:

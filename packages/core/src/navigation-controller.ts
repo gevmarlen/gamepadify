@@ -1,5 +1,5 @@
 import { normalizeButton } from './buttons.js';
-import { available, inRoot, onScreen } from './dom.js';
+import { inRoot } from './dom.js';
 import { nearest } from './geometry.js';
 import type { Entry, Navigation, NavigationContext } from './features.js';
 import type { DeviceProfile, Diagnostic, Direction, PhysicalButton } from './types.js';
@@ -8,7 +8,7 @@ const dpad: readonly PhysicalButton[] = ['dpad-up', 'dpad-down', 'dpad-left', 'd
 
 export class SpatialNavigation implements Navigation {
   focused: HTMLElement | null = null;
-  private tabIndices = new Map<HTMLElement, string | null>();
+  private tabIndices = new Set<HTMLElement>();
   private direction: Direction | null = null;
   private nextMove = 0;
 
@@ -43,23 +43,20 @@ export class SpatialNavigation implements Navigation {
 
   stop(): void {
     this.reset();
-    for (const [element, value] of this.tabIndices) {
-      if (element.getAttribute('tabindex') === '-1') {
-        if (value === null) element.removeAttribute('tabindex'); else element.setAttribute('tabindex', value);
-      }
-    }
+    for (const element of this.tabIndices) if (element.getAttribute('tabindex') === '-1') element.removeAttribute('tabindex');
     this.tabIndices.clear();
   }
 
   candidates(): HTMLElement[] {
     if (!this.context.options() || !this.context.document()) return [];
-    return this.context.entries().filter(entry => entry.binding.focusable && inRoot(this.context.scope(), entry.element) && available(entry.element)).map(entry => entry.element);
+    return this.context.entries().filter(entry => entry.binding.focusable && inRoot(this.context.scope(), entry.element) && this.context.measurements().available(entry.element)).map(entry => entry.element);
   }
 
   ensureFocus(): void {
     if (!this.context.active()) return;
+    if (!this.context.options()) { this.setFocus(null, false); return; }
+    if (this.focused && this.context.entries().some(entry => entry.element === this.focused && entry.binding.focusable) && inRoot(this.context.scope(), this.focused) && this.context.measurements().available(this.focused)) return;
     const candidates = this.candidates();
-    if (this.focused && candidates.includes(this.focused)) return;
     const active = this.context.document()?.activeElement as HTMLElement | null;
     this.setFocus(active && candidates.includes(active) ? active : candidates[0] ?? null, true);
   }
@@ -69,11 +66,15 @@ export class SpatialNavigation implements Navigation {
     this.focused = element;
     if (element && move) {
       if (element.tabIndex < 0 && !element.hasAttribute('tabindex') && !element.matches('button, input, select, textarea, a[href], [contenteditable="true"]')) {
-        this.tabIndices.set(element, null);
+        this.tabIndices.add(element);
         element.setAttribute('tabindex', '-1');
       }
       element.focus({ preventScroll: true });
-      if (!onScreen(element)) element.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+      this.context.invalidate();
+      if (!this.context.measurements().onScreen(element)) {
+        element.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+        this.context.invalidate();
+      }
     }
     if (changed) this.context.changed(element);
   }
@@ -83,6 +84,8 @@ export class SpatialNavigation implements Navigation {
     if (!options) return;
     const axes = profile.axes ?? [0, 1];
     let x = pad.axes[axes[0]] ?? 0, y = pad.axes[axes[1]] ?? 0;
+    if (!Number.isFinite(x)) x = 0;
+    if (!Number.isFinite(y)) y = 0;
     if (options.dpad) {
       if (pressed.has('dpad-left') && !reservedConflicts.has('dpad-left')) x = -1;
       if (pressed.has('dpad-right') && !reservedConflicts.has('dpad-right')) x = 1;
@@ -99,7 +102,7 @@ export class SpatialNavigation implements Navigation {
     this.nextMove = time + (changed ? options.repeatDelay ?? 300 : options.repeatInterval ?? 100);
     this.ensureFocus();
     if (!this.focused) return;
-    const target = nearest(this.focused, this.candidates(), direction);
+    const target = nearest(this.focused, this.candidates(), direction, element => this.context.measurements().rect(element));
     if (target) this.setFocus(target, true);
   }
 }

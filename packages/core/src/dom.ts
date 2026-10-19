@@ -8,39 +8,66 @@ export function elements(root: Document | HTMLElement, selector: string): HTMLEl
   return result;
 }
 
-export function available(element: HTMLElement): boolean {
-  if (!element.isConnected || element.closest('[inert], [hidden], [aria-disabled="true"]') || element.matches(':disabled')) return false;
-  const view = element.ownerDocument.defaultView;
-  if (!view || !element.getClientRects().length) return false;
-  for (let current: HTMLElement | null = element; current; current = current.parentElement) {
-    const style = view.getComputedStyle(current);
-    if (style.display === 'none' || style.visibility === 'hidden' || style.visibility === 'collapse' || style.opacity === '0' || style.contentVisibility === 'hidden') return false;
+// Discard after each frame, focus/scroll change or application callback.
+export class Measurements {
+  private values = new Map<Element, { style?: CSSStyleDeclaration; rect?: DOMRect; hidden?: boolean; screen?: boolean }>();
+
+  private get(element: Element) {
+    let value = this.values.get(element);
+    if (!value) { value = {}; this.values.set(element, value); }
+    return value;
   }
-  const rect = element.getBoundingClientRect();
-  return rect.width > 0 && rect.height > 0;
+
+  rect(element: Element): DOMRect {
+    return this.get(element).rect ??= element.getBoundingClientRect();
+  }
+
+  style(element: Element): CSSStyleDeclaration {
+    return this.get(element).style ??= element.ownerDocument.defaultView!.getComputedStyle(element);
+  }
+
+  private isHidden(element: HTMLElement): boolean {
+    const value = this.get(element), cached = value.hidden;
+    if (cached !== undefined) return cached;
+    const style = this.style(element);
+    const hidden = element.matches('[inert], [hidden], [aria-disabled="true"]') || style.display === 'none' || style.visibility === 'hidden' || style.visibility === 'collapse' || style.opacity === '0' || style.contentVisibility === 'hidden' || !!element.parentElement && this.isHidden(element.parentElement);
+    value.hidden = hidden;
+    return hidden;
+  }
+
+  available(element: HTMLElement): boolean {
+    if (!element.isConnected || !element.ownerDocument.defaultView || element.matches(':disabled') || this.isHidden(element)) return false;
+    const rect = this.rect(element);
+    return rect.width > 0 && rect.height > 0;
+  }
+
+  onScreen(element: HTMLElement): boolean {
+    return this.get(element).screen ??= this.visible(element);
+  }
+
+  private visible(element: HTMLElement): boolean {
+    if (!this.available(element)) return false;
+    const view = element.ownerDocument.defaultView!;
+    const rect = this.rect(element);
+    let left = Math.max(0, rect.left), top = Math.max(0, rect.top);
+    let right = Math.min(view.innerWidth, rect.right), bottom = Math.min(view.innerHeight, rect.bottom);
+    for (let parent = element.parentElement; parent; parent = parent.parentElement) {
+      const style = this.style(parent);
+      const clipX = /(auto|scroll|hidden|clip)/.test(style.overflowX), clipY = /(auto|scroll|hidden|clip)/.test(style.overflowY);
+      if (clipX || clipY) {
+        const box = this.rect(parent);
+        if (clipX) { left = Math.max(left, box.left); right = Math.min(right, box.right); }
+        if (clipY) { top = Math.max(top, box.top); bottom = Math.min(bottom, box.bottom); }
+      }
+    }
+    if (right <= left || bottom <= top || this.style(element).pointerEvents === 'none') return false;
+    const hit = element.ownerDocument.elementFromPoint?.((left + right) / 2, (top + bottom) / 2);
+    return !hit || hit === element || element.contains(hit);
+  }
 }
 
-export function onScreen(element: HTMLElement): boolean {
-  if (!available(element)) return false;
-  const view = element.ownerDocument.defaultView!;
-  const rect = element.getBoundingClientRect();
-  let left = Math.max(0, rect.left), top = Math.max(0, rect.top);
-  let right = Math.min(view.innerWidth, rect.right), bottom = Math.min(view.innerHeight, rect.bottom);
-  for (let parent = element.parentElement; parent; parent = parent.parentElement) {
-    const style = view.getComputedStyle(parent);
-    const box = parent.getBoundingClientRect();
-    if (/(auto|scroll|hidden|clip)/.test(style.overflowX)) { left = Math.max(left, box.left); right = Math.min(right, box.right); }
-    if (/(auto|scroll|hidden|clip)/.test(style.overflowY)) { top = Math.max(top, box.top); bottom = Math.min(bottom, box.bottom); }
-  }
-  if (right <= left || bottom <= top) return false;
-  if (view.getComputedStyle(element).pointerEvents === 'none') return false;
-  const hitTest = element.ownerDocument.elementFromPoint;
-  if (hitTest) {
-    const hit = hitTest.call(element.ownerDocument, (left + right) / 2, (top + bottom) / 2);
-    if (hit && hit !== element && !element.contains(hit)) return false;
-  }
-  return true;
-}
+export const available = (element: HTMLElement): boolean => new Measurements().available(element);
+export const onScreen = (element: HTMLElement): boolean => new Measurements().onScreen(element);
 
 const classOwners = new WeakMap<HTMLElement, Map<string, { count: number; original: boolean }>>();
 
@@ -51,13 +78,14 @@ export function claimClass(element: HTMLElement, token: string): () => void {
   if (!entry) { entry = { count: 0, original: element.classList.contains(token) }; owned.set(token, entry); }
   entry.count++;
   if (!element.classList.contains(token)) element.classList.add(token);
+  const claim = entry, tokens = owned;
   let released = false;
   return () => {
     if (released) return;
     released = true;
-    if (--entry!.count === 0) {
-      if (!entry!.original) element.classList.remove(token);
-      owned!.delete(token);
+    if (--claim.count === 0) {
+      if (!claim.original) element.classList.remove(token);
+      tokens.delete(token);
     }
   };
 }

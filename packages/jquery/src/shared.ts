@@ -23,10 +23,11 @@ export function install($: JQueryStatic, factory: GamepadifyFactory): void {
       let controller = controllers.get(root);
       if (typeof input === 'string') {
         if (!controller) return;
-        if (input === 'configure') controller.configure(options ?? {});
-        else { controller[input](); if (input === 'destroy') controllers.delete(root); }
+        if (input === 'configure') controller.configure({ ...options, root });
+        else if (input === 'destroy') { try { controller.destroy(); } finally { controllers.delete(root); } }
+        else controller[input]();
       } else {
-        if (controller) controller.configure(input ?? {});
+        if (controller) controller.configure({ ...input, root });
         else { controller = factory({ ...input, root }); controllers.set(root, controller); }
         controller.start();
       }

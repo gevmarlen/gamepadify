@@ -11,22 +11,28 @@ export function createPlugin(factory: GamepadifyFactory, options: GamepadifyOpti
   const context: Context = {
     controller,
     retain() {
-      users++;
-      queueMicrotask(() => { if (users) controller.start(); });
+      if (++users === 1) queueMicrotask(() => { if (users) controller.start(); });
       let released = false;
       return () => { if (!released) { released = true; if (--users === 0) controller.stop(); } };
     },
   };
   const createDirective = (focusable: boolean): ObjectDirective<HTMLElement, BindingInput | boolean | undefined> => {
-    const entries = new WeakMap<HTMLElement, { unbind: () => void; release: () => void }>();
+    const entries = new WeakMap<HTMLElement, { unbind: () => void; release: () => void; signature: string; action: unknown }>();
     const input = (value: BindingInput | boolean | undefined): BindingInput => focusable ? { focusable: value !== false } : value === undefined || typeof value === 'boolean' ? { enabled: false } : value;
+    const snapshot = (value: BindingInput) => ({ signature: JSON.stringify(value), action: typeof value === 'object' && 'action' in value ? value.action : undefined });
     return {
+      deep: true,
       mounted(element, binding) {
-        entries.set(element, { unbind: controller.bind(element, input(binding.value)), release: context.retain() });
+        const value = input(binding.value);
+        entries.set(element, { unbind: controller.bind(element, value), release: context.retain(), ...snapshot(value) });
       },
       updated(element, binding) {
         const entry = entries.get(element);
-        if (entry) { entry.unbind(); entry.unbind = controller.bind(element, input(binding.value)); }
+        const value = input(binding.value), next = snapshot(value);
+        if (entry && (entry.signature !== next.signature || entry.action !== next.action)) {
+          entry.unbind(); entry.unbind = controller.bind(element, value);
+          Object.assign(entry, next);
+        }
       },
       unmounted(element) {
         const entry = entries.get(element);

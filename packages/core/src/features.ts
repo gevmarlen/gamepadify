@@ -1,4 +1,5 @@
 import type { Binding, Diagnostic, DeviceProfile, Family, GamepadifyOptions, NavigationOptions, PhysicalButton } from './types.js';
+import type { Measurements } from './dom.js';
 
 export interface Entry { id: string; element: HTMLElement; binding: Binding; buttons: PhysicalButton[] }
 
@@ -8,6 +9,8 @@ export interface NavigationContext {
   active(): boolean;
   entries(): readonly Entry[];
   scope(): Document | HTMLElement;
+  measurements(): Measurements;
+  invalidate(): void;
   changed(element: HTMLElement | null): void;
 }
 
@@ -32,9 +35,11 @@ export interface RenderState {
   scope: Document | HTMLElement;
   family: Family;
   options: GamepadifyOptions;
+  measurements: Measurements;
 }
 
 export interface Presentation {
+  measure<T>(read: () => T): T;
   render(state: RenderState): void;
   hide(): void;
   destroy(): void;

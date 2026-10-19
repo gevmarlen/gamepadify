@@ -34,6 +34,14 @@ describe('chord arbitration', () => {
     expect(matcher.sample(set(), [single, chord], 30, 80).fired).toEqual(['single']);
     expect(matcher.sample(set(), [single, chord], 100, 80).fired).toEqual([]);
   });
+  it.each([false, true])('repeats quick taps after release (idle frame: %s)', idle => {
+    const matcher = new ChordMatcher();
+    matcher.sample(set('south'), [single, chord], 0, 80);
+    expect(matcher.sample(set(), [single, chord], 20, 80).fired).toEqual(['single']);
+    if (idle) matcher.sample(set(), [single, chord], 30, 80);
+    matcher.sample(set('south'), [single, chord], 40, 80);
+    expect(matcher.sample(set(), [single, chord], 60, 80).fired).toEqual(['single']);
+  });
   it('repeats a chord by releasing its action button while holding its modifier', () => {
     const matcher = new ChordMatcher();
     expect(matcher.sample(set('south', 'left-shoulder'), [single, chord], 0, 80).fired).toEqual(['chord']);

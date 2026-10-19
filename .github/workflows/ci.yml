@@ -48,6 +48,10 @@ jobs:
       - run: npm run test:packages
       - run: npx playwright install --with-deps chromium
       - run: npm run test:consumer -- ${{ matrix.target }}
+      - if: matrix.target == 'angular20'
+        run: npm run test:consumer -- angular20 full
+        env:
+          ANGULAR_ZONE: 'true'
       - uses: actions/upload-artifact@v4
         with:
           name: compatibility-${{ matrix.target }}

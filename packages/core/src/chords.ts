@@ -18,8 +18,13 @@ export class ChordMatcher {
   }
 
   sample(pressed: ReadonlySet<PhysicalButton>, targets: readonly MatchTarget[], now: number, window: number): { fired: string[]; ambiguous: string[][] } {
+    if (!pressed.size && !this.previous.size && !this.pending.size) return { fired: [], ambiguous: [] };
     const rising = new Set([...pressed].filter(button => !this.previous.has(button)));
     const active = (target: MatchTarget) => target.buttons.every(button => pressed.has(button));
+    const consume = (target: MatchTarget) => {
+      if (active(target)) this.latched.add(target.id);
+      if (target.buttons.some(button => pressed.has(button))) this.consumed.push(target);
+    };
     this.consumed = this.consumed.filter(target => target.buttons.some(button => pressed.has(button)));
     const ids = new Set(targets.map(target => target.id));
     for (const id of this.pending.keys()) if (!ids.has(id)) this.pending.delete(id);
@@ -48,12 +53,11 @@ export class ChordMatcher {
       if (ties.length > 1) {
         const group = ties.map(item => item.id);
         ambiguous.push(group);
-        for (const item of ties) { rejected.add(item.id); this.latched.add(item.id); this.pending.delete(item.id); this.consumed.push(item); }
+        for (const item of ties) { rejected.add(item.id); this.pending.delete(item.id); consume(item); }
         continue;
       }
       fired.push(target.id);
-      this.latched.add(target.id);
-      this.consumed.push(target);
+      consume(target);
       for (const candidate of targets) {
         if (overlaps(target.buttons, candidate.buttons)) {
           this.pending.delete(candidate.id);

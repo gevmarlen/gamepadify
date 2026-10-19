@@ -4,14 +4,16 @@ The default `gamepadify` import includes every feature and keeps the existing AP
 
 | Import | Included features | Stylesheet | Script gzip |
 | --- | --- | --- | ---: |
-| `gamepadify` | Bindings, navigation, prompts and focus ring | `gamepadify/styles.css` | 9,400 B |
-| `gamepadify/core` | Bindings, chords, conflicts, scopes and input modes | `gamepadify/core.css` | 6,779 B |
-| `gamepadify/navigation` | Core, stick/D-pad navigation and focus ring | `gamepadify/navigation.css` | 8,200 B |
-| `gamepadify/hints` | Core, prompts and focus ring | `gamepadify/styles.css` | 8,322 B |
+| `gamepadify` | Bindings, navigation, prompts and focus ring | `gamepadify/styles.css` | 10,150 B |
+| `gamepadify/core` | Bindings, chords, conflicts, scopes and input modes | `gamepadify/core.css` | 7,242 B |
+| `gamepadify/navigation` | Core, stick/D-pad navigation and focus ring | `gamepadify/navigation.css` | 8,770 B |
+| `gamepadify/hints` | Core, prompts and focus ring | `gamepadify/styles.css` | 9,011 B |
 
-Sizes are for the standalone minified scripts compressed with gzip. The same builds, bundled from ESM with only `createGamepadify` imported, measure 9,113 / 6,490 / 7,912 / 8,033 bytes gzip respectively. These figures exclude CSS and PNGs. See [the recorded measurements](bundles.json) and run `npm run test:bundles` to reproduce them.
+Sizes are for the standalone minified scripts compressed with gzip. The same builds, bundled from ESM with only `createGamepadify` imported, measure 9,864 / 6,952 / 8,481 / 8,728 bytes gzip respectively. These figures exclude CSS and PNGs. See [the recorded measurements](bundles.json) and run `npm run test:bundles` to reproduce them.
 
-`core` is 28% smaller than the current full script, or 25% smaller than the 0.1.0 full script (8,992 bytes gzip). The current full script is about 408 bytes gzip larger than 0.1.0 because it shares the configurable controller with the other entry points. There is no runtime dependency or extra network request for feature discovery.
+These measurements describe unreleased changes after 0.2.0. The release scripts remain 9,400 / 6,779 / 8,200 / 8,322 bytes gzip (full/core/navigation/hints). The current full build adds 750 bytes gzip for frame measurements and lifecycle fixes; see [the measured CPU/memory tradeoff](compatibility.md#performance). Core remains 29% smaller than full.
+
+Gzip budgets are now 10,300 / 7,400 / 8,900 / 9,100 bytes respectively, with limited headroom above these measured builds. Bundle inclusion checks and the minimum 25% core saving remain enforced. Runtime core dependencies remain zero.
 
 ## Plain JavaScript
 
@@ -80,7 +82,7 @@ All four standalone scripts expose `Gamepadify.createGamepadify()`:
 | Navigation | `gamepadify-navigation.min.js` | `gamepadify-navigation.css` |
 | Hints | `gamepadify-hints.min.js` | `gamepadify.css` |
 
-Load one pair from the same release. All files are in the GitHub browser archive. After npm publication, their CDN base will be `https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/`.
+Load one pair from the same release. All files are in the GitHub browser archive and at `https://cdn.jsdelivr.net/npm/gamepadify@0.2.0/dist/`. That fixed CDN version contains the original 0.2.0 release, not the unreleased changes measured above.
 
 Core and navigation stylesheets contain no image URLs and request no PNGs. When served directly, the full and hints stylesheets load only the glyphs used by the displayed controls. A bundler may instead inline PNGs into CSS, increasing its initial download; asset inlining follows the application's bundler settings. Keep `assets/` beside the stylesheet when serving the browser builds locally.
 

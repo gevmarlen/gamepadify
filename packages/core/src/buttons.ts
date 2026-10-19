@@ -1,4 +1,4 @@
-import type { Binding, BindingInput, Button, Family, PhysicalButton } from './types.js';
+import type { Binding, BindingInput, Family, PhysicalButton, Trigger } from './types.js';
 
 export const buttons = [
   'south', 'east', 'west', 'north', 'left-shoulder', 'right-shoulder',
@@ -17,7 +17,8 @@ for (const [family, labels] of Object.entries(names)) {
   labels.forEach((label, index) => aliases.set(`${family === 'playstation' ? 'ps' : family}:${label}`, buttons[index === 12 ? 16 : index]!));
 }
 
-export function normalizeButton(button: string): PhysicalButton | null {
+export function normalizeButton(button: unknown): PhysicalButton | null {
+  if (typeof button !== 'string') return null;
   const value = button.trim().toLowerCase();
   return buttons.includes(value as PhysicalButton) ? value as PhysicalButton : aliases.get(value) ?? null;
 }
@@ -25,13 +26,13 @@ export function normalizeButton(button: string): PhysicalButton | null {
 export function normalizeTrigger(value: unknown): PhysicalButton[] | null {
   const parts = typeof value === 'string' ? value.split('+') : Array.isArray(value) ? value : [];
   if (!parts.length || parts.some(part => typeof part !== 'string')) return null;
-  const normalized = parts.map(part => normalizeButton(part as string));
-  if (normalized.some(part => part === null) || new Set(normalized).size !== parts.length) return null;
-  return (normalized as PhysicalButton[]).sort((a, b) => buttons.indexOf(a) - buttons.indexOf(b));
+  const normalized = parts.map(normalizeButton).filter((button): button is PhysicalButton => button !== null);
+  if (normalized.length !== parts.length || new Set(normalized).size !== parts.length) return null;
+  return normalized.sort((a, b) => buttons.indexOf(a) - buttons.indexOf(b));
 }
 
 export function asBinding(input: BindingInput): Binding {
-  return typeof input === 'string' || Array.isArray(input) ? { button: input as Button } : input as Binding;
+  return typeof input === 'string' || Array.isArray(input) ? { button: input as Trigger } : input as Binding;
 }
 
 export function buttonLabel(button: PhysicalButton, family: Family): string {
