@@ -98,15 +98,10 @@ h1 > span { color: #e36e42; }
 .art i, .art b { display: block; position: absolute; }
 .art > svg { display: block; width: 100%; height: 100%; }
 .art-dune { background: #e4bd8e; }
-.art-dune i { width: 170px; height: 100px; border-radius: 50%; background: #9b603c; left: -30px; top: 70px; transform: rotate(-18deg); }
-.art-dune i + i { background: #c28a59; left: 70px; top: 70px; transform: rotate(25deg); }
-.art-dune b { width: 29px; height: 29px; background: #f8e6bc; border-radius: 50%; top: 21px; left: 110px; }
 .art-orbit { background: #889cb5; }
 .art-tide { background: #729593; }
 .art-mono { background: #c6c6ba; }
 .art-bloom { background: #ba9582; }
-.art-bloom i { width: 52px; height: 52px; background: #efe3c7; border-radius: 50%; left: calc(50% - 26px); top: 14px; box-shadow: -24px 24px #efe3c7, 24px 24px #efe3c7, 0 48px #efe3c7; }
-.art-bloom b { width: 31px; height: 31px; background: #6b725a; border-radius: 50%; left: calc(50% - 15px); top: 48px; }
 .art-echo { background: #9fa98b; }
 .art-echo i { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #344039; top: 45px; left: calc(50% - 15px); }
 .art-echo i:nth-child(2) { width: 70px; height: 70px; top: 25px; left: calc(50% - 35px); }
