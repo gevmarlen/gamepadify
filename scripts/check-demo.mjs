@@ -30,20 +30,22 @@ try {
       const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
       page.setDefaultTimeout(10000);
       const errors = [];
+      const warnings = [];
       page.on('pageerror', error => errors.push(error.message));
+      page.on('console', message => { if (message.type() === 'warning' && message.text().startsWith('[gamepadify:')) warnings.push(message.text()); });
       await page.addInitScript(() => {
         window.__demoAnimations = [];
         const animate = Element.prototype.animate;
         Element.prototype.animate = function (...args) {
           const animation = animate.apply(this, args);
-          if (this.matches('#collection > .world')) window.__demoAnimations.push({
+          if (this.matches('#collection > .world, .demo-page')) window.__demoAnimations.push({
             duration: animation.effect.getTiming().duration,
             moves: animation.effect.getKeyframes().some(frame => frame.transform && frame.transform !== 'none'),
           });
           return animation;
         };
       });
-      const keyTargets = { ArrowRight: '.direction-right', ArrowLeft: '.direction-left', z: '.face-south', v: '.face-east', x: '.face-west', c: '.face-north' };
+      const keyTargets = { ArrowRight: '.direction-right', ArrowLeft: '.direction-left', ArrowDown: '.direction-down', ArrowUp: '.direction-up', z: '.face-south', v: '.face-east', x: '.face-west', c: '.face-north', q: '.pad-shoulder' };
       const frames = () => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
       const press = async key => {
         const native = await page.evaluate(() => document.activeElement.matches('input, select, textarea, [contenteditable]'));
@@ -60,6 +62,11 @@ try {
       const mode = () => page.locator('#mode').textContent();
       const visible = () => page.locator('#collection .world:visible').evaluateAll(cards => cards.map(card => card.dataset.world));
       const settle = () => page.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
+      const route = async key => {
+        await page.waitForFunction(value => location.hash === `#/${value}`, key);
+        await frames();
+        assert.equal(await page.locator('[data-page]:visible').count(), 1);
+      };
       const simulate = async () => {
         await page.locator('#simulate').click();
         await page.waitForFunction(() => document.querySelector('#mode').textContent === 'GAMEPAD MODE');
@@ -67,14 +74,17 @@ try {
       };
       await page.goto(url);
       await page.bringToFront();
+      const hasGamepadApi = await page.evaluate(() => typeof navigator.getGamepads === 'function');
       assert.equal(await page.locator('.brand-mark').getAttribute('src'), await page.locator('link[rel=icon]').getAttribute('href'));
       assert(await page.locator('.brand-mark').evaluate(image => image.complete && image.naturalWidth > 0));
-      assert.equal(await page.locator('#body-class, #element-class, #conflict, #favorite, #duplicate').count(), 0);
+      assert.equal(await page.locator('#body-class, #element-class, #conflict, #favorite, #duplicate, #search, #clear-search').count(), 0);
+      assert.equal(await page.locator('#stage input, #stage textarea').count(), 0);
       await simulate();
       await page.waitForFunction(() => {
         const images = [...document.querySelectorAll('.gamepadify-glyph img')];
         return images.length >= 3 && images.every(image => image.complete && image.naturalWidth > 0);
       });
+      await settle();
       if (name === 'chromium') await page.screenshot({ path: `${screenshots}/playground.png`, fullPage: true });
       await press('ArrowRight');
       assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Orbit');
@@ -127,29 +137,84 @@ try {
       await page.locator('#placement').selectOption('bottom-end');
       assert.equal(await mode(), 'GAMEPAD MODE');
       await page.locator('[data-pad-button=left-shoulder]').click();
-      await page.waitForFunction(() => document.activeElement.id === 'search');
+      await page.waitForFunction(() => !document.querySelector('#menu-panel').hidden);
       assert.equal(await mode(), 'GAMEPAD MODE');
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'collection');
+      assert.equal(await page.locator('.gamepadify-glyph').count(), 3, 'menu must contain only LB, B and the selected link prompt');
+      const menuOrder = await visible();
+      await press('c');
+      assert.deepEqual(await visible(), menuOrder, 'menu scope must block background shortcuts');
+      await press('q');
+      assert(!(await page.locator('#menu-panel').isVisible()));
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Orbit');
+      await press('q');
+      await press('v');
+      assert(!(await page.locator('#menu-panel').isVisible()));
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Orbit');
 
-      await page.locator('#search').click();
-      assert.equal(await mode(), 'POINTER MODE', 'pointer input in the preview must still exit controller mode');
-      const filtering = await animationCount();
-      await page.locator('#search').fill('o');
-      await page.waitForFunction(() => document.querySelector('#collection-count').textContent === '4 worlds');
-      assert.deepEqual(await visible(), ['Orbit', 'Mono', 'Bloom', 'Echo']);
-      assert(await animatedSince(filtering), 'filter must animate its layout');
-      await page.locator('#search').fill('orb');
-      await page.locator('#search').fill('missing');
-      await page.locator('#search').fill('tide');
-      await page.waitForFunction(() => document.querySelector('#collection-count').textContent === '1 world');
-      assert.deepEqual(await visible(), ['Tide']);
-      assert(await page.locator('#shuffle').isDisabled());
-      await page.locator('#search').fill('missing');
-      await page.waitForFunction(() => !document.querySelector('#empty-collection').hidden);
-      assert.deepEqual(await visible(), []);
-      await page.locator('#clear-search').click();
-      await page.waitForFunction(() => document.querySelector('#collection-count').textContent === '6 worlds');
+      await press('q');
+      await page.locator('#size').click();
+      assert(!(await page.locator('#menu-panel').isVisible()));
+      assert.deepEqual(await nativeFocus(), settingsFocus, 'dismissing the menu must preserve native settings focus');
+      assert.equal(await mode(), 'GAMEPAD MODE');
+      await page.locator('[data-pad-button=left-shoulder]').click();
+      await page.waitForFunction(() => !document.querySelector('#menu-panel').hidden);
       await settle();
-      await simulate();
+      if (name === 'chromium') await page.locator('.preview-column').screenshot({ path: '.artifacts/playground-menu.png' });
+      const pageTransition = await animationCount();
+      await press('ArrowDown');
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'journeys');
+      await press('z');
+      await route('journeys');
+      assert(!(await page.locator('#menu-panel').isVisible()));
+      assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'), 'false');
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'journeys/slow');
+      assert(await animatedSince(pageTransition), 'page changes must animate');
+      await settle();
+      if (name === 'chromium') await page.locator('.preview-column').screenshot({ path: '.artifacts/playground-journeys.png' });
+      await press('z');
+      await route('journeys/slow');
+      assert.deepEqual(await visible(), ['Dune', 'Tide', 'Bloom']);
+      assert.equal(await page.locator('#collection-count').textContent(), '3 worlds');
+      assert.equal(await page.locator('#back-page').textContent(), '← Back to journeys');
+      await press('z');
+      await page.waitForFunction(() => document.querySelector('dialog').open);
+      assert.equal(await page.locator('#detail-title').textContent(), 'Dune');
+      await press('v');
+      await page.waitForFunction(() => !document.querySelector('dialog').open);
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Dune');
+      await press('v');
+      await route('journeys');
+      await press('q');
+      assert.equal(await page.evaluate(() => document.activeElement.dataset.route), 'journeys');
+      await press('ArrowDown');
+      await press('z');
+      await route('journal');
+      assert.equal(await page.locator('#journal-count').textContent(), '2 / 6 visited');
+      assert.deepEqual(await page.locator('#journal-list [data-world]').evaluateAll(cards => cards.map(card => card.dataset.world)), ['Orbit', 'Dune']);
+      await settle();
+      if (name === 'chromium') await page.locator('.preview-column').screenshot({ path: '.artifacts/playground-journal.png' });
+      await press('z');
+      await page.waitForFunction(() => document.querySelector('dialog').open);
+      assert.equal(await page.locator('#detail-title').textContent(), 'Orbit');
+      assert.equal(await page.locator('#close-dialog').textContent(), 'Back to journal');
+      await press('v');
+      await page.waitForFunction(() => !document.querySelector('dialog').open);
+      assert.equal(await page.locator('#journal-count').textContent(), '2 / 6 visited');
+      await press('ArrowDown');
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'clear-journal');
+      await press('z');
+      assert(await page.locator('#empty-journal').isVisible());
+      assert.equal(await page.locator('#journal-list [data-world]').count(), 0);
+      await press('z');
+      await route('collection');
+      await page.goBack();
+      await route('journal');
+      assert(await page.locator('#empty-journal').isVisible());
+      await page.goForward();
+      await route('collection');
+      assert.equal(await mode(), 'GAMEPAD MODE');
+      await settle();
       const before = await visible();
       const focused = await page.evaluate(() => document.activeElement.dataset.world);
       const shuffling = await animationCount();
@@ -174,14 +239,15 @@ try {
       await page.keyboard.up('ArrowDown');
 
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await page.locator('#search').fill('orbit');
-      await page.waitForFunction(() => document.querySelector('#collection-count').textContent === '1 world');
-      assert.deepEqual(await visible(), ['Orbit']);
-      assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
-      await page.locator('#clear-search').click();
-      await simulate();
       await press('c');
       assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
+      await press('q');
+      await press('ArrowDown');
+      await press('z');
+      await route('journeys');
+      assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
+      await press('v');
+      await route('collection');
       await page.emulateMedia({ reducedMotion: 'no-preference' });
       await page.setViewportSize({ width: 390, height: 844 });
       await page.locator('#stage').scrollIntoViewIfNeeded();
@@ -190,11 +256,43 @@ try {
         await page.screenshot({ path: '.artifacts/demo-mobile.png', fullPage: true });
         await page.locator('.preview-column').screenshot({ path: '.artifacts/playground-mobile.png' });
       }
+      await press('q');
+      assert(await page.locator('#menu-panel').isVisible());
+      const menu = await page.locator('#menu-panel').boundingBox();
+      assert(menu.x >= 0 && menu.x + menu.width <= 390, 'mobile menu must fit the viewport');
+      await press('ArrowDown');
+      await press('z');
+      await route('journeys');
+      assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'mobile journeys must not overflow');
+      await settle();
+      if (name === 'chromium') await page.locator('.preview-column').screenshot({ path: '.artifacts/playground-journeys-mobile.png' });
+      await press('v');
+      await route('collection');
       await page.locator('#hardware').click();
       assert(!(await page.locator('#simulator').isVisible()));
       assert.equal(await mode(), 'POINTER MODE');
+      await page.locator('#menu-toggle').click();
+      await page.keyboard.press('Escape');
+      assert(!(await page.locator('#menu-panel').isVisible()));
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'menu-toggle');
+      await page.locator('#menu-toggle').click();
+      await page.locator('.page-links [data-route=journeys]').focus();
+      await page.keyboard.press('Enter');
+      await route('journeys');
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'page-title');
+      await page.goto(`${url}#/journeys/motion`);
+      await page.reload();
+      await page.bringToFront();
+      await route('journeys/motion');
+      assert.deepEqual(await visible(), ['Orbit', 'Tide', 'Echo']);
+      await simulate();
+      await press('v');
+      await route('journeys');
+      await page.locator('#help').hover();
+      assert.equal(await mode(), 'POINTER MODE', 'pointer input in the preview must still exit controller mode');
+      assert.deepEqual(warnings.filter(message => hasGamepadApi || !message.startsWith('[gamepadify:unavailable]')), [], 'page and overlay shortcuts must not conflict');
       assert.deepEqual(errors, []);
-      console.log(`Demo ${name}: controls, B/back, help scope, settings isolation, search, animated shuffle, virtual inputs, skins, reduced motion and mobile layout passed.`);
+      console.log(`Demo ${name}: LB menu, gamepad-only pages, journeys, journal, history, deep links, scoped controls, settings, animations, skins and mobile layout passed.`);
     } finally { await browser.close(); }
   }
 } finally { preview?.kill(); }
