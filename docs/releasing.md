@@ -61,7 +61,9 @@ Reference: [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/).
 
 ## GitHub and CDN
 
-Create an annotated `vX.Y.Z` tag and a GitHub Release from the checked commit. Attach the five npm archives, browser bundle and checksums. Publishing a release triggers the npm workflow once enabled. Manual dispatch must select a version tag; branch dispatches cannot publish. The publish script checks that the tag matches the packed version.
+Create an annotated `vX.Y.Z` tag and a GitHub Release from the checked commit. Attach the five npm archives, browser bundle and checksums. Publishing a release triggers the npm workflow once enabled.
+
+To retry after fixing release tooling, manually dispatch the current workflow from `main` and provide the existing tag in `release_tag`. Verification and package builds use that tag; publishing scripts come from the workflow revision. The publisher checks that the package version and checked-out commit match the tag. This allows tooling fixes without moving a published tag or changing package contents.
 
 After publication, verify all five registry versions and fetch:
 

@@ -4,6 +4,10 @@ on:
     branches: [main]
   pull_request:
   workflow_call:
+    inputs:
+      ref:
+        type: string
+        required: false
 permissions:
   contents: read
 concurrency:
@@ -14,11 +18,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - run: node --input-type=module -e "import { npm } from './scripts/npm.mjs'; console.log(npm(['--version']).trim())"
+        if: inputs.ref == ''
       - run: npm run check
       - run: npx playwright install --with-deps
       - run: npm run test:browser
@@ -39,6 +47,8 @@ jobs:
         target: [react18, react19, vue33, vue34, vue35, angular20, angular21, angular22, jquery3, jquery4]
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
