@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gamepad controls for the web. Try typed bindings, spatial navigation, adaptive button prompts and framework adapters.">
+  <meta name="theme-color" content="#eeeee7">
+  <title>Gamepadify — The web, within reach.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231b2228'/%3E%3Cpath d='M10 20h10m-5-5v10' stroke='%23b9ef67' stroke-width='3'/%3E%3Ccircle cx='28' cy='17' r='2' fill='%23b9ef67'/%3E%3Ccircle cx='25' cy='24' r='2' fill='%23b9ef67'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="./" aria-label="Gamepadify home"><span class="brand-mark">✚</span> gamepadify<span class="version">0.1.0</span></a>
+    <nav aria-label="Main"><a href="https://github.com/gevmarlen/gamepadify#readme">Documentation ↗</a><a href="https://github.com/gevmarlen/gamepadify">GitHub ↗</a></nav>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">SMALL LIBRARY. ANOTHER WAY IN.</p><h1>The web,<br>within reach<span>.</span></h1></div>
+      <div class="intro-copy"><p>Give your interface a gamepad.<br>Keep your markup. Keep your framework.</p><code>npm install gamepadify</code><p class="frameworks">Vanilla JS <span>/</span> Angular <span>/</span> React <span>/</span> Vue <span>/</span> jQuery</p></div>
+    </section>
+    <div class="workbench-heading"><h2>01 <span>THE PLAYGROUND</span></h2><span>Real controls. Real DOM. No canvas.</span></div>
+    <section class="workbench" aria-label="Interactive playground">
+      <div class="preview-column">
+        <div class="preview-toolbar"><span class="preview-label"><i></i> EXAMPLE INTERFACE</span><span id="mode" class="mode-label">POINTER MODE</span></div>
+        <div id="stage" class="stage">
+          <div class="archive-heading"><div><p class="eyebrow">YOUR COLLECTION</p><h3>Small worlds.</h3></div><button class="icon-button" id="help" data-gamepad="west" aria-label="Show help">?</button></div>
+          <div class="collection" id="collection">
+            <button class="world" data-gamepad-focusable data-world="Dune"><span class="art art-dune"><i></i><i></i><b></b></span><span class="world-meta"><span>Dune</span><small>01 / TERRAIN</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Orbit"><span class="art art-orbit"><i></i><b></b></span><span class="world-meta"><span>Orbit</span><small>02 / MOTION</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Tide"><span class="art art-tide"><i></i><i></i><i></i></span><span class="world-meta"><span>Tide</span><small>03 / RHYTHM</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Mono"><span class="art art-mono"><i></i><b></b></span><span class="world-meta"><span>Mono</span><small>04 / FORM</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Bloom"><span class="art art-bloom"><i></i><b></b></span><span class="world-meta"><span>Bloom</span><small>05 / GROWTH</small></span></button>
+            <button class="world" data-gamepad-focusable data-world="Echo"><span class="art art-echo"><i></i><i></i><i></i></span><span class="world-meta"><span>Echo</span><small>06 / SIGNAL</small></span></button>
+          </div>
+          <div class="stage-actions"><button class="stage-button" id="shuffle" data-gamepad="north">Shuffle collection ↗</button><button class="stage-button secondary" id="favorite" data-gamepad="left-shoulder+north">Favorite all ☆</button><button class="stage-button conflict-target" id="duplicate" data-gamepad="north" hidden>Conflicting action</button></div>
+          <div class="stage-footer"><span id="last-action" role="status">Press a controller button to explore.</span><span>↑ ↓ ← → MOVE <b>·</b> SOUTH SELECT</span></div>
+          <dialog id="detail-dialog"><p class="eyebrow">A CLOSER LOOK</p><h3 id="detail-title">Dune</h3><p>This is a native dialog. Navigation and button mappings stay inside its active scope.</p><button class="stage-button" id="close-dialog" data-gamepad-focusable>Back to collection</button></dialog>
+        </div>
+        <div class="input-strip"><span class="status-dot" id="device-dot"></span><span id="device">Waiting for a controller</span><span id="profile">GAMEPAD API</span></div>
+      </div>
+      <aside class="inspector" aria-label="Playground settings">
+        <div class="panel-heading"><h3>Make it yours</h3><span>LIVE SETTINGS</span></div>
+        <div class="input-picker"><button id="hardware" class="selected" type="button">Controller</button><button id="simulate" type="button">Simulator</button></div>
+        <p id="input-note" class="note">Connect a gamepad and press any button. The first press shows your controls.</p>
+        <div class="sim-keys" id="sim-keys" hidden><p><kbd>↑↓←→</kbd> Move <kbd>Z</kbd> South</p><p><kbd>X</kbd> West <kbd>C</kbd> North <kbd>Q</kbd> L1</p><small>Hold Q + C for a combination.</small></div>
+        <div class="settings-group">
+          <label class="toggle-row"><span>Button hints <code>showHints</code></span><input id="show-hints" type="checkbox" checked></label>
+          <label class="field"><span>Button artwork</span><select id="skin"><option value="auto">Match controller</option><option value="xbox">Xbox</option><option value="playstation">PlayStation</option><option value="switch">Switch</option><option value="custom">Custom skin example</option></select></label>
+          <label class="field range-field"><span>Icon size <output id="size-value">24 px</output></span><input id="size" type="range" min="16" max="40" value="24"></label>
+          <label class="field"><span>Position</span><select id="placement"><option value="top-end">Top / end</option><option value="top-start">Top / start</option><option value="bottom-end">Bottom / end</option><option value="right">Right</option></select></label>
+        </div>
+        <div class="settings-group class-fields"><label class="field"><span>Body class <code>bodyClass</code></span><input id="body-class" placeholder="e.g. pad-active" autocomplete="off"></label><label class="field"><span>Element class <code>elementClass</code></span><input id="element-class" placeholder="e.g. pad-target" autocomplete="off"></label></div>
+        <label class="toggle-row conflict-toggle"><span>Introduce a conflict <small>Two elements, one button.</small></span><input id="conflict" type="checkbox"></label>
+      </aside>
+    </section>
+    <section class="under-bench">
+      <div class="code-panel"><div class="panel-heading"><h3>A few attributes. That's it.</h3><span>HTML + JAVASCRIPT</span></div><pre><code>&lt;button data-gamepad="west"&gt;Help&lt;/button&gt;
+&lt;button data-gamepad-focusable&gt;Explore&lt;/button&gt;
+
+const pad = createGamepadify({
+  navigation: { confirm: 'south' },
+  showHints: true,
+});
+pad.start();</code></pre></div>
+      <div class="diagnostics-panel"><div class="panel-heading"><h3>Under the hood</h3><span>EVENT LOG</span></div><ol id="log" aria-label="Recent controller events"><li><span>READY</span> Waiting for input.</li></ol></div>
+    </section>
+    <section class="principles"><div><span>01</span><h3>Your framework stays yours.</h3><p>A dependency-free core. Thin adapters. Public APIs and ordinary DOM events.</p></div><div><span>02</span><h3>Focus has a direction.</h3><p>The stick follows the layout, including scrollable containers and scoped dialogs.</p></div><div><span>03</span><h3>Ambiguity gets noticed.</h3><p>Conflicting actions stop and explain themselves. Chords take precedence over single presses.</p></div></section>
+  </main>
+  <footer><span>GAMEPADIFY / MIT LICENSE</span><span>Button artwork by <a href="https://kenney.nl/assets/input-prompts">Kenney · CC0</a></span><a href="https://github.com/gevmarlen/gamepadify">Source & documentation ↗</a></footer>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

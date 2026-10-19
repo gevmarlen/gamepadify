@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "experimentalDecorators": true, "declaration": true, "declarationMap": true, "paths": { "gamepadify": ["../core/dist/types/index.d.ts"] } },
+  "angularCompilerOptions": { "compilationMode": "partial", "strictTemplates": true },
+  "include": ["src/**/*.ts"]
+}

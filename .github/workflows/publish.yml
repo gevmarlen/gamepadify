@@ -1,0 +1,29 @@
+name: Publish
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    if: vars.NPM_PUBLISHING_ENABLED == 'true'
+    uses: ./.github/workflows/ci.yml
+  publish:
+    if: vars.NPM_PUBLISHING_ENABLED == 'true'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:packages
+      - run: node scripts/publish.mjs --provenance

@@ -1,0 +1,7 @@
+@import 'gamepadify/styles.css';
+
+:root { font: 18px/1.6 system-ui, sans-serif; color: #18282c; background: #f1f3ed; --gamepadify-focus-color: #41794b; }
+body { max-width: 720px; margin: 64px auto; padding: 24px; }
+h1 { font-size: 48px; letter-spacing: -2px; }
+button { font: inherit; padding: 16px 24px; margin: 16px 16px 16px 0; border: 1px solid #9caaa3; border-radius: 8px; background: white; }
+output { display: block; margin-top: 24px; }

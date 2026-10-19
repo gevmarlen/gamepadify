@@ -1,0 +1,178 @@
+{
+  "version": "0.1.0",
+  "verifiedAt": "2026-10-19T13:56:34.620Z",
+  "platform": "win32",
+  "node": "v24.22.0",
+  "unitTests": 36,
+  "browserTests": 39,
+  "browsers": {
+    "chromium": "156.0.8078.4",
+    "firefox": "157.0",
+    "webkit": "27.2"
+  },
+  "hardwareVerified": false,
+  "sizes": {
+    "minified": 25502,
+    "gzip": 8982,
+    "tarballs": {
+      "core": 122976,
+      "react": 3189,
+      "vue": 3875,
+      "jquery": 3262,
+      "angular": 3911
+    }
+  },
+  "consumers": [
+    {
+      "target": "angular20",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@angular/build": "20.3.40",
+        "@angular/cli": "20.3.40",
+        "@angular/common": "20.3.34",
+        "@angular/compiler-cli": "20.3.34",
+        "@angular/compiler": "20.3.34",
+        "@angular/core": "20.3.34",
+        "@angular/platform-browser": "20.3.34",
+        "@angular/platform-server": "20.3.34",
+        "gamepadify-angular": "0.1.0",
+        "gamepadify": "0.1.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "angular21",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@angular/build": "21.2.27",
+        "@angular/cli": "21.2.27",
+        "@angular/common": "21.2.25",
+        "@angular/compiler-cli": "21.2.25",
+        "@angular/compiler": "21.2.25",
+        "@angular/core": "21.2.25",
+        "@angular/platform-browser": "21.2.25",
+        "@angular/platform-server": "21.2.25",
+        "gamepadify-angular": "0.1.0",
+        "gamepadify": "0.1.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "angular22",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@angular/build": "22.2.3",
+        "@angular/cli": "22.2.3",
+        "@angular/common": "22.2.3",
+        "@angular/compiler-cli": "22.2.3",
+        "@angular/compiler": "22.2.3",
+        "@angular/core": "22.2.3",
+        "@angular/platform-browser": "22.2.3",
+        "@angular/platform-server": "22.2.3",
+        "gamepadify-angular": "0.1.0",
+        "gamepadify": "0.1.0",
+        "rxjs": "7.8.2",
+        "tslib": "2.8.1",
+        "typescript": "6.0.3"
+      }
+    },
+    {
+      "target": "jquery3",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@types/jquery": "3.5.34",
+        "gamepadify-jquery": "0.1.0",
+        "gamepadify": "0.1.0",
+        "jquery": "3.7.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "jquery4",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@types/jquery": "4.0.1",
+        "gamepadify-jquery": "0.1.0",
+        "gamepadify": "0.1.0",
+        "jquery": "4.0.0",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "react18",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@types/react-dom": "18.3.7",
+        "@types/react": "18.3.31",
+        "gamepadify-react": "0.1.0",
+        "gamepadify": "0.1.0",
+        "react-dom": "18.3.1",
+        "react": "18.3.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "react19",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@types/react-dom": "19.3.0",
+        "@types/react": "19.3.0",
+        "gamepadify-react": "0.1.0",
+        "gamepadify": "0.1.0",
+        "react-dom": "19.3.1",
+        "react": "19.3.1",
+        "typescript": "5.9.3"
+      }
+    },
+    {
+      "target": "vue33",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@vue/server-renderer": "3.3.13",
+        "gamepadify-vue": "0.1.0",
+        "gamepadify": "0.1.0",
+        "typescript": "5.9.3",
+        "vue-tsc": "3.3.13",
+        "vue": "3.3.13"
+      }
+    },
+    {
+      "target": "vue34",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@vue/server-renderer": "3.4.38",
+        "gamepadify-vue": "0.1.0",
+        "gamepadify": "0.1.0",
+        "typescript": "5.9.3",
+        "vue-tsc": "3.3.13",
+        "vue": "3.4.38"
+      }
+    },
+    {
+      "target": "vue35",
+      "passed": true,
+      "node": "v24.22.0",
+      "dependencies": {
+        "@vue/server-renderer": "3.5.44",
+        "gamepadify-vue": "0.1.0",
+        "gamepadify": "0.1.0",
+        "typescript": "5.9.3",
+        "vue-tsc": "3.3.13",
+        "vue": "3.5.44"
+      }
+    }
+  ]
+}

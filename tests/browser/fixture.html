@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Gamepadify browser fixture</title>
+<link rel="stylesheet" href="../../packages/core/dist/gamepadify.css">
+<style>
+body { margin: 40px; font-family: sans-serif; }
+button { min-width: 100px; min-height: 42px; margin: 12px; }
+#grid { display: grid; grid-template-columns: repeat(3, 160px); gap: 20px; }
+#scroll { width: 200px; height: 120px; overflow: auto; }
+#scroll button { display: block; margin-bottom: 100px; }
+dialog { padding: 40px; }
+</style>
+<main id="root"></main>
+<script type="module">
+import { createGamepadify } from '../../packages/core/dist/index.js';
+import { createGamepadSimulator } from '../../packages/core/dist/testing.js';
+window.events = [];
+window.setup = (html, options = {}, family = 'xbox') => {
+  window.pad?.destroy();
+  document.getElementById('root').innerHTML = html;
+  window.events = [];
+  window.sim = createGamepadSimulator(family);
+  window.pad = createGamepadify({ source: window.sim, ...options });
+  window.pad.on('activate', event => window.events.push(event.element.id));
+  window.pad.start();
+};
+window.step = (count = 3) => new Promise(resolve => {
+  const tick = () => --count > 0 ? requestAnimationFrame(tick) : resolve();
+  requestAnimationFrame(tick);
+});
+window.press = async (...buttons) => { window.sim.press(...buttons); await window.step(); };
+window.release = async (...buttons) => { window.sim.release(...buttons); await window.step(); };
+window.tap = async (...buttons) => { await window.press(...buttons); await window.release(...buttons); };
+window.ready = true;
+</script>
+</html>

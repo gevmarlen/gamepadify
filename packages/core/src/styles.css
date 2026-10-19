@@ -1,0 +1,11 @@
+.gamepadify-mode, .gamepadify-mode * { cursor: none !important; }
+.gamepadify-native-focus:focus { outline: none !important; }
+.gamepadify-layer { position: fixed; inset: 0; z-index: var(--gamepadify-z-index, 2147483000); pointer-events: none; contain: layout style; }
+.gamepadify-layer *, .gamepadify-layer *::before, .gamepadify-layer *::after { box-sizing: border-box; pointer-events: none; }
+.gamepadify-focus { position: absolute; border: var(--gamepadify-focus-width, 2px) solid var(--gamepadify-focus-color, #8b7dff); border-radius: var(--gamepadify-focus-radius, 8px); box-shadow: 0 0 0 2px var(--gamepadify-focus-shadow, #151322); }
+.gamepadify-hint { position: absolute; display: flex; align-items: center; gap: 2px; color: var(--gamepadify-color, #fff); font: 600 12px/1 system-ui, sans-serif; }
+.gamepadify-glyph { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 var(--gamepadify-size, 24px); width: var(--gamepadify-size, 24px); height: var(--gamepadify-size, 24px); background-image: var(--gamepadify-image, none); background-size: contain; background-repeat: no-repeat; }
+.gamepadify-glyph > span { padding: 3px; border-radius: 4px; background: var(--gamepadify-background, #242333); white-space: nowrap; }
+.gamepadify-glyph img { position: absolute; width: var(--gamepadify-size, 24px); height: var(--gamepadify-size, 24px); object-fit: contain; }
+.gamepadify-plus { display: inline-flex; width: 10px; justify-content: center; text-shadow: 0 1px 3px #000; }
+.gamepadify-layer [hidden] { display: none !important; }

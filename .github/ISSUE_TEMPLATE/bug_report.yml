@@ -1,0 +1,22 @@
+name: Bug report
+description: Report an input, navigation or integration problem.
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: A minimal example, steps, expected behavior and actual behavior.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Gamepadify, framework, browser and OS versions.
+    validations:
+      required: true
+  - type: textarea
+    id: controller
+    attributes:
+      label: Controller details
+      description: Physical or simulated? Model, connection type, Gamepad ID and mapping if relevant.

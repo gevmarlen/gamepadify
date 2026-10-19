@@ -1,0 +1,19 @@
+{
+  "name": "gamepadify-example-vue",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "gamepadify": "file:../../packages/core",
+    "gamepadify-vue": "file:../../packages/vue",
+    "vue": "~3.5.44"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4",
+    "typescript": "~5.9.3",
+    "@vitejs/plugin-vue": "^6.0.0"
+  }
+}

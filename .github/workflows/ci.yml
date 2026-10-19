@@ -1,0 +1,54 @@
+name: Checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+permissions:
+  contents: read
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npx playwright install --with-deps
+      - run: npm run test:browser
+      - run: npm run demo:build
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-results
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+  consumers:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [react18, react19, vue33, vue34, vue35, angular20, angular21, angular22, jquery3, jquery4]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:packages
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:consumer -- ${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: compatibility-${{ matrix.target }}
+          path: .artifacts/compatibility/*.json

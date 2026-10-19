@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "projects": {
+    "example": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "main.ts",
+            "preserveSymlinks": true,
+            "index": "index.html",
+            "tsConfig": "tsconfig.json",
+            "outputPath": "dist",
+            "styles": [
+              "../style.css"
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "example:build"
+          }
+        }
+      }
+    }
+  }
+}

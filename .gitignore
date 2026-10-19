@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.artifacts/
+coverage/
+test-results/
+playwright-report/
+*.tgz
+*.tsbuildinfo
+.DS_Store
+.angular/

@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import { mkdir } from 'node:fs/promises';
+import { chromium } from '@playwright/test';
+
+const browser = await chromium.launch();
+try {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1200 }, deviceScaleFactor: 1 });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const press = async key => { await page.keyboard.press(key, { delay: 50 }); await page.waitForTimeout(50); };
+  await page.goto(process.env.DEMO_URL ?? 'http://127.0.0.1:4174/');
+  await page.locator('#simulate').click();
+  await page.waitForFunction(() => document.querySelector('#mode').textContent === 'GAMEPAD MODE');
+  await page.waitForFunction(() => [...document.querySelectorAll('.gamepadify-glyph img')].every(image => image.complete && image.naturalWidth > 0));
+  await page.waitForTimeout(150);
+  await mkdir('docs', { recursive: true });
+  await page.screenshot({ path: 'docs/playground.png', fullPage: true });
+  await press('ArrowRight');
+  assert.equal(await page.evaluate(() => document.activeElement.dataset.world), 'Orbit');
+  await press('z');
+  await page.waitForFunction(() => document.querySelector('dialog').open);
+  assert.equal(await page.locator('#detail-title').textContent(), 'Orbit');
+  await press('z');
+  await page.waitForFunction(() => !document.querySelector('dialog').open);
+  await page.keyboard.down('q'); await press('c'); await page.keyboard.up('q');
+  assert.match(await page.locator('#last-action').textContent(), /favorites/);
+  await page.locator('#show-hints').uncheck();
+  await page.locator('#simulate').focus();
+  await press('z');
+  await page.waitForFunction(() => document.querySelector('#mode').textContent === 'GAMEPAD MODE');
+  assert.equal(await page.locator('.gamepadify-hint').count(), 0);
+  await page.locator('#body-class').fill('pad-active');
+  await page.locator('#element-class').fill('pad-target');
+  await page.locator('#simulate').focus(); await press('z');
+  await page.waitForFunction(() => document.body.classList.contains('pad-active'));
+  assert.ok(await page.locator('#stage .pad-target').count() > 0);
+  await page.locator('#conflict').check();
+  await page.waitForFunction(() => document.querySelector('#log').textContent.includes('Multiple visible elements'));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: '.artifacts/demo-mobile.png', fullPage: true });
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'mobile layout must not overflow');
+  assert.deepEqual(errors, []);
+  console.log('Demo: simulator, navigation, dialog, chord, settings, conflicts, mobile layout and PNGs passed.');
+} finally { await browser.close(); }

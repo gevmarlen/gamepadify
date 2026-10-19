@@ -1,0 +1,9 @@
+{
+  "name": "gamepadify-vue", "version": "0.1.0", "description": "Vue directives and composables for Gamepadify.",
+  "type": "module", "main": "./dist/index.cjs", "module": "./dist/index.js", "types": "./dist/types/index.d.ts",
+  "exports": { ".": { "types": "./dist/types/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs" } },
+  "sideEffects": false, "files": ["dist", "LICENSE"], "license": "MIT", "author": "gevmarlen",
+  "peerDependencies": { "gamepadify": "^0.1.0", "vue": "^3.3.0" },
+  "repository": { "type": "git", "url": "git+https://github.com/gevmarlen/gamepadify.git", "directory": "packages/vue" },
+  "homepage": "https://gevmarlen.github.io/gamepadify/", "publishConfig": { "access": "public" }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "gamepadify-example-react",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "gamepadify": "file:../../packages/core",
+    "gamepadify-react": "file:../../packages/react",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4",
+    "typescript": "~5.9.3",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}

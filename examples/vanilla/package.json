@@ -1,0 +1,16 @@
+{
+  "name": "gamepadify-example-vanilla",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "gamepadify": "file:../../packages/core"
+  },
+  "devDependencies": {
+    "vite": "^8.3.4",
+    "typescript": "~5.9.3"
+  }
+}
