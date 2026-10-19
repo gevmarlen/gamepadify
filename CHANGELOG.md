@@ -5,6 +5,7 @@
 - Use Xbox aliases throughout the README, integration snippets and runnable examples; explain neutral button positions and cross-controller mappings separately.
 - Refresh the playground with a shared SVG logo/favicon, corrected card artwork, controller-shaped simulator and platform-specific button labels.
 - Redraw Bloom with eight evenly spaced petals and Dune with smooth layered ridges, using SVG artwork across cards, previews and the journal.
+- Add staggered shuffle motion, popup entry and exit transitions, an animated menu toggle and hover/press feedback. Preserve gamepad focus and honor reduced-motion preferences.
 - Redraw the simulator on one coordinate grid with symmetric grips and shoulders, inset face buttons and an interactive D-pad.
 - Preserve simulator input when the browser reports a stationary pointer after scrolling from Live Settings back to the preview.
 - Add an LB navigation menu, curated journeys and a session journal, with URL history and gamepad-only navigation. Animate page transitions and random shuffling with reduced-motion support; remove placeholder favorite, text search and class/conflict controls from the playground.

@@ -3,7 +3,9 @@ import type { Family, GamepadifyController, HintOptions, PhysicalButton, Skin } 
 import { createCollection } from './collection.js';
 import { createPages } from './pages.js';
 import { createDemoSimulator } from './simulator.js';
+import { createDialogMotion } from './dialog-motion.js';
 import './style.css';
+import './motion.css';
 
 const get = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 const stage = get('stage');
@@ -13,6 +15,7 @@ const simulation = createDemoSimulator(get('virtual-pad'));
 let simulated = false;
 let pad: GamepadifyController;
 let closeScope: (() => void) | undefined;
+const dialogMotion = createDialogMotion(dialog, () => { closeScope?.(); closeScope = undefined; });
 let closeHelpScope: (() => void) | undefined;
 let closeMenuScope: (() => void) | undefined;
 let closePageScope: (() => void) | undefined;
@@ -88,6 +91,7 @@ function closeHelp(restoreFocus = false) {
   const active = document.activeElement as HTMLElement | null;
   const release = closeHelpScope;
   get('help-panel').hidden = true;
+  get('help-panel').inert = true;
   closeHelpScope = undefined; release?.();
   get('help').setAttribute('aria-expanded', 'false');
   if (restoreFocus) get('help').focus({ preventScroll: true });
@@ -100,7 +104,7 @@ function closeHelp(restoreFocus = false) {
 function boot() {
   closeMenu();
   closeHelp();
-  closeDialog();
+  closeDialog(true);
   closePageScope?.(); closePageScope = undefined;
   pad?.destroy(); simulation.enable(simulated);
   pad = createGamepadify({ root: stage, source: simulated ? simulation.source : undefined, navigation: { confirm: 'xbox:a' }, ...settings() });
@@ -143,7 +147,7 @@ const collection = createCollection(get('collection'), count => {
   get<HTMLButtonElement>('shuffle').disabled = count < 2;
 });
 const pages = createPages(collection, () => {
-  closeMenu(); closeHelp(); closeDialog();
+  closeMenu(); closeHelp(); closeDialog(true);
   closePageScope?.(); closePageScope = undefined;
 }, page => {
   if (pad) {
@@ -172,17 +176,16 @@ stage.addEventListener('click', event => {
   dialog.showModal(); closeScope = pad.pushScope(dialog);
   pages.visit(name);
 });
-function closeDialog() {
-  if (dialog.open) dialog.close();
-  closeScope?.(); closeScope = undefined;
+function closeDialog(immediate = false) {
+  dialogMotion.close(immediate);
 }
-get('close-dialog').addEventListener('click', closeDialog);
-dialog.addEventListener('close', () => { if (!dialog.open) { closeScope?.(); closeScope = undefined; } });
+get('close-dialog').addEventListener('click', () => closeDialog());
 
 function closeMenu(restoreFocus = false) {
   const active = document.activeElement as HTMLElement | null;
   const release = closeMenuScope;
   get('menu-panel').hidden = true;
+  get('menu-panel').inert = true;
   closeMenuScope = undefined; release?.();
   get('menu-toggle').setAttribute('aria-expanded', 'false');
   get('menu-toggle').setAttribute('aria-label', 'Open navigation');
@@ -195,6 +198,7 @@ get('menu-toggle').addEventListener('click', () => {
   if (!get('menu-panel').hidden) { closeMenu(true); return; }
   closeHelp();
   get('menu-panel').hidden = false;
+  get('menu-panel').inert = false;
   get('menu-toggle').setAttribute('aria-expanded', 'true');
   get('menu-toggle').setAttribute('aria-label', 'Close navigation');
   closeMenuScope = pad.pushScope(get('menu-scope'));
@@ -205,6 +209,7 @@ get('help').addEventListener('click', () => {
   if (!get('help-panel').hidden) { closeHelp(); return; }
   closeMenu();
   get('help-panel').hidden = false;
+  get('help-panel').inert = false;
   get('help').setAttribute('aria-expanded', 'true');
   closeHelpScope = pad.pushScope(get('help-panel'));
   get('close-help').focus({ preventScroll: true });
