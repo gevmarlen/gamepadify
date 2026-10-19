@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.2 — 2026-10-19
 
 - Use Xbox aliases throughout the README, integration snippets and runnable examples; explain neutral button positions and cross-controller mappings separately.
 - Refresh the playground with a shared SVG logo/favicon, corrected card artwork, controller-shaped simulator and platform-specific button labels.
@@ -12,6 +12,8 @@
 - Add scoped control tips, map dialog back to the right face button (Xbox B), and preserve controller mode while using Live Settings.
 - Align popup action labels and arrows inside evenly padded buttons so the controller focus ring has balanced spacing.
 - Type-check the demo and exercise its interactions in Chromium, Firefox and WebKit in CI.
+
+Core and adapter runtime code is unchanged from 0.2.1. All five packages share version 0.2.2; adapters remain compatible with `gamepadify@^0.2.1`.
 
 ## 0.2.1 — 2026-10-19
 

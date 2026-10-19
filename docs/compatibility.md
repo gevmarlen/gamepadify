@@ -1,5 +1,7 @@
 # Compatibility and verification
 
+The 0.2.2 release updates documentation and the playground; library runtime code is unchanged. Its fresh package, browser and consumer checks, archive integrities and public CDN verification are recorded with the [0.2.2 release](https://github.com/gevmarlen/gamepadify/releases/tag/v0.2.2). The detailed 0.2.1 measurements below remain available as the runtime baseline.
+
 These are local validation results for 0.2.1, recorded on 2026-10-19 with Node v24.22.0 on Windows. GitHub Actions repeats the tests on Ubuntu; its results are available in the [Checks workflow](https://github.com/gevmarlen/gamepadify/actions/workflows/ci.yml). Exact versions, archive integrities, baseline measurements and run summaries are in [compatibility.json](compatibility.json).
 
 ## Packed consumers
