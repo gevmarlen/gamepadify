@@ -1,12 +1,18 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { readFile } from 'node:fs/promises';
 import { npm } from './npm.mjs';
 
 const manifest = JSON.parse(await readFile('.artifacts/packages/manifest.json', 'utf8'));
 const version = manifest.core.version;
-if (process.env.GITHUB_ACTIONS === 'true') assert.equal(process.env.GITHUB_REF_TYPE, 'tag', 'CI publication requires a version tag');
+const releaseTag = process.env.GAMEPADIFY_RELEASE_TAG || (process.env.GITHUB_REF_TYPE === 'tag' ? process.env.GITHUB_REF_NAME : undefined);
+if (process.env.GITHUB_ACTIONS === 'true') assert.ok(releaseTag, 'CI publication requires a version tag');
 for (const item of Object.values(manifest)) assert.equal(item.version, version);
-if (process.env.GITHUB_REF_TYPE === 'tag') assert.equal(process.env.GITHUB_REF_NAME, `v${version}`);
+if (releaseTag) {
+  assert.equal(releaseTag, `v${version}`);
+  const revision = ref => execFileSync('git', ['rev-parse', '--verify', ref], { encoding: 'utf8' }).trim();
+  assert.equal(revision('HEAD'), revision(`refs/tags/${releaseTag}^{commit}`), 'Publication must use the tagged source');
+}
 
 for (const name of ['core', 'react', 'vue', 'angular', 'jquery']) {
   const item = manifest[name];
