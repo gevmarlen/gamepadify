@@ -63,7 +63,20 @@ try {
       const visible = () => page.locator('#collection .world:visible').evaluateAll(cards => cards.map(card => card.dataset.world));
       const settle = () => page.waitForFunction(() => document.getAnimations().every(animation => animation.playState !== 'running'));
       const route = async key => {
-        await page.waitForFunction(value => location.hash === `#/${value}`, key);
+        try { await page.waitForFunction(value => location.hash === `#/${value}`, key); }
+        catch (error) {
+          await mkdir('test-results', { recursive: true });
+          await page.screenshot({ path: `test-results/demo-${name}-route.png`, fullPage: true });
+          console.error(await page.evaluate(() => ({
+            hash: location.hash,
+            mode: document.querySelector('#mode').textContent,
+            focused: document.activeElement.outerHTML,
+            back: document.querySelector('#back-page').getBoundingClientRect().toJSON(),
+            viewport: { width: innerWidth, height: innerHeight, scrollY },
+            events: document.querySelector('#log').textContent,
+          })));
+          throw error;
+        }
         await frames();
         assert.equal(await page.locator('[data-page]:visible').count(), 1);
       };
@@ -80,6 +93,10 @@ try {
       assert.equal(await page.locator('#body-class, #element-class, #conflict, #favorite, #duplicate, #search, #clear-search').count(), 0);
       assert.equal(await page.locator('#stage input, #stage textarea').count(), 0);
       await simulate();
+      const stationaryPointer = { bubbles: true, pointerType: 'mouse', clientX: 100, clientY: 100 };
+      await page.locator('#settings').dispatchEvent('pointermove', stationaryPointer);
+      await page.locator('#stage').dispatchEvent('pointermove', stationaryPointer);
+      assert.equal(await mode(), 'GAMEPAD MODE', 'scrolling under a stationary pointer must preserve controller mode');
       await page.waitForFunction(() => {
         const images = [...document.querySelectorAll('.gamepadify-glyph img')];
         return images.length >= 3 && images.every(image => image.complete && image.naturalWidth > 0);

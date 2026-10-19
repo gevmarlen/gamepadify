@@ -4,6 +4,8 @@
 
 - Use Xbox aliases throughout the README, integration snippets and runnable examples; explain neutral button positions and cross-controller mappings separately.
 - Refresh the playground with a shared SVG logo/favicon, corrected card artwork, controller-shaped simulator and platform-specific button labels.
+- Redraw the simulator on one coordinate grid with symmetric grips and shoulders, inset face buttons and an interactive D-pad.
+- Preserve simulator input when the browser reports a stationary pointer after scrolling from Live Settings back to the preview.
 - Add an LB navigation menu, curated journeys and a session journal, with URL history and gamepad-only navigation. Animate page transitions and random shuffling with reduced-motion support; remove placeholder favorite, text search and class/conflict controls from the playground.
 - Add scoped control tips, map dialog back to the right face button (Xbox B), and preserve controller mode while using Live Settings.
 - Align popup action labels and arrows inside evenly padded buttons so the controller focus ring has balanced spacing.

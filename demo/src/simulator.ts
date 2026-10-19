@@ -23,8 +23,8 @@ export function createDemoSimulator(element: HTMLElement) {
     source.axes(x, y);
     for (const button of element.querySelectorAll<HTMLElement>('[data-pad-button]')) button.classList.toggle('pressed', [...pressed.values()].includes(button.dataset.padButton as Button));
     for (const button of element.querySelectorAll<HTMLElement>('[data-pad-direction]')) button.classList.toggle('pressed', values.includes(button.dataset.padDirection as Direction));
-    element.style.setProperty('--stick-x', `${x * 5}px`);
-    element.style.setProperty('--stick-y', `${y * 5}px`);
+    element.style.setProperty('--stick-x', `${x * 12.5}%`);
+    element.style.setProperty('--stick-y', `${y * 12.5}%`);
   }
 
   function reset() {
