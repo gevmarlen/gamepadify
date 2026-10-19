@@ -17,8 +17,8 @@ npm install gamepadify
 ```
 
 ```html
-<button data-gamepad="south">Save</button>
-<button data-gamepad="left-shoulder+north">More</button>
+<button data-gamepad="xbox:x">Save</button>
+<button data-gamepad="xbox:lb+xbox:y">More</button>
 ```
 
 ```ts
@@ -31,7 +31,7 @@ pad.start();
 
 Connect a controller and press any button to enter gamepad mode. Release it before activating an action. Bindings focus the element and call `.click()`. Mouse, keyboard or touch input restores the ordinary interface.
 
-Names refer to physical positions: `south`, `east`, `west`, `north`, shoulder buttons, triggers, sticks and D-pad. Explicit aliases such as `xbox:a`, `ps:cross` and `switch:b` all mean `south`. Unprefixed `A` and `X` are rejected.
+Press **X** to save or **LB + Y** together for More on an Xbox controller. These bindings also work on other controllers; prompts show their corresponding buttons. See [button names and physical positions](#button-names-and-physical-positions).
 
 For a plain script tag, load the script and stylesheet from the same fixed version:
 
@@ -43,13 +43,30 @@ For a plain script tag, load the script and stylesheet from the same fixed versi
 
 To self-host, unpack the browser ZIP and keep its `assets/` directory beside the stylesheet. Use matching versions of the script, stylesheet and adapters.
 
+## Button names and physical positions
+
+Start with familiar names such as `xbox:a`, `xbox:b`, `xbox:x`, `xbox:y`, `xbox:lb` and `xbox:rb`. The prefix identifies the naming convention; it does not restrict the binding to Xbox hardware.
+
+The neutral names `south`, `east`, `west` and `north` describe the positions of the four face buttons, not the D-pad:
+
+| Xbox alias | Face button position | Neutral name | PlayStation alias | Switch alias |
+| --- | --- | --- | --- | --- |
+| `xbox:a` | Bottom | `south` | `ps:cross` | `switch:b` |
+| `xbox:b` | Right | `east` | `ps:circle` | `switch:a` |
+| `xbox:x` | Left | `west` | `ps:square` | `switch:y` |
+| `xbox:y` | Top | `north` | `ps:triangle` | `switch:x` |
+
+Names in the same row are interchangeable. For example, `xbox:a` uses the bottom face button: A on Xbox, × on PlayStation or B on Switch. Prompts follow the connected controller automatically. Include the prefix: plain `A` or `X` is ambiguous and rejected.
+
+Use Xbox aliases in bindings, combinations and navigation settings. Event payloads, custom skin keys and device profile keys use the neutral names. See the [complete button reference](docs/api.md#buttons-and-chords) for triggers, stick clicks and D-pad controls.
+
 ## Configure
 
 Data attributes also work with dynamically inserted elements. Alternatively, supply a selector map or call [`pad.bind()`](docs/api.md#binding):
 
 ```ts
 const pad = createGamepadify({
-  bindings: { '#save': 'south', '#more': ['left-shoulder', 'north'] },
+  bindings: { '#save': 'xbox:x', '#more': ['xbox:lb', 'xbox:y'] },
   showHints: true,
   bodyClass: 'using-gamepad',
   elementClass: 'gamepad-action',
@@ -75,11 +92,11 @@ Identical bindings on different visible, available elements are blocked and repo
 ```
 
 ```ts
-const pad = createGamepadify({ navigation: { confirm: 'east' } });
+const pad = createGamepadify({ navigation: { confirm: 'xbox:a' } });
 pad.start();
 ```
 
-The left stick moves real DOM focus toward the nearest eligible element in that direction, scrolling when needed. The confirm button is reserved and must not appear in a binding. [Dialog scopes, D-pad and repeat settings](docs/api.md#navigation-and-dialogs) are optional.
+The left stick moves real DOM focus toward the nearest eligible element in that direction, scrolling when needed. Press A on Xbox to activate the focused element. The confirm button is reserved and must not appear in another binding. The Save binding above uses X, so it can coexist with A for confirmation. [Dialog scopes, D-pad and repeat settings](docs/api.md#navigation-and-dialogs) are optional.
 
 ## Frameworks and smaller builds
 

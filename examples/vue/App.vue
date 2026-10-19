@@ -7,8 +7,8 @@ useGamepadify();
 
 <template>
   <h1>Vue</h1>
-  <p>Press a controller button to start. West saves; south activates the focused card.</p>
-  <button v-gamepad="'west'" @click="count++">Save</button>
+  <p>Press a controller button to start. On Xbox, X saves and A activates the focused card. Other controllers show their own button prompts.</p>
+  <button v-gamepad="'xbox:x'" @click="count++">Save</button>
   <section>
     <button v-gamepad-focusable @click="count++">First card</button>
     <button v-gamepad-focusable @click="count++">Second card</button>

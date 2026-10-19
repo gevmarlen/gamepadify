@@ -7,8 +7,8 @@ import { options } from '../input';
   selector: 'app-root',
   standalone: true,
   imports: [GamepadDirective, GamepadFocusableDirective],
-  template: `<h1>Angular</h1><p>Press a controller button to start. West saves; south activates the focused card.</p>
-    <button [gamepad]="'west'" (click)="activate()">Save</button>
+  template: `<h1>Angular</h1><p>Press a controller button to start. On Xbox, X saves and A activates the focused card. Other controllers show their own button prompts.</p>
+    <button [gamepad]="'xbox:x'" (click)="activate()">Save</button>
     <section><button gamepadFocusable (click)="activate()">First card</button><button gamepadFocusable (click)="activate()">Second card</button></section>
     <output>{{ count() }} actions</output>`,
 })

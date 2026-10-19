@@ -14,11 +14,13 @@ pad.start();
 ```
 
 ```html
-<button data-gamepad="south">Save</button>
-<button data-gamepad="left-shoulder+north">More</button>
+<button data-gamepad="xbox:x">Save</button>
+<button data-gamepad="xbox:lb+xbox:y">More</button>
 ```
 
 The first controller press enters gamepad mode. Release before activating actions.
+
+On Xbox, X activates Save and LB + Y activates More. Xbox aliases also work on other controllers, with matching button prompts. See [button names and physical positions](https://github.com/gevmarlen/gamepadify#button-names-and-physical-positions) for the full mapping.
 
 [Documentation](https://github.com/gevmarlen/gamepadify#readme) · [Playground](https://gevmarlen.github.io/gamepadify/) · [API](https://github.com/gevmarlen/gamepadify/blob/main/docs/api.md)
 

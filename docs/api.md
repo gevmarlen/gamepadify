@@ -55,7 +55,7 @@ interface Binding {
 
 A string button or tuple is shorthand for `{ button }`. `enabled: false` unregisters this effective binding. `focusable: true` includes an element in explicit navigation. A binding can have both fields, but its button must not contain a reserved navigation button.
 
-In data attributes, `data-gamepad="left-shoulder+north"` is parsed at runtime. Invalid/duplicate button names produce a diagnostic. `data-gamepad-focusable="false"` opts out of the default navigation selector. A custom selector explicitly includes its matches. Framework focusable directives accept `false` directly.
+In data attributes, `data-gamepad="xbox:lb+xbox:y"` is parsed at runtime as LB + Y. Invalid/duplicate button names produce a diagnostic. `data-gamepad-focusable="false"` opts out of the default navigation selector. A custom selector explicitly includes its matches. Framework focusable directives accept `false` directly.
 
 At the same precedence level, the last registered field wins. Releasing that registration restores the preceding registration. Element contents and event handlers remain owned by the application.
 
@@ -74,6 +74,8 @@ Explicit registrations override selector maps, which override data attributes. T
 
 Diagnostic codes: `duplicate-binding`, `reserved-button`, `ambiguous-chord`, `invalid-binding`, `invalid-selector`, `unsupported-gamepad`, `unavailable`, `overlapping-root`, `missing-feature`.
 
+Activation and diagnostic `buttons` arrays contain normalized [physical names](#physical-positions), even when a binding uses Xbox aliases. For example, `xbox:a` is reported as `south`.
+
 `missing-feature` reports enabled navigation or prompts absent from the selected build. Import a build containing that feature; configuration changes cannot add code that was excluded at build time.
 
 Callbacks run synchronously. Errors propagate to the caller or the browser; the next polling frame remains scheduled. `stop()` and `destroy()` finish resource cleanup before notifying listeners. Diagnostics are committed before warning callbacks run. Exceptions from a custom input source are propagated, while browser Gamepad API permission failures produce `unavailable`. State snapshots copy diagnostics and device metadata; element references are live DOM objects.
@@ -81,6 +83,8 @@ Callbacks run synchronously. Errors propagate to the caller or the browser; the 
 Changing only presentation settings keeps input armed. Changes to bindings, navigation, source, profiles, chord timing or scopes reset pending combinations and wait for release.
 
 ## Profiles
+
+Profile `buttons` keys use [physical names](#physical-positions): `south` means the bottom face button (Xbox A), for example. Values are indices into the device's raw `Gamepad.buttons` array; aliases such as `xbox:a` are used in bindings, not as profile keys.
 
 ```ts
 import type { DeviceProfile } from 'gamepadify';
@@ -109,10 +113,10 @@ const source = createGamepadSimulator('xbox');
 const pad = createGamepadify({ source });
 pad.start();
 
-source.press('home');
-source.release('home');
-source.press('south');
-source.release('south');
+source.press('xbox:home');
+source.release('xbox:home');
+source.press('xbox:a');
+source.release('xbox:a');
 source.axes(1, 0);
 source.axes(0, 0);
 source.disconnect();
@@ -124,26 +128,47 @@ Custom sources can expose multiple controllers for tests or an external input br
 
 ## Buttons and chords
 
-| Position | Xbox alias | PlayStation alias | Switch alias |
-| --- | --- | --- | --- |
-| `south` | `xbox:a` | `ps:cross` | `switch:b` |
-| `east` | `xbox:b` | `ps:circle` | `switch:a` |
-| `west` | `xbox:x` | `ps:square` | `switch:y` |
-| `north` | `xbox:y` | `ps:triangle` | `switch:x` |
+Use familiar Xbox names in bindings: `xbox:a`, `xbox:b`, `xbox:x`, `xbox:y`, `xbox:lb`, `xbox:rb`, `xbox:lt` and `xbox:rt`. These aliases work across controller families; prompts use the connected controller's symbols. Plain `A` or `X` is ambiguous and rejected.
 
-Other physical names: `left-shoulder`, `right-shoulder`, `left-trigger`, `right-trigger`, `left-stick`, `right-stick`, `select`, `start`, `home`, and `dpad-up/down/left/right`.
-
-Aliases always denote a physical position, regardless of the connected controller. Plain `A` or `X` is rejected. In TypeScript use a typed tuple for a chord; in HTML use `+`:
+For a simultaneous LB + Y combination, use a typed tuple in TypeScript or `+` in HTML:
 
 ```ts
 import type { Chord } from 'gamepadify';
 
-const favorite: Chord = ['left-shoulder', 'north'];
+const more: Chord = ['xbox:lb', 'xbox:y'];
+```
+
+```html
+<button data-gamepad="xbox:lb+xbox:y">More</button>
 ```
 
 Button order does not matter. When a single binding overlaps a longer chord, only the ambiguous action waits for the default 80 ms chord window. The longest match wins. Releasing a chord does not fire its shorter bindings; adding a button after an action has already fired does not trigger another overlapping action. You can hold a modifier and repeatedly press the other button. Equally long overlapping matches are blocked and reported.
 
 These are simultaneous controller combinations, not keyboard shortcuts or input sequences.
+
+### Physical positions
+
+The neutral names describe button positions. In particular, `south`, `east`, `west` and `north` mean the bottom, right, left and top **face buttons**, not D-pad directions. Each row below names the same physical control using different conventions:
+
+| Xbox alias | PlayStation alias | Switch alias | Neutral name |
+| --- | --- | --- | --- |
+| `xbox:a` | `ps:cross` | `switch:b` | `south` (bottom) |
+| `xbox:b` | `ps:circle` | `switch:a` | `east` (right) |
+| `xbox:x` | `ps:square` | `switch:y` | `west` (left) |
+| `xbox:y` | `ps:triangle` | `switch:x` | `north` (top) |
+| `xbox:lb` | `ps:l1` | `switch:l` | `left-shoulder` |
+| `xbox:rb` | `ps:r1` | `switch:r` | `right-shoulder` |
+| `xbox:lt` | `ps:l2` | `switch:zl` | `left-trigger` |
+| `xbox:rt` | `ps:r2` | `switch:zr` | `right-trigger` |
+| `xbox:ls` | `ps:l3` | `switch:ls` | `left-stick` (click) |
+| `xbox:rs` | `ps:r3` | `switch:rs` | `right-stick` (click) |
+| `xbox:view` | `ps:create` | `switch:minus` | `select` |
+| `xbox:menu` | `ps:options` | `switch:plus` | `start` |
+| `xbox:home` | `ps:home` | `switch:home` | `home` |
+
+For example, `xbox:a`, `ps:cross`, `switch:b` and `south` all select the bottom face button. The prefix does not select a controller family or an artwork skin. This also means assigning `xbox:a` and `ps:cross` to different visible elements creates a conflict.
+
+Use `dpad-up`, `dpad-down`, `dpad-left` and `dpad-right` on every controller family; D-pad directions have no prefixed aliases. Event payloads, skin glyph keys and device profile keys use the neutral names in the last column.
 
 
 ## Navigation and dialogs
@@ -156,7 +181,7 @@ These are simultaneous controller combinations, not keyboard shortcuts or input 
 ```ts
 const pad = createGamepadify({
   navigation: {
-    confirm: 'east',
+    confirm: 'xbox:a',
     selector: '[data-gamepad-focusable]',
     dpad: false,
   },
@@ -206,7 +231,7 @@ import {
   selector: 'app-root',
   imports: [GamepadDirective, GamepadFocusableDirective],
   template: `
-    <button [gamepad]="'west'" (click)="save()">Save</button>
+    <button [gamepad]="'xbox:x'" (click)="save()">Save</button>
     <button gamepadFocusable (click)="next()">Continue</button>
   `,
 })
@@ -217,7 +242,7 @@ class App {
 }
 
 bootstrapApplication(App, {
-  providers: [provideGamepadify({ navigation: { confirm: 'south' } })],
+  providers: [provideGamepadify({ navigation: { confirm: 'xbox:a' } })],
 });
 ```
 
@@ -234,7 +259,7 @@ import { GamepadProvider, useGamepad } from 'gamepadify-react';
 import 'gamepadify/styles.css';
 
 function SaveButton() {
-  const ref = useGamepad<HTMLButtonElement>('west');
+  const ref = useGamepad<HTMLButtonElement>('xbox:x');
   return <button ref={ref} onClick={() => console.log('Saved')}>Save</button>;
 }
 
@@ -258,7 +283,7 @@ import 'gamepadify/styles.css';
 import App from './App.vue';
 
 createApp(App)
-  .use(createGamepadifyPlugin({ navigation: { confirm: 'south' } }))
+  .use(createGamepadifyPlugin({ navigation: { confirm: 'xbox:a' } }))
   .mount('#app');
 ```
 
@@ -270,8 +295,8 @@ function save() { console.log('Saved'); }
 </script>
 
 <template>
-  <button v-gamepad="'west'" @click="save">Save</button>
-  <button v-gamepad="['left-shoulder', 'north']">More</button>
+  <button v-gamepad="'xbox:x'" @click="save">Save</button>
+  <button v-gamepad="['xbox:lb', 'xbox:y']">More</button>
   <button v-gamepad-focusable>Continue</button>
 </template>
 ```
@@ -290,7 +315,7 @@ import { installGamepadify } from 'gamepadify-jquery';
 import 'gamepadify/styles.css';
 
 installGamepadify($);
-$('#app').gamepadify({ bindings: { '#save': 'west' } });
+$('#app').gamepadify({ bindings: { '#save': 'xbox:x' } });
 const pad = $('#app').gamepadify('instance');
 $('#app').gamepadify('configure', { showHints: false });
 $('#app').gamepadify('destroy');
@@ -302,6 +327,8 @@ Install `@types/jquery` for TypeScript projects. Plugin installation is explicit
 ## Prompts, skins and focus
 
 The bundled PNG artwork is [Kenney Input Prompts](https://kenney.nl/assets/input-prompts), licensed CC0. It includes Xbox, PlayStation and Switch sets. These are community assets, not official manufacturer assets. Unknown standard controllers use neutral text labels. Missing or failed images fall back to text.
+
+Custom skin `glyphs` keys use [physical names](#physical-positions): `south` for Xbox A and `north` for Xbox Y below. This keeps the skin independent of the naming convention used by bindings.
 
 ```ts
 import type { Skin } from 'gamepadify';
